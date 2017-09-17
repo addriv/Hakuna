@@ -12,6 +12,10 @@
 
 **Note:** All other components are rendered inside of `MainPage`
 
+## SignupForm
++ `SignupContainer` + `SignupForm`
+  + Route: `/#/signup`
+
 ## TeamForm
 + `TeamFormContainer` + `TeamForm`
   + Route: `/#/newTeam`

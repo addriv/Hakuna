@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: projects
+#
+#  id          :integer          not null, primary key
+#  name        :string           not null
+#  description :string
+#  public      :boolean          default(TRUE), not null
+#  lead_id     :integer          not null
+#  team_id     :integer          not null
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 # This model initially had no columns defined. If you add columns to the
