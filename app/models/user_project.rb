@@ -1,0 +1,2 @@
+class UserProject < ApplicationRecord
+end
