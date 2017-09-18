@@ -17,7 +17,7 @@ const Protected = ({component: Component, path, loggedIn}) => (
       if (loggedIn){
         return <Component {...props} />;
         }
-      else if (location.hash !== '#/signup' && location.hash !== '#/login'){
+      else {
         return <Redirect to="/login" />;
       }
     }
