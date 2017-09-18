@@ -20,15 +20,27 @@ html, body {
 }
 
 #login-auth, #signup-auth {
-  height: 100vh;
+  height: 100%;
   width: 100%;
   margin: 0;
   padding: 0;
   text-align: center;
 }
 
+html {
+  background: url(http://res.cloudinary.com/dcl72qrya/image/upload/v1505711124/login_background_hpnkgq.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 #login-auth{
-  background-image: url(http://res.cloudinary.com/dcl72qrya/image/upload/v1505711124/login_background_hpnkgq.png);
+  background: url(http://res.cloudinary.com/dcl72qrya/image/upload/v1505711124/login_background_hpnkgq.png) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 #signup-auth{
