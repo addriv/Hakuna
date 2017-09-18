@@ -16,11 +16,10 @@ class ApplicationController < ActionController::Base
     session[:session_token] = nil
   end
 
-  helper_method :current_user
-
-  private
-
-  def user_params
-    params.require(:user).permit(:email, :name, :password)
+  def logged_in?
+    !current_user.nil?
   end
+
+  helper_method :current_user, :logged_in?
+
 end

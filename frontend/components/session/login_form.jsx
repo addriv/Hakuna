@@ -1,10 +1,9 @@
 import React from 'react';
 
-export default class SignupForm extends React.Component {
+export default class LoginForm extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      name: '',
       email: '',
       password: ''
     };
@@ -18,30 +17,27 @@ export default class SignupForm extends React.Component {
 
   handleSubmit(event){
     event.preventDefault();
-    this.props.signup({ user: this.state });
+    this.props.login({ user: this.state });
   }
 
   render(){
     return (
-      <div id="signup">
-        <h2>SIGN UP</h2>
+      <div id="login">
+        <h2>LOG IN</h2>
 
-          <label for='name'>NAME</label>
-          <input
-            onChange={this.handleInput('name')}
-            value={this.state.name}></input>
-
-          <label for='email'>EMAIL ADDRESS</label>
+          <label>EMAIL ADDRESS</label>
           <input
             onChange={this.handleInput('email')}
+            type='text'
             value={this.state.email}></input>
 
-          <label for='password'>PASSWORD</label>
+          <label>PASSWORD</label>
           <input
             onChange={this.handleInput('password')}
+            type='password'
             value={this.state.password}></input>
 
-        <button onClick={this.handleSubmit}>SIGN UP</button>
+          <button onClick={this.handleSubmit}>LOG IN</button>
       </div>
     );
   }

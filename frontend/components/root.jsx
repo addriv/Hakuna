@@ -1,12 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { HashRouter, Route } from 'react-router-dom';
-import SignupContainer from './signup_container';
+import { HashRouter } from 'react-router-dom';
+import App from './App';
 
 const Root = ({ store }) => (
   <Provider store={store}>
     <HashRouter>
-      <Route path='/signup' component={SignupContainer}/>
+      <App />
     </HashRouter>
   </Provider>
 );
+
+export default Root;
