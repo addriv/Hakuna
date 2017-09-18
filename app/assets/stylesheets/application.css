@@ -13,3 +13,80 @@
  *= require_tree .
  *= require_self
  */
+
+html, body {
+  padding: 0;
+  margin: 0;
+}
+
+#login-auth, #signup-auth {
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+#login-auth{
+  background-image: url(http://res.cloudinary.com/dcl72qrya/image/upload/v1505711124/login_background_hpnkgq.png);
+}
+
+#signup-auth{
+  background-image: url(http://res.cloudinary.com/dcl72qrya/image/upload/v1505717424/signup_background_nqqdgh.png)
+}
+
+.login-content, .signup-content{
+  width: 585px;
+  height: 300px;
+  position: absolute;
+  top: 30%;
+  right: 5%;
+}
+
+.login-form, .signup-form {
+  width: 405px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 0 90px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.login-form h2{
+  text-align: right;
+  margin-right: 20px;
+}
+
+.login-btn {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.login-form label{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.signup{
+  display: flex;
+  height: 20px;
+  justify-content: flex-end;
+}
+
+.signup p {
+  padding: 0;
+  margin: 2px;
+}
+
+.signup-btn {
+    -webkit-appearance: button;
+    padding: 3px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: initial;
+    font-size: 11px;
+}

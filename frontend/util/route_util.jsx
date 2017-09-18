@@ -7,19 +7,21 @@ const Auth = ({component: Component, path, loggedIn}) => (
     !loggedIn ? (
       <Component {...props} />
     ) : (
-      <Redirect to="/dashboard" />
+      <Redirect to="/" />
     )
   )}/>
 );
 
 const Protected = ({component: Component, path, loggedIn}) => (
-  <Route path={path} render={(props) => (
-    loggedIn ? (
-      <Component {...props} />
-    ) : (
-      <Redirect to="/login" />
-    )
-  )}/>
+  <Route path={path} render={(props) => {
+      if (loggedIn){
+        return <Component {...props} />;
+        }
+      else if (location.hash !== '#/signup' && location.hash !== '#/login'){
+        return <Redirect to="/login" />;
+      }
+    }
+  }/>
 );
 
 const mapStateToProps = state => {
