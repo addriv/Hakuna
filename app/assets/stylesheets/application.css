@@ -107,6 +107,7 @@ button{
   font-family: Helvetica, Arial, sans-serif;
   border-radius: 3px;
   border: 0;
+  box-shadow: none;
 }
 
 .login-form > form > h2, .signup-form > form > h2{
