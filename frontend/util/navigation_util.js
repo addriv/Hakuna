@@ -1,7 +1,7 @@
-export const fetchTeam = teamData => (
+export const fetchTeam = teamId => (
   $.ajax({
     method: 'GET',
-    url: `/api/teams/${teamData.id}`
+    url: `/api/teams/${teamId}`
   })
 );
 

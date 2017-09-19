@@ -30626,7 +30626,10 @@ var Dashboard = function (_React$Component) {
   function Dashboard(props) {
     _classCallCheck(this, Dashboard);
 
-    return _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
+
+    _this.handleTeam = _this.handleTeam.bind(_this);
+    return _this;
   }
 
   _createClass(Dashboard, [{
@@ -30637,7 +30640,7 @@ var Dashboard = function (_React$Component) {
       var getFirstTeam = function getFirstTeam(ajaxResponse) {
         var teams = ajaxResponse.teams;
         var teamsKeys = Object.keys(teams);
-        return teams[teamsKeys[0]];
+        return teams[teamsKeys[0]].id;
       };
 
       this.props.fetchTeams().then(function (response) {
@@ -30645,23 +30648,48 @@ var Dashboard = function (_React$Component) {
       });
     }
   }, {
+    key: 'handleTeam',
+    value: function handleTeam(event) {
+      event.preventDefault();
+      var teamId = parseInt(event.target.id);
+      this.props.fetchTeam(teamId);
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this3 = this;
+
       var entitiesExist = Object.keys(this.props.entities).length > 0;
+      var teams = this.props.teams;
+
+      //Declare variables to be rendered
       var teamDisplay = void 0,
-          teams = void 0;
+          teamsList = void 0,
+          teamsUl = void 0;
+
+      //Grab team being displayed
       if (entitiesExist) {
         teamDisplay = this.props.entities.team.name;
       }
 
-      if (this.props.teams) {
-        teams = this.props.teams.map(function (team, i) {
+      //Grab teams if they exist
+      if (teams) {
+        teamsList = teams.map(function (team, i) {
           return _react2.default.createElement(
-            'li',
-            { key: i },
+            'button',
+            {
+              onClick: _this3.handleTeam,
+              id: team.id,
+              key: i },
             team.name
           );
         });
+
+        teamsUl = _react2.default.createElement(
+          'ul',
+          null,
+          teamsList
+        );
       }
 
       return _react2.default.createElement(
@@ -30684,26 +30712,31 @@ var Dashboard = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'user-teams' },
-                teams
+                teamsUl
               )
             ),
             _react2.default.createElement(
               'nav',
               { className: 'bottom-bar' },
               _react2.default.createElement(
-                'h1',
+                'div',
                 null,
-                'Welcome! This is ',
-                teamDisplay,
-                ' Dashboard'
-              ),
-              _react2.default.createElement(
-                'button',
-                { onClick: this.props.logout },
-                'Log Out'
+                _react2.default.createElement(
+                  'h1',
+                  null,
+                  'Welcome! This is ',
+                  teamDisplay,
+                  ' Dashboard'
+                ),
+                _react2.default.createElement(
+                  'button',
+                  { onClick: this.props.logout },
+                  'Log Out'
+                )
               )
             )
-          )
+          ),
+          _react2.default.createElement('div', { className: 'tasks-ui' })
         )
       );
     }
@@ -30711,15 +30744,6 @@ var Dashboard = function (_React$Component) {
 
   return Dashboard;
 }(_react2.default.Component);
-
-// debugger;
-// const entitiesExist = Object.keys(this.props.entities).length > 0;
-// const firstTeam = newProps.teams[0];
-// debugger;
-// if (!entitiesExist || (entitiesExist && firstTeam.id !== this.props.entities.team.id)){
-//   this.props.fetchTeam(firstTeam);
-// }
-
 
 exports.default = Dashboard;
 
@@ -30818,10 +30842,10 @@ exports.default = Sidebar;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var fetchTeam = exports.fetchTeam = function fetchTeam(teamData) {
+var fetchTeam = exports.fetchTeam = function fetchTeam(teamId) {
   return $.ajax({
     method: 'GET',
-    url: '/api/teams/' + teamData.id
+    url: '/api/teams/' + teamId
   });
 };
 

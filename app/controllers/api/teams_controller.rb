@@ -1,7 +1,11 @@
 class Api::TeamsController < ApplicationController
   def show
     @team = current_user.teams.find_by_id(params[:id])
-    render :team
+    if @team
+      render :team
+    else
+      render json: @team.errors.full_messages, status: 404
+    end
   end
 
   def index

@@ -5,13 +5,14 @@ import SidebarContainer from '../sidebar/sidebar_container';
 export default class Dashboard extends React.Component{
   constructor(props){
     super(props);
+    this.handleTeam = this.handleTeam.bind(this);
   }
 
   componentDidMount(){
     const getFirstTeam = (ajaxResponse) => {
       const teams = ajaxResponse.teams;
       const teamsKeys = Object.keys(teams);
-      return teams[teamsKeys[0]];
+      return teams[teamsKeys[0]].id;
     };
 
     this.props.fetchTeams().then(
@@ -19,17 +20,34 @@ export default class Dashboard extends React.Component{
     );
   }
 
+  handleTeam(event){
+    event.preventDefault();
+    const teamId = parseInt(event.target.id);
+    this.props.fetchTeam(teamId);
+  }
+
   render(){
     const entitiesExist = Object.keys(this.props.entities).length > 0;
-    let teamDisplay, teams;
+    const teams = this.props.teams;
+
+    //Declare variables to be rendered
+    let teamDisplay, teamsList, teamsUl;
+
+    //Grab team being displayed
     if (entitiesExist){
       teamDisplay = this.props.entities.team.name;
     }
 
-    if (this.props.teams){
-      teams = this.props.teams.map((team, i) => {
-        return <li key={i}>{team.name}</li>;
+    //Grab teams if they exist
+    if (teams){
+      teamsList = teams.map((team, i) => {
+        return <button
+          onClick={this.handleTeam}
+          id={team.id}
+          key={i}>{team.name}</button>;
       });
+
+      teamsUl = <ul>{ teamsList }</ul>;
     }
 
     return (
@@ -44,20 +62,24 @@ export default class Dashboard extends React.Component{
             <nav className='top-bar'>
 
               <div className='user-teams'>
-                {teams}
+                { teamsUl }
               </div>
 
             </nav>
 
             <nav className='bottom-bar'>
+              <div>
+                <h1>Welcome! This is {teamDisplay} Dashboard</h1>
 
-              <h1>Welcome! This is {teamDisplay} Dashboard</h1>
-
-              <button onClick={this.props.logout}>Log Out</button>
-
+                <button onClick={this.props.logout}>Log Out</button>
+              </div>
             </nav>
 
           </nav>
+
+          <div className='tasks-ui'>
+
+          </div>
 
         </div>
       </div>
@@ -65,14 +87,3 @@ export default class Dashboard extends React.Component{
   }
 
 }
-
-
-
-
-// debugger;
-// const entitiesExist = Object.keys(this.props.entities).length > 0;
-// const firstTeam = newProps.teams[0];
-// debugger;
-// if (!entitiesExist || (entitiesExist && firstTeam.id !== this.props.entities.team.id)){
-//   this.props.fetchTeam(firstTeam);
-// }

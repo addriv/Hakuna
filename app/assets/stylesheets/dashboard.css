@@ -1,0 +1,42 @@
+.dashboard-nav{
+  text-align: center;
+  width: 100%;
+  height: 15vh;
+  background-color: gray;
+  padding: 1px;
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+}
+
+.bottom-bar{
+  border-bottom: solid black 2px;
+  height: 90%;
+}
+
+.bottom-bar > div{
+  position: relative;
+  top: 30%;
+}
+
+.bottom-bar > div > h1 {
+  margin: 0;
+}
+
+.top-bar {
+  border-bottom: solid black 1px;
+  height: 15%;
+}
+
+.user-teams{
+  list-style: none;
+}
+
+.user-teams > ul{
+  display: flex;
+  flex-direction: row;
+}
+
+.user-teams > ul > li {
+  padding: 0 5px;
+}
