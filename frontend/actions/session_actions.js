@@ -2,6 +2,7 @@ import * as sessionApiUtil from '../util/session_api_util';
 
 export const RECEIVE_CURRENT_USER = 'RECEIVE_USER';
 export const RECEIVE_SESSION_ERRORS = 'RECEIVE_SESSION_ERRORS';
+export const CLEAR_SESSION_ERRORS = 'CLEAR_SESSION_ERRORS';
 export const RECEIVE_TEAMS = 'RECEIVE_TEAMS';
 
 export const receiveTEAMS = teams => ({
@@ -28,6 +29,7 @@ export const signupUser = (userData) => dispatch => {
 };
 
 export const loginUser = (userData) => dispatch => {
+
   const ajax = sessionApiUtil.login(userData);
   let responseObj;
 
@@ -40,6 +42,7 @@ export const loginUser = (userData) => dispatch => {
     ).then(
       () => dispatch(receiveTEAMS(responseObj.teams))
     );
+  return ajax;
 };
 
 export const logoutUser = () => dispatch => {

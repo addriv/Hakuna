@@ -22,32 +22,58 @@ export default class LoginForm extends React.Component {
   }
 
   render(){
+    const sessionErrors = this.props.errors.session;
+    let errors;
+    if (sessionErrors.length > 0){
+      errors = sessionErrors.map((error, i) => (
+        <li key={i}>{error}</li>
+      ));
+    }
+
     return (
       <div id='login-auth'>
         <div className='login-content'>
-          <form className='login-form'>
-            <h2>Log In</h2>
+          <div className='front-display'>
 
-            <label>EMAIL ADDRESS</label>
-            <input
-              onChange={this.handleInput('email')}
-              type='text'
-              value={this.state.email}></input>
-
-            <label>PASSWORD</label>
-            <input
-              onChange={this.handleInput('password')}
-              type='password'
-              value={this.state.password}></input>
-            <div className='login-btn'>
-              <button onClick={this.handleSubmit}>LOG IN</button>
+            <div className='logo'>
+              <img src='http://res.cloudinary.com/dcl72qrya/image/upload/v1505801236/full_logo_medium_q8xov2.png'/>
+              <p>It means no worries, your team solutions are one step away</p>
             </div>
-          </form>
 
-          <div className='signup'>
-            <p>Don't have an account?</p>
-            <Link to='/signup' className='signup-btn'>SIGN UP</Link>
           </div>
+
+          <div className='test'>
+
+            <div className='login-form'>
+              <form>
+                <h2>Log In</h2>
+
+                <label>EMAIL ADDRESS</label>
+                <input
+                  onChange={this.handleInput('email')}
+                  type='text'
+                  value={this.state.email}></input>
+
+                <label>PASSWORD</label>
+                <input
+                  onChange={this.handleInput('password')}
+                  type='password'
+                  value={this.state.password}></input>
+                <div className='login-btn'>
+                  <button onClick={this.handleSubmit}>LOG IN</button>
+                </div>
+
+                {errors}
+              </form>
+            </div>
+
+            <div className='signup'>
+              <p>Don't have an account?</p>
+              <Link to='/signup' className='signup-link'>SIGN UP</Link>
+            </div>
+
+          </div>
+
         </div>
       </div>
     );

@@ -1,6 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default class LoginForm extends React.Component {
+export default class SignupForm extends React.Component {
   constructor(props){
     super(props);
     this.state = {
@@ -22,33 +23,63 @@ export default class LoginForm extends React.Component {
   }
 
   render(){
+    const sessionErrors = this.props.errors.session;
+    let errors;
+    if (sessionErrors.length > 0){
+      errors = sessionErrors.map((error, i) => (
+        <li key={i}>{error}</li>
+      ));
+    }
+
     return (
       <div id='signup-auth'>
         <div className='signup-content'>
-          <form className='signup-form'>
-            <h2>Sign Up</h2>
+          <div className='front-display'>
 
-            <label>NAME</label>
-            <input
-              onChange={this.handleInput('name')}
-              type='text'
-              value={this.state.name}></input>
+            <div className='logo'>
+              <img src='http://res.cloudinary.com/dcl72qrya/image/upload/v1505802948/full_logo_full_yfxljp.png'/>
+              <p>It means no worries, your team solutions are one step away</p>
+            </div>
 
-            <label>EMAIL ADDRESS</label>
-            <input
-              onChange={this.handleInput('email')}
-              type='text'
-              value={this.state.email}></input>
+          </div>
 
-            <label>PASSWORD</label>
-            <input
-              onChange={this.handleInput('password')}
-              type='password'
-              value={this.state.password}></input>
+          <div className='test'>
+            <div  className='signup-form'>
+              <form>
+                <h2>Sign Up</h2>
 
-            <button onClick={this.handleSubmit}>SIGN UP</button>
-          </form>
+                <label>NAME</label>
+                <input
+                  onChange={this.handleInput('name')}
+                  type='text'
+                  value={this.state.name}></input>
+
+                <label>EMAIL ADDRESS</label>
+                <input
+                  onChange={this.handleInput('email')}
+                  type='text'
+                  value={this.state.email}></input>
+
+                <label>PASSWORD</label>
+                <input
+                  onChange={this.handleInput('password')}
+                  type='password'
+                  value={this.state.password}></input>
+
+                <div className='signup-btn'>
+                  <button onClick={this.handleSubmit}>SIGN UP</button>
+                </div>
+
+                {errors}
+              </form>
+            </div>
+            <div className='login'>
+              <p>Already have an account?</p>
+              <Link to='/login' className='login-link'>LOG IN</Link>
+            </div>
+          </div>
         </div>
+
       </div>
     );
   }

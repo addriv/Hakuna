@@ -22,9 +22,6 @@ html, body {
 #login-auth, #signup-auth {
   height: 100vh;
   width: 100%;
-  margin: 0;
-  padding: 0;
-  text-align: center;
 }
 
 #login-auth{
@@ -43,12 +40,53 @@ html, body {
   background-size: cover;
 }
 
+.front-display{
+  margin-right: 150px;
+}
+
+.front-display > img{
+  margin-right: 100px;
+}
+
+.logo{
+  height: 40%;
+  left: 20%;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  text-aligh: center;
+  font-size: 20px;
+}
+
+.logo > img {
+  height: 184.25px;
+  margin-top: 20px;
+  margin-left: 90px;
+}
+
+.logo > p {
+  margin-top: 15px;
+}
+
 .login-content, .signup-content{
-  width: 585px;
+  width: 100vw;
   height: 300px;
   position: absolute;
-  top: 30%;
+  top: 20%;
   right: 5%;
+  display: flex;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.test{
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-form > form, .login-form > form{
+  display: flex;
+  flex-direction: column;
 }
 
 .login-form, .signup-form {
@@ -57,46 +95,60 @@ html, body {
   display: flex;
   flex-direction: column;
   text-align: left;
-  padding: 0 90px;
+  padding: 0 40px;
   background-color: white;
+  font-family: Helvetica, Arial, sans-serif;
   border-radius: 5px;
+  list-style: none;
 }
 
-.login-form h2{
+button{
+  background-color: #796eff;
+  font-family: Helvetica, Arial, sans-serif;
+  border-radius: 3px;
+}
+
+.login-form > form > h2, .signup-form > form > h2{
   text-align: right;
   margin-right: 20px;
 }
 
-.login-btn {
+.login-btn , .signup-btn{
   display: flex;
   justify-content: flex-end;
   padding: 0;
   margin-top: 10px;
 }
 
-.login-form label{
+.login-form > label, .signup-form > label{
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.signup{
+form > label{
+  margin-top: 10px;
+  color: #a1a4aa;
+}
+
+.signup, .login{
   display: flex;
   height: 20px;
   justify-content: flex-end;
 }
 
-.signup p {
+.signup > p, .login > p {
   padding: 0;
   margin: 2px;
 }
 
-.signup-btn {
-    -webkit-appearance: button;
+.signup-link, .login-link {
+    background-color: #796eff;
     padding: 3px;
-    border-radius: 5px;
+    border-radius: 3px;
     text-decoration: none;
     color: initial;
     font-size: 11px;
+    font-family: Helvetica, Arial, sans-serif;
 }
 
 .hakuna-ui {
