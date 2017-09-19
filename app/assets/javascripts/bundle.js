@@ -30389,6 +30389,7 @@ var LoginForm = function (_React$Component) {
     };
     _this.handleInput = _this.handleInput.bind(_this);
     _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.handleDemoLogin = _this.handleDemoLogin.bind(_this);
     return _this;
   }
 
@@ -30411,6 +30412,19 @@ var LoginForm = function (_React$Component) {
     value: function handleSubmit(event) {
       event.preventDefault();
       this.props.login({ user: this.state });
+    }
+  }, {
+    key: 'handleDemoLogin',
+    value: function handleDemoLogin(event) {
+      event.preventDefault();
+
+      var demoAcc = {
+        user: {
+          email: 'demo@email.com',
+          password: 'demo123'
+        } };
+
+      this.props.login(demoAcc);
     }
   }, {
     key: 'render',
@@ -30488,6 +30502,15 @@ var LoginForm = function (_React$Component) {
                     'button',
                     { onClick: this.handleSubmit },
                     'LOG IN'
+                  )
+                ),
+                _react2.default.createElement(
+                  'div',
+                  { className: 'demo-btn' },
+                  _react2.default.createElement(
+                    'button',
+                    { onClick: this.handleDemoLogin },
+                    'DEMO'
                   )
                 ),
                 errors

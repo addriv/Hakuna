@@ -10,6 +10,7 @@ export default class LoginForm extends React.Component {
     };
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDemoLogin = this.handleDemoLogin.bind(this);
   }
 
   componentDidMount(){
@@ -23,6 +24,18 @@ export default class LoginForm extends React.Component {
   handleSubmit(event){
     event.preventDefault();
     this.props.login({ user: this.state });
+  }
+
+  handleDemoLogin(event){
+    event.preventDefault();
+    
+    const demoAcc = {
+      user: {
+        email: 'demo@email.com',
+        password: 'demo123'
+      }};
+
+    this.props.login(demoAcc);
   }
 
   render(){
@@ -65,9 +78,13 @@ export default class LoginForm extends React.Component {
                   type='password'
                   value={this.state.password}
                   placeholder='Password'></input>
-                
+
                 <div className='login-btn'>
                   <button onClick={this.handleSubmit}>LOG IN</button>
+                </div>
+
+                <div className='demo-btn'>
+                  <button onClick={this.handleDemoLogin}>DEMO</button>
                 </div>
 
                 {errors}

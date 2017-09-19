@@ -106,6 +106,8 @@ button{
   background-color: #796eff;
   font-family: Helvetica, Arial, sans-serif;
   border-radius: 3px;
+  border: 0;
+  box-shadow: none;
 }
 
 .login-form > form > h2, .signup-form > form > h2{
@@ -113,7 +115,7 @@ button{
   margin-right: 20px;
 }
 
-.login-btn , .signup-btn{
+.login-btn, .signup-btn, .demo-btn{
   display: flex;
   justify-content: flex-end;
   padding: 0;
