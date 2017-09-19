@@ -1,21 +1,18 @@
 ````js
  {
    entities: {
-     users: {
+     team: {
+       id: 1,
+       name: "Fullstack",
+       lead_id: 1
+     },
+     members: {
        1: {
          id: 1,
          name: "John Doe",
          email: "johndoe@gmail.com"
        }
-     },
-     teams: {
-       1: {
-         id: 1,
-         name: "App Academy",
-         lead_id: 3,
-         member_ids: [4,1,2]
-       }
-     },
+     }
      projects: {
        4: {
          id: 4,
@@ -28,10 +25,11 @@
      },
      tasks: {
        id: 1,
-       title: "Add Pieces class"
-       description: "Finish code to implement pieces"
-       assignee_id: 5
-       public: true
+       title: "Add Pieces class",
+       description: "Finish code to implement pieces",
+       assignee_id: 5,
+       public: true,
+       project_id: 4
      }
    },
    session: {
@@ -39,7 +37,19 @@
        id: 1,
        name: "John Doe"
         email: "johndoe@gmail.com"
-     }
+     },
+     teams: {
+       1: {
+         id: 1,
+         name: "Fullstack",
+         lead_id: 1
+      },
+      2: {
+        id: 2,
+        name: "Flex",
+        lead_id: 1
+      }
+    }
    },
    ui: {
      loading: false,
@@ -51,6 +61,6 @@
    },
    errors: {
      login: null
-   } 
+   }
  }
 ````

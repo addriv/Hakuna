@@ -29,7 +29,6 @@ class User < ApplicationRecord
   has_many :created_tasks, foreign_key: :creator_id, class_name: :Task
   has_many :assigned_tasks, foreign_key: :assignee_id, class_name: :Task
 
-
   attr_reader :password
 
   after_initialize :ensure_session_token!

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     resources :users, only: [:create]
 
-    resources :teams, only: [:create] do
+    resources :teams, only: %i(create show) do
       resources :projects, only: %i(create update destroy)
     end
 

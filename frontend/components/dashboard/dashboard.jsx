@@ -7,8 +7,13 @@ export default class Dashboard extends React.Component{
     super(props);
   }
 
-  render(){
+  componentWillReceiveProps(newProps){
+    const firstTeamId = parseInt(Object.keys(newProps.teams)[0]);
+    const firstTeam = newProps.teams[firstTeamId];
+    this.props.fetchTeam(firstTeam);
+  }
 
+  render(){
 
     return (
       <div>
