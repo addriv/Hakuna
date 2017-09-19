@@ -1,13 +1,8 @@
 import * as sessionApiUtil from '../util/session_api_util';
 import { receiveSessionErrors } from './errors_actions';
+import { receiveTeams } from './navigation_actions';
 
 export const RECEIVE_CURRENT_USER = 'RECEIVE_USER';
-export const RECEIVE_TEAMS = 'RECEIVE_TEAMS';
-
-export const receiveTEAMS = teams => ({
-  type: RECEIVE_TEAMS,
-  teams
-});
 
 export const receiveCurrentUser = currentUser => ({
   type: RECEIVE_CURRENT_USER,
@@ -31,8 +26,6 @@ export const loginUser = (userData) => dispatch => {
        return dispatch(receiveCurrentUser(response.user));
      },
       (response) => dispatch(receiveSessionErrors(response.responseJSON))
-    ).then(
-      () => dispatch(receiveTEAMS(responseObj.teams))
     );
   return ajax;
 };

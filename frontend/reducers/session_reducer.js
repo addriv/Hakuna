@@ -1,4 +1,5 @@
-import { RECEIVE_CURRENT_USER, RECEIVE_TEAMS } from '../actions/session_actions';
+import { RECEIVE_CURRENT_USER } from '../actions/session_actions';
+import { RECEIVE_TEAMS } from '../actions/navigation_actions';
 import merge from 'lodash/merge';
 
 const _defaultState = {

@@ -6,7 +6,6 @@ class Api::SessionsController < ApplicationController
     )
     if @user
       login(@user)
-      @teams = @user.teams
       render :show
     else
       render json: ['Invalid credentials'], status: 404

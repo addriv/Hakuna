@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   //Bootstrap the user
   let store;
   if (window.currentUser) {
-    const preloadedState = { session: { currentUser: window.currentUser} };
+    const preloadedState = { session: { currentUser: window.currentUser } };
     store = configureStore(preloadedState);
     delete window.currentUser;
   }

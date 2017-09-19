@@ -3972,7 +3972,7 @@ var createPath = function createPath(location) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.logoutUser = exports.loginUser = exports.signupUser = exports.receiveCurrentUser = exports.receiveTEAMS = exports.RECEIVE_TEAMS = exports.RECEIVE_CURRENT_USER = undefined;
+exports.logoutUser = exports.loginUser = exports.signupUser = exports.receiveCurrentUser = exports.RECEIVE_CURRENT_USER = undefined;
 
 var _session_api_util = __webpack_require__(302);
 
@@ -3980,17 +3980,11 @@ var sessionApiUtil = _interopRequireWildcard(_session_api_util);
 
 var _errors_actions = __webpack_require__(386);
 
+var _navigation_actions = __webpack_require__(132);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var RECEIVE_CURRENT_USER = exports.RECEIVE_CURRENT_USER = 'RECEIVE_USER';
-var RECEIVE_TEAMS = exports.RECEIVE_TEAMS = 'RECEIVE_TEAMS';
-
-var receiveTEAMS = exports.receiveTEAMS = function receiveTEAMS(teams) {
-  return {
-    type: RECEIVE_TEAMS,
-    teams: teams
-  };
-};
 
 var receiveCurrentUser = exports.receiveCurrentUser = function receiveCurrentUser(currentUser) {
   return {
@@ -4018,8 +4012,6 @@ var loginUser = exports.loginUser = function loginUser(userData) {
       return dispatch(receiveCurrentUser(response.user));
     }, function (response) {
       return dispatch((0, _errors_actions.receiveSessionErrors)(response.responseJSON));
-    }).then(function () {
-      return dispatch(receiveTEAMS(responseObj.teams));
     });
     return ajax;
   };
@@ -13217,7 +13209,7 @@ var isExtraneousPopstateEvent = function isExtraneousPopstateEvent(event) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchTeam = exports.receiveTeam = exports.RECEIVE_TEAM = undefined;
+exports.fetchTeams = exports.fetchTeam = exports.receiveTeam = exports.receiveTeams = exports.RECEIVE_TEAMS = exports.RECEIVE_TEAM = undefined;
 
 var _navigation_util = __webpack_require__(309);
 
@@ -13226,6 +13218,14 @@ var navUtil = _interopRequireWildcard(_navigation_util);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var RECEIVE_TEAM = exports.RECEIVE_TEAM = 'RECEIVE_TEAM';
+var RECEIVE_TEAMS = exports.RECEIVE_TEAMS = 'RECEIVE_TEAMS';
+
+var receiveTeams = exports.receiveTeams = function receiveTeams(teams) {
+  return {
+    type: RECEIVE_TEAMS,
+    teams: teams
+  };
+};
 
 var receiveTeam = exports.receiveTeam = function receiveTeam(teamData) {
   return {
@@ -13238,6 +13238,14 @@ var fetchTeam = exports.fetchTeam = function fetchTeam(team) {
   return function (dispatch) {
     return navUtil.fetchTeam(team).then(function (response) {
       return dispatch(receiveTeam(response));
+    });
+  };
+};
+
+var fetchTeams = exports.fetchTeams = function fetchTeams() {
+  return function (dispatch) {
+    return navUtil.fetchTeams().then(function (response) {
+      return dispatch(receiveTeams(response));
     });
   };
 };
@@ -30461,7 +30469,8 @@ var LoginForm = function (_React$Component) {
                 _react2.default.createElement('input', {
                   onChange: this.handleInput('email'),
                   type: 'text',
-                  value: this.state.email }),
+                  value: this.state.email,
+                  placeholder: 'name@company.com' }),
                 _react2.default.createElement(
                   'label',
                   null,
@@ -30470,7 +30479,8 @@ var LoginForm = function (_React$Component) {
                 _react2.default.createElement('input', {
                   onChange: this.handleInput('password'),
                   type: 'password',
-                  value: this.state.password }),
+                  value: this.state.password,
+                  placeholder: 'Password' }),
                 _react2.default.createElement(
                   'div',
                   { className: 'login-btn' },
@@ -30529,11 +30539,14 @@ var _session_actions = __webpack_require__(35);
 
 var _navigation_actions = __webpack_require__(132);
 
+var _selectors = __webpack_require__(387);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    teams: state.session.teams
+    teams: (0, _selectors.teamsSelector)(state),
+    entities: state.entities
   };
 };
 
@@ -30541,6 +30554,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     logout: function logout() {
       return dispatch((0, _session_actions.logoutUser)());
+    },
+    fetchTeams: function fetchTeams() {
+      return dispatch((0, _navigation_actions.fetchTeams)());
     },
     fetchTeam: function fetchTeam(team) {
       return dispatch((0, _navigation_actions.fetchTeam)(team));
@@ -30591,15 +30607,40 @@ var Dashboard = function (_React$Component) {
   }
 
   _createClass(Dashboard, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(newProps) {
-      var firstTeamId = parseInt(Object.keys(newProps.teams)[0]);
-      var firstTeam = newProps.teams[firstTeamId];
-      this.props.fetchTeam(firstTeam);
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      var getFirstTeam = function getFirstTeam(ajaxResponse) {
+        var teams = ajaxResponse.teams;
+        var teamsKeys = Object.keys(teams);
+        return teams[teamsKeys[0]];
+      };
+
+      this.props.fetchTeams().then(function (response) {
+        return _this2.props.fetchTeam(getFirstTeam(response));
+      });
     }
   }, {
     key: 'render',
     value: function render() {
+      var entitiesExist = Object.keys(this.props.entities).length > 0;
+      var teamDisplay = void 0,
+          teams = void 0;
+      if (entitiesExist) {
+        teamDisplay = this.props.entities.team.name;
+      }
+
+      if (this.props.teams) {
+        teams = this.props.teams.map(function (team, i) {
+          return _react2.default.createElement(
+            'li',
+            { key: i },
+            team.name
+          );
+        });
+      }
+
       return _react2.default.createElement(
         'div',
         null,
@@ -30615,14 +30656,29 @@ var Dashboard = function (_React$Component) {
             'nav',
             { className: 'dashboard-nav' },
             _react2.default.createElement(
-              'h1',
-              null,
-              'Welcome! This is the Dashboard'
+              'nav',
+              { className: 'top-bar' },
+              _react2.default.createElement(
+                'div',
+                { className: 'user-teams' },
+                teams
+              )
             ),
             _react2.default.createElement(
-              'button',
-              { onClick: this.props.logout },
-              'Log Out'
+              'nav',
+              { className: 'bottom-bar' },
+              _react2.default.createElement(
+                'h1',
+                null,
+                'Welcome! This is ',
+                teamDisplay,
+                ' Dashboard'
+              ),
+              _react2.default.createElement(
+                'button',
+                { onClick: this.props.logout },
+                'Log Out'
+              )
             )
           )
         )
@@ -30632,6 +30688,15 @@ var Dashboard = function (_React$Component) {
 
   return Dashboard;
 }(_react2.default.Component);
+
+// debugger;
+// const entitiesExist = Object.keys(this.props.entities).length > 0;
+// const firstTeam = newProps.teams[0];
+// debugger;
+// if (!entitiesExist || (entitiesExist && firstTeam.id !== this.props.entities.team.id)){
+//   this.props.fetchTeam(firstTeam);
+// }
+
 
 exports.default = Dashboard;
 
@@ -30703,7 +30768,6 @@ var Sidebar = function (_React$Component) {
   _createClass(Sidebar, [{
     key: 'render',
     value: function render() {
-      var projects = this.props.entities.projects;
       return _react2.default.createElement(
         'div',
         null,
@@ -30735,6 +30799,13 @@ var fetchTeam = exports.fetchTeam = function fetchTeam(teamData) {
   return $.ajax({
     method: 'GET',
     url: '/api/teams/' + teamData.id
+  });
+};
+
+var fetchTeams = exports.fetchTeams = function fetchTeams() {
+  return $.ajax({
+    method: 'GET',
+    url: 'api/teams'
   });
 };
 
@@ -30896,6 +30967,8 @@ exports.sessionReducer = undefined;
 
 var _session_actions = __webpack_require__(35);
 
+var _navigation_actions = __webpack_require__(132);
+
 var _merge = __webpack_require__(316);
 
 var _merge2 = _interopRequireDefault(_merge);
@@ -30914,7 +30987,7 @@ var sessionReducer = exports.sessionReducer = function sessionReducer() {
   switch (action.type) {
     case _session_actions.RECEIVE_CURRENT_USER:
       return { currentUser: action.currentUser };
-    case _session_actions.RECEIVE_TEAMS:
+    case _navigation_actions.RECEIVE_TEAMS:
       return (0, _merge2.default)({}, state, { teams: action.teams });
     default:
       return state;
@@ -33182,6 +33255,23 @@ var clearSessionErrors = exports.clearSessionErrors = function clearSessionError
   return {
     type: CLEAR_SESSION_ERRORS
   };
+};
+
+/***/ }),
+/* 387 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var teamsSelector = exports.teamsSelector = function teamsSelector(state) {
+  var teams = state.session.teams;
+  if (teams) {
+    return Object.values(teams);
+  }
 };
 
 /***/ })

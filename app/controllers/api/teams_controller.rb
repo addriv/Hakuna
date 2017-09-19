@@ -1,7 +1,12 @@
 class Api::TeamsController < ApplicationController
   def show
-    @team = Team.find_by_id(params[:id])
+    @team = current_user.teams.find_by_id(params[:id])
     render :team
+  end
+
+  def index
+    @teams = current_user.teams
+    render :index
   end
 
   private

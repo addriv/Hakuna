@@ -35,13 +35,3 @@ json.tasks do
     end
   end
 end
-
-# json.tasks do
-#   projects.each do |project|
-#     project.tasks do |task|
-#       json.set! task.id do
-#         json.extract! task, :title, :description, :assignee_id, :due_date
-#       end
-#     end
-#   end
-# end
