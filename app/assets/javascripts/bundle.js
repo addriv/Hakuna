@@ -3972,17 +3972,17 @@ var createPath = function createPath(location) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.logoutUser = exports.loginUser = exports.signupUser = exports.receiveSessionErrors = exports.receiveCurrentUser = exports.receiveTEAMS = exports.RECEIVE_TEAMS = exports.CLEAR_SESSION_ERRORS = exports.RECEIVE_SESSION_ERRORS = exports.RECEIVE_CURRENT_USER = undefined;
+exports.logoutUser = exports.loginUser = exports.signupUser = exports.receiveCurrentUser = exports.receiveTEAMS = exports.RECEIVE_TEAMS = exports.RECEIVE_CURRENT_USER = undefined;
 
 var _session_api_util = __webpack_require__(302);
 
 var sessionApiUtil = _interopRequireWildcard(_session_api_util);
 
+var _errors_actions = __webpack_require__(386);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var RECEIVE_CURRENT_USER = exports.RECEIVE_CURRENT_USER = 'RECEIVE_USER';
-var RECEIVE_SESSION_ERRORS = exports.RECEIVE_SESSION_ERRORS = 'RECEIVE_SESSION_ERRORS';
-var CLEAR_SESSION_ERRORS = exports.CLEAR_SESSION_ERRORS = 'CLEAR_SESSION_ERRORS';
 var RECEIVE_TEAMS = exports.RECEIVE_TEAMS = 'RECEIVE_TEAMS';
 
 var receiveTEAMS = exports.receiveTEAMS = function receiveTEAMS(teams) {
@@ -3999,34 +3999,25 @@ var receiveCurrentUser = exports.receiveCurrentUser = function receiveCurrentUse
   };
 };
 
-var receiveSessionErrors = exports.receiveSessionErrors = function receiveSessionErrors(errors) {
-  return {
-    type: RECEIVE_SESSION_ERRORS,
-    errors: errors
-  };
-};
-
 var signupUser = exports.signupUser = function signupUser(userData) {
   return function (dispatch) {
     sessionApiUtil.signup(userData).then(function (response) {
       return dispatch(receiveCurrentUser(response));
     }, function (response) {
-      return dispatch(receiveSessionErrors(response.responseJSON));
+      return dispatch((0, _errors_actions.receiveSessionErrors)(response.responseJSON));
     });
   };
 };
 
 var loginUser = exports.loginUser = function loginUser(userData) {
   return function (dispatch) {
-
     var ajax = sessionApiUtil.login(userData);
     var responseObj = void 0;
-
     ajax.then(function (response) {
       responseObj = response;
       return dispatch(receiveCurrentUser(response.user));
     }, function (response) {
-      return dispatch(receiveSessionErrors(response.responseJSON));
+      return dispatch((0, _errors_actions.receiveSessionErrors)(response.responseJSON));
     }).then(function () {
       return dispatch(receiveTEAMS(responseObj.teams));
     });
@@ -4039,7 +4030,7 @@ var logoutUser = exports.logoutUser = function logoutUser() {
     sessionApiUtil.logout().then(function (response) {
       return dispatch(receiveCurrentUser(null));
     }, function (response) {
-      return dispatch(receiveSessionErrors(response.responseJSON));
+      return dispatch((0, _errors_actions.receiveSessionErrors)(response.responseJSON));
     });
   };
 };
@@ -30068,6 +30059,8 @@ var _signup_form2 = _interopRequireDefault(_signup_form);
 
 var _session_actions = __webpack_require__(35);
 
+var _errors_actions = __webpack_require__(386);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -30080,6 +30073,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     signup: function signup(userData) {
       return dispatch((0, _session_actions.signupUser)(userData));
+    },
+    clearSessionErrors: function clearSessionErrors() {
+      return dispatch((0, _errors_actions.clearSessionErrors)());
     }
   };
 };
@@ -30134,6 +30130,11 @@ var SignupForm = function (_React$Component) {
   }
 
   _createClass(SignupForm, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.clearSessionErrors();
+    }
+  }, {
     key: 'handleInput',
     value: function handleInput(type) {
       var _this2 = this;
@@ -30313,6 +30314,8 @@ var _login_form2 = _interopRequireDefault(_login_form);
 
 var _session_actions = __webpack_require__(35);
 
+var _errors_actions = __webpack_require__(386);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -30326,6 +30329,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     login: function login(userData) {
       return dispatch((0, _session_actions.loginUser)(userData));
+    },
+    clearSessionErrors: function clearSessionErrors() {
+      return dispatch((0, _errors_actions.clearSessionErrors)());
     }
   };
 };
@@ -30379,6 +30385,11 @@ var LoginForm = function (_React$Component) {
   }
 
   _createClass(LoginForm, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.clearSessionErrors();
+    }
+  }, {
     key: 'handleInput',
     value: function handleInput(type) {
       var _this2 = this;
@@ -30644,7 +30655,9 @@ var _sidebar2 = _interopRequireDefault(_sidebar);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
-  return {};
+  return {
+    entities: state.entities
+  };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -30690,6 +30703,7 @@ var Sidebar = function (_React$Component) {
   _createClass(Sidebar, [{
     key: 'render',
     value: function render() {
+      var projects = this.props.entities.projects;
       return _react2.default.createElement(
         'div',
         null,
@@ -30802,7 +30816,7 @@ var _root_reducer = __webpack_require__(314);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var configureStore = exports.configureStore = function configureStore(preloadedState) {
-  return (0, _redux.createStore)(_root_reducer.rootReducer, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+  return (0, _redux.createStore)(_root_reducer.rootReducer, preloadedState, (0, _redux.applyMiddleware)(_reduxThunk2.default, _reduxLogger2.default));
 };
 
 /***/ }),
@@ -33093,6 +33107,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.sessionErrorsReducer = undefined;
 
+var _errors_actions = __webpack_require__(386);
+
 var _session_actions = __webpack_require__(35);
 
 var sessionErrorsReducer = exports.sessionErrorsReducer = function sessionErrorsReducer() {
@@ -33101,9 +33117,10 @@ var sessionErrorsReducer = exports.sessionErrorsReducer = function sessionErrors
 
   Object.freeze(state);
   switch (action.type) {
-    case _session_actions.RECEIVE_SESSION_ERRORS:
+    case _errors_actions.RECEIVE_SESSION_ERRORS:
       return action.errors;
     case _session_actions.RECEIVE_CURRENT_USER:
+    case _errors_actions.CLEAR_SESSION_ERRORS:
       return [];
     default:
       return state;
@@ -33139,6 +33156,32 @@ var entitiesReducer = exports.entitiesReducer = function entitiesReducer() {
     default:
       return state;
   }
+};
+
+/***/ }),
+/* 386 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var RECEIVE_SESSION_ERRORS = exports.RECEIVE_SESSION_ERRORS = 'RECEIVE_SESSION_ERRORS';
+var CLEAR_SESSION_ERRORS = exports.CLEAR_SESSION_ERRORS = 'CLEAR_SESSION_ERRORS';
+
+var receiveSessionErrors = exports.receiveSessionErrors = function receiveSessionErrors(errors) {
+  return {
+    type: RECEIVE_SESSION_ERRORS,
+    errors: errors
+  };
+};
+
+var clearSessionErrors = exports.clearSessionErrors = function clearSessionErrors() {
+  return {
+    type: CLEAR_SESSION_ERRORS
+  };
 };
 
 /***/ })

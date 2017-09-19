@@ -6,6 +6,7 @@ export default class Sidebar extends React.Component {
   }
 
   render(){
+    const projects = this.props.entities.projects
     return (
       <div>
         <p>Sidebar Component</p>
