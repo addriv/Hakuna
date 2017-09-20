@@ -4,8 +4,7 @@ import { teamMembersSelector } from '../../reducers/selectors';
 
 const mapStateToProps = state => ({
   entities: state.entities,
-  teamMembers: teamMembersSelector(state),
-  team
+  teamMembers: teamMembersSelector(state)
 });
 
 const mapDispatchToProps = dispatch => ({

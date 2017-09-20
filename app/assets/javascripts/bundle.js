@@ -30806,8 +30806,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mapStateToProps = function mapStateToProps(state) {
   return {
     entities: state.entities,
-    teamMembers: (0, _selectors.teamMembersSelector)(state),
-    team: team
+    teamMembers: (0, _selectors.teamMembersSelector)(state)
   };
 };
 
@@ -30855,7 +30854,8 @@ var Sidebar = function (_React$Component) {
     key: 'render',
     value: function render() {
       var members = void 0,
-          membersList = void 0;
+          membersList = void 0,
+          currentTeam = void 0;
       if (this.props.teamMembers) {
         members = this.props.teamMembers.map(function (member, i) {
           return _react2.default.createElement(
@@ -30872,6 +30872,8 @@ var Sidebar = function (_React$Component) {
           null,
           members
         );
+
+        currentTeam = this.props.entities.team.name;
       }
 
       return _react2.default.createElement(
@@ -30884,7 +30886,7 @@ var Sidebar = function (_React$Component) {
           _react2.default.createElement(
             'h1',
             null,
-            'TEAM NAME'
+            currentTeam
           ),
           _react2.default.createElement(
             'div',
