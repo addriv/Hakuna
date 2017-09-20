@@ -1,0 +1,14 @@
+.tasks-ui{
+  height: 85vh;
+  background-color: #F0F8FF;
+}
+
+.tasks-list{
+  background-color: #F5F5DC;
+  height: 100%;
+  position: relative;
+  top: 10px;
+  left: 5%;
+  width: 90%;
+  border: solid 1px	#DCDCDC;
+}

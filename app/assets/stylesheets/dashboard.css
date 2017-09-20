@@ -1,3 +1,9 @@
+.dashboard-ui{
+  width: calc(100% - 240px);
+  display: flex;
+  flex-direction: column;
+}
+
 .dashboard-nav{
   text-align: center;
   width: 100%;
@@ -11,7 +17,7 @@
 
 .bottom-bar{
   border-bottom: solid black 2px;
-  height: 90%;
+  height: 85%;
 }
 
 .bottom-bar > div{

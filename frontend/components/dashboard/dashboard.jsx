@@ -29,9 +29,11 @@ export default class Dashboard extends React.Component{
   render(){
     const entitiesExist = Object.keys(this.props.entities).length > 0;
     const teams = this.props.teams;
+    const tasks = this.props.tasks;
 
     //Declare variables to be rendered
     let teamDisplay, teamsList, teamsUl;
+    let tasksList, tasksUl;
 
     //Grab team being displayed
     if (entitiesExist){
@@ -50,6 +52,19 @@ export default class Dashboard extends React.Component{
       teamsUl = <ul>{ teamsList }</ul>;
     }
 
+    //Grab tasks if they exist
+    if (tasks){
+      tasksList = tasks.map((task, i) => {
+        return (
+          <li
+            id={ task.id }
+            key={i}>{ task.title }</li>
+        );
+      });
+
+      tasksUl = <ul>{ tasksList }</ul>;
+    }
+
     return (
       <div>
         <div className='hakuna-ui'>
@@ -57,27 +72,33 @@ export default class Dashboard extends React.Component{
             <SidebarContainer />
           </div>
 
-          <nav className='dashboard-nav'>
+          <div className='dashboard-ui'>
+            <nav className='dashboard-nav'>
 
-            <nav className='top-bar'>
+              <nav className='top-bar'>
 
-              <div className='user-teams'>
-                { teamsUl }
-              </div>
+                <div className='user-teams'>
+                  { teamsUl }
+                </div>
 
+              </nav>
+
+              <nav className='bottom-bar'>
+                <div>
+                  <h1>Welcome! This is {teamDisplay} Dashboard</h1>
+
+                  <button onClick={this.props.logout}>Log Out</button>
+                </div>
+              </nav>
             </nav>
 
-            <nav className='bottom-bar'>
-              <div>
-                <h1>Welcome! This is {teamDisplay} Dashboard</h1>
+            <div className='tasks-ui'>
 
-                <button onClick={this.props.logout}>Log Out</button>
+              <div className='tasks-list'>
+                { tasksUl }
               </div>
-            </nav>
-
-          </nav>
-
-          <div className='tasks-ui'>
+              
+            </div>
 
           </div>
 

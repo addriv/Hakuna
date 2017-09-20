@@ -30569,7 +30569,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var mapStateToProps = function mapStateToProps(state) {
   return {
     teams: (0, _selectors.teamsSelector)(state),
-    entities: state.entities
+    entities: state.entities,
+    tasks: (0, _selectors.tasksSelector)(state)
   };
 };
 
@@ -30661,11 +30662,14 @@ var Dashboard = function (_React$Component) {
 
       var entitiesExist = Object.keys(this.props.entities).length > 0;
       var teams = this.props.teams;
+      var tasks = this.props.tasks;
 
       //Declare variables to be rendered
       var teamDisplay = void 0,
           teamsList = void 0,
           teamsUl = void 0;
+      var tasksList = void 0,
+          tasksUl = void 0;
 
       //Grab team being displayed
       if (entitiesExist) {
@@ -30692,6 +30696,25 @@ var Dashboard = function (_React$Component) {
         );
       }
 
+      //Grab tasks if they exist
+      if (tasks) {
+        tasksList = tasks.map(function (task, i) {
+          return _react2.default.createElement(
+            'li',
+            {
+              id: task.id,
+              key: i },
+            task.title
+          );
+        });
+
+        tasksUl = _react2.default.createElement(
+          'ul',
+          null,
+          tasksList
+        );
+      }
+
       return _react2.default.createElement(
         'div',
         null,
@@ -30704,39 +30727,51 @@ var Dashboard = function (_React$Component) {
             _react2.default.createElement(_sidebar_container2.default, null)
           ),
           _react2.default.createElement(
-            'nav',
-            { className: 'dashboard-nav' },
+            'div',
+            { className: 'dashboard-ui' },
             _react2.default.createElement(
               'nav',
-              { className: 'top-bar' },
+              { className: 'dashboard-nav' },
               _react2.default.createElement(
-                'div',
-                { className: 'user-teams' },
-                teamsUl
+                'nav',
+                { className: 'top-bar' },
+                _react2.default.createElement(
+                  'div',
+                  { className: 'user-teams' },
+                  teamsUl
+                )
+              ),
+              _react2.default.createElement(
+                'nav',
+                { className: 'bottom-bar' },
+                _react2.default.createElement(
+                  'div',
+                  null,
+                  _react2.default.createElement(
+                    'h1',
+                    null,
+                    'Welcome! This is ',
+                    teamDisplay,
+                    ' Dashboard'
+                  ),
+                  _react2.default.createElement(
+                    'button',
+                    { onClick: this.props.logout },
+                    'Log Out'
+                  )
+                )
               )
             ),
             _react2.default.createElement(
-              'nav',
-              { className: 'bottom-bar' },
+              'div',
+              { className: 'tasks-ui' },
               _react2.default.createElement(
                 'div',
-                null,
-                _react2.default.createElement(
-                  'h1',
-                  null,
-                  'Welcome! This is ',
-                  teamDisplay,
-                  ' Dashboard'
-                ),
-                _react2.default.createElement(
-                  'button',
-                  { onClick: this.props.logout },
-                  'Log Out'
-                )
+                { className: 'tasks-list' },
+                tasksUl
               )
             )
-          ),
-          _react2.default.createElement('div', { className: 'tasks-ui' })
+          )
         )
       );
     }
@@ -30764,11 +30799,15 @@ var _sidebar = __webpack_require__(308);
 
 var _sidebar2 = _interopRequireDefault(_sidebar);
 
+var _selectors = __webpack_require__(387);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    entities: state.entities
+    entities: state.entities,
+    teamMembers: (0, _selectors.teamMembersSelector)(state),
+    team: team
   };
 };
 
@@ -30815,13 +30854,43 @@ var Sidebar = function (_React$Component) {
   _createClass(Sidebar, [{
     key: 'render',
     value: function render() {
+      var members = void 0,
+          membersList = void 0;
+      if (this.props.teamMembers) {
+        members = this.props.teamMembers.map(function (member, i) {
+          return _react2.default.createElement(
+            'li',
+            {
+              key: i,
+              id: member.id },
+            member.name
+          );
+        });
+
+        membersList = _react2.default.createElement(
+          'ul',
+          null,
+          members
+        );
+      }
+
       return _react2.default.createElement(
         'div',
         null,
+        _react2.default.createElement('img', { src: 'http://res.cloudinary.com/dcl72qrya/image/upload/v1505802948/full_logo_full_yfxljp.png' }),
         _react2.default.createElement(
-          'p',
-          null,
-          'Sidebar Component'
+          'div',
+          { className: 'sidebar-team-members' },
+          _react2.default.createElement(
+            'h1',
+            null,
+            'TEAM NAME'
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            membersList
+          )
         )
       );
     }
@@ -33318,6 +33387,20 @@ var teamsSelector = exports.teamsSelector = function teamsSelector(state) {
   var teams = state.session.teams;
   if (teams) {
     return Object.values(teams);
+  }
+};
+
+var tasksSelector = exports.tasksSelector = function tasksSelector(state) {
+  var tasks = state.entities.tasks;
+  if (tasks) {
+    return Object.values(tasks);
+  }
+};
+
+var teamMembersSelector = exports.teamMembersSelector = function teamMembersSelector(state) {
+  var members = state.entities.members;
+  if (members) {
+    return Object.values(members);
   }
 };
 

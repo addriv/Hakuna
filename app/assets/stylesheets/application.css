@@ -158,9 +158,3 @@ form > label{
   flex-direction: row;
   height: 100%;
 }
-
-.sidebar{
-  height: 100vh;
-  background-color: #C3E0E6;
-  width: 15%;
-}
