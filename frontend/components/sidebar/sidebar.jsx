@@ -31,6 +31,14 @@ export default class Sidebar extends React.Component {
             { membersList }
           </div>
         </div>
+
+        <div className='spacer'>
+
+        </div>
+
+        <div className='sidebar-projects'>
+          PROJECTS
+        </div>
       </div>
     );
   }

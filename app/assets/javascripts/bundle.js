@@ -30893,6 +30893,12 @@ var Sidebar = function (_React$Component) {
             null,
             membersList
           )
+        ),
+        _react2.default.createElement('div', { className: 'spacer' }),
+        _react2.default.createElement(
+          'div',
+          { className: 'sidebar-projects' },
+          'PROJECTS'
         )
       );
     }
