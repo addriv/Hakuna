@@ -1,5 +1,5 @@
 .tasks-ui{
-  height: 85vh;
+  height: calc(100% - 105px);
   background-color: #F0F8FF;
 }
 

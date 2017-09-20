@@ -30571,7 +30571,8 @@ var mapStateToProps = function mapStateToProps(state) {
     teams: (0, _selectors.teamsSelector)(state),
     entities: state.entities,
     tasks: (0, _selectors.tasksSelector)(state),
-    projectDisplay: state.ui.projectDisplay
+    projectDisplay: state.ui.projectDisplay,
+    userInitials: (0, _selectors.currentUserInitials)(state)
   };
 };
 
@@ -30630,7 +30631,10 @@ var Dashboard = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
 
+    _this.state = { teamToggled: false };
+
     _this.handleTeam = _this.handleTeam.bind(_this);
+    _this.handleTeamToggle = _this.handleTeamToggle.bind(_this);
     return _this;
   }
 
@@ -30657,6 +30661,15 @@ var Dashboard = function (_React$Component) {
       this.props.fetchTeam(teamId);
     }
   }, {
+    key: 'handleTeamToggle',
+    value: function handleTeamToggle(event) {
+      event.preventDefault();
+      this.setState({ teamToggled: !this.state.teamToggled });
+    }
+  }, {
+    key: 'handleTeamModalToggle',
+    value: function handleTeamModalToggle(event) {}
+  }, {
     key: 'render',
     value: function render() {
       var _this3 = this;
@@ -30680,21 +30693,25 @@ var Dashboard = function (_React$Component) {
       //Grab teams if they exist
       if (teams) {
         teamsList = teams.map(function (team, i) {
-          return _react2.default.createElement(
-            'button',
-            {
-              onClick: _this3.handleTeam,
-              id: team.id,
-              key: i },
-            team.name
-          );
+          if (team.name !== teamDisplay) {
+            return _react2.default.createElement(
+              'button',
+              {
+                onClick: _this3.handleTeam,
+                id: team.id,
+                key: i },
+              team.name
+            );
+          }
         });
 
-        teamsUl = _react2.default.createElement(
-          'ul',
-          null,
-          teamsList
-        );
+        if (this.state.teamToggled) {
+          teamsUl = _react2.default.createElement(
+            'ul',
+            null,
+            teamsList
+          );
+        }
       }
 
       //Grab tasks if they exist
@@ -30746,6 +30763,29 @@ var Dashboard = function (_React$Component) {
           'div',
           { className: 'hakuna-ui' },
           _react2.default.createElement(
+            'button',
+            { onClick: this.handleTeamModalToggle },
+            'Open modal'
+          ),
+          _react2.default.createElement(
+            'div',
+            { id: 'team-modal', className: 'modal' },
+            _react2.default.createElement(
+              'div',
+              { 'class': 'team-modal-content' },
+              _react2.default.createElement(
+                'button',
+                { onClick: this.handleTeamModalToggle },
+                '\xD7'
+              ),
+              _react2.default.createElement(
+                'p',
+                null,
+                'Some text in the Modal..'
+              )
+            )
+          ),
+          _react2.default.createElement(
             'div',
             { className: 'sidebar' },
             _react2.default.createElement(_sidebar_container2.default, null)
@@ -30760,8 +30800,35 @@ var Dashboard = function (_React$Component) {
                 'nav',
                 { className: 'top-bar' },
                 _react2.default.createElement(
+                  'button',
+                  {
+                    className: 'view-user-tasks'
+                  },
+                  'My Tasks'
+                ),
+                _react2.default.createElement(
                   'div',
                   { className: 'user-teams' },
+                  _react2.default.createElement(
+                    'button',
+                    {
+                      className: 'settings-menu',
+                      onClick: this.handleTeamToggle },
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'current-team' },
+                      teamDisplay
+                    ),
+                    _react2.default.createElement(
+                      'div',
+                      { className: 'current-user' },
+                      _react2.default.createElement(
+                        'div',
+                        null,
+                        this.props.userInitials
+                      )
+                    )
+                  ),
                   teamsUl
                 )
               ),
@@ -30777,11 +30844,6 @@ var Dashboard = function (_React$Component) {
                     'Welcome! This is ',
                     teamDisplay,
                     ' Dashboard'
-                  ),
-                  _react2.default.createElement(
-                    'button',
-                    { onClick: this.props.logout },
-                    'Log Out'
                   )
                 )
               )
@@ -30907,7 +30969,7 @@ var Sidebar = function (_React$Component) {
         members = this.props.teamMembers.map(function (member, i) {
           var memberInitials = member.name.split(' ').map(function (name) {
             return name[0];
-          }).join('');
+          });
           return _react2.default.createElement(
             'li',
             {
@@ -33501,7 +33563,14 @@ var projectsSelector = exports.projectsSelector = function projectsSelector(stat
   }
 };
 
-var listDisplaySelector = exports.listDisplaySelector = function listDisplaySelector(state) {};
+var currentUserInitials = exports.currentUserInitials = function currentUserInitials(state) {
+  var currentUser = state.session.currentUser;
+  if (currentUser) {
+    return currentUser.name.split(' ').map(function (name) {
+      return name[0];
+    }).join('');
+  }
+};
 
 /***/ }),
 /* 388 */

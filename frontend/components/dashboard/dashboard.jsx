@@ -5,7 +5,10 @@ import SidebarContainer from '../sidebar/sidebar_container';
 export default class Dashboard extends React.Component{
   constructor(props){
     super(props);
+    this.state = { teamToggled: false };
+
     this.handleTeam = this.handleTeam.bind(this);
+    this.handleTeamToggle = this.handleTeamToggle.bind(this);
   }
 
   componentDidMount(){
@@ -26,6 +29,16 @@ export default class Dashboard extends React.Component{
     this.props.fetchTeam(teamId);
   }
 
+
+  handleTeamToggle(event){
+    event.preventDefault();
+    this.setState({ teamToggled: !this.state.teamToggled });
+  }
+
+  handleTeamModalToggle(event){
+
+  }
+
   render(){
     const entitiesExist = Object.keys(this.props.entities).length > 0;
     const teams = this.props.teams;
@@ -43,13 +56,17 @@ export default class Dashboard extends React.Component{
     //Grab teams if they exist
     if (teams){
       teamsList = teams.map((team, i) => {
-        return <button
-          onClick={this.handleTeam}
-          id={team.id}
-          key={i}>{team.name}</button>;
+        if (team.name !== teamDisplay){
+          return <button
+            onClick={this.handleTeam}
+            id={team.id}
+            key={i}>{team.name}</button>;
+        }
       });
 
-      teamsUl = <ul>{ teamsList }</ul>;
+      if (this.state.teamToggled){
+        teamsUl = <ul>{ teamsList }</ul>;
+      }
     }
 
     //Grab tasks if they exist
@@ -86,6 +103,14 @@ export default class Dashboard extends React.Component{
     return (
       <div>
         <div className='hakuna-ui'>
+          <button onClick={this.handleTeamModalToggle}>Open modal</button>
+          <div id='team-modal' className='modal'>
+            <div class='team-modal-content'>
+              <button onClick={this.handleTeamModalToggle}>&times;</button>
+              <p>Some text in the Modal..</p>
+            </div>
+          </div>
+
           <div className='sidebar'>
             <SidebarContainer />
           </div>
@@ -94,9 +119,24 @@ export default class Dashboard extends React.Component{
             <nav className='dashboard-nav'>
 
               <nav className='top-bar'>
+                <button
+                  className='view-user-tasks'
+                  >My Tasks</button>
 
                 <div className='user-teams'>
+                  <button
+                    className='settings-menu'
+                    onClick={this.handleTeamToggle}>
+
+                    <div className='current-team'>{teamDisplay}</div>
+
+                    <div className='current-user'>
+                      <div>{this.props.userInitials}</div>
+                    </div>
+                  </button>
+
                   { teamsUl }
+
                 </div>
 
               </nav>
@@ -105,7 +145,7 @@ export default class Dashboard extends React.Component{
                 <div>
                   <h1>Welcome! This is {teamDisplay} Dashboard</h1>
 
-                  <button onClick={this.props.logout}>Log Out</button>
+
                 </div>
               </nav>
             </nav>

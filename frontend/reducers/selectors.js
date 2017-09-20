@@ -26,6 +26,11 @@ export const projectsSelector = state => {
   }
 };
 
-export const listDisplaySelector = state => {
-
+export const currentUserInitials = state => {
+  const currentUser = state.session.currentUser;
+  if (currentUser){
+    return currentUser.name.split(' ')
+                    .map(name => name[0])
+                    .join('');
+  }
 };

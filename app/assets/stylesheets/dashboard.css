@@ -7,7 +7,7 @@
 .dashboard-nav{
   text-align: center;
   width: 100%;
-  height: calc(15vh - 6px);
+  height: 105px;
   background-color: white;
   padding: 1px;
   display: flex;
@@ -17,12 +17,12 @@
 
 .bottom-bar{
   border-bottom: solid 2px rgba(162, 162, 162, 0.4);
-  height: 85%;
+  height: 65px;
 }
 
 .bottom-bar > div{
   position: relative;
-  top: 30%;
+  top: 20%;
 }
 
 .bottom-bar > div > h1 {
@@ -31,18 +31,72 @@
 
 .top-bar {
   box-shadow: 5px 5px 5px -5px rgba(0,0,0,0.3);
-  height: 15%;
+  height: 40px;
+  display: flex;
 }
 
 .user-teams{
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  position: fixed;
+  width: 125px;
+  right: 0%;
 }
 
 .user-teams > ul{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
-.user-teams > ul > li {
-  padding: 0 5px;
+.user-teams > ul > button{
+  background-color: white;
+  border: solid black 1px;
+  width: 100%;
+}
+
+.settings-menu {
+  background-color: white;
+  border: solid black 1px;
+  width: 100%;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.current-team{
+  width: calc(100% - 30px);
+  height: 100%;
+  font-size: 20px;
+  padding-top: 5px;
+}
+
+.view-user-tasks{
+  background-color: white;
+  border: solid black 1px;
+  width: 125px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+}
+
+.current-user{
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  /*border: solid black 1px;*/
+  position: relative;
+  padding: 0;
+  margin: 0;
+  right: 1%;
+  background-color: #F94449;
+}
+
+.current-user > div{
+  position: relative;
+  top: 30%;
 }

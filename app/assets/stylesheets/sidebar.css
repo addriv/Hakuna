@@ -28,6 +28,9 @@
   border-radius: 30px;
   border: solid white 1px;
 }
+.sidebar-team-members > div > ul {
+  display: flex;
+}
 
 div.member{
   position: relative;
@@ -37,7 +40,7 @@ div.member{
 
 .sidebar > div > img{
   height: 100px;
-  padding-left: 10%;
+  padding-left: 5%;
   padding-right: 10%;
   padding-top: 5px;
   padding-bottom: 5px;

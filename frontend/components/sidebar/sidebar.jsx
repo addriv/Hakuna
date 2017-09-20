@@ -23,7 +23,6 @@ export default class Sidebar extends React.Component {
         const memberInitials = member.name
           .split(' ')
           .map(name => name[0])
-          .join('');
         return (
           <li
             key={i}
