@@ -5,10 +5,14 @@ import SidebarContainer from '../sidebar/sidebar_container';
 export default class Dashboard extends React.Component{
   constructor(props){
     super(props);
-    this.state = { teamToggled: false };
+    this.state = {
+      teamMenuToggled: false,
+      teamModalIsOpen: false
+     };
 
     this.handleTeam = this.handleTeam.bind(this);
-    this.handleTeamToggle = this.handleTeamToggle.bind(this);
+    this.handleTeamMenuToggle = this.handleTeamMenuToggle.bind(this);
+    this.handleTeamModalToggle = this.handleTeamModalToggle.bind(this);
   }
 
   componentDidMount(){
@@ -30,13 +34,20 @@ export default class Dashboard extends React.Component{
   }
 
 
-  handleTeamToggle(event){
+  handleTeamMenuToggle(event){
     event.preventDefault();
     this.setState({ teamToggled: !this.state.teamToggled });
   }
 
   handleTeamModalToggle(event){
-
+    event.preventDefault();
+    const teamModal = document.getElementById('team-modal');
+    if (teamModal.style.display === 'none'){
+      teamModal.style.display = 'block';
+    }
+    else {
+     teamModal.style.display = 'none';
+    }
   }
 
   render(){
@@ -103,13 +114,6 @@ export default class Dashboard extends React.Component{
     return (
       <div>
         <div className='hakuna-ui'>
-          <button onClick={this.handleTeamModalToggle}>Open modal</button>
-          <div id='team-modal' className='modal'>
-            <div class='team-modal-content'>
-              <button onClick={this.handleTeamModalToggle}>&times;</button>
-              <p>Some text in the Modal..</p>
-            </div>
-          </div>
 
           <div className='sidebar'>
             <SidebarContainer />
@@ -126,7 +130,7 @@ export default class Dashboard extends React.Component{
                 <div className='user-teams'>
                   <button
                     className='settings-menu'
-                    onClick={this.handleTeamToggle}>
+                    onClick={this.handleTeamMenuToggle}>
 
                     <div className='current-team'>{teamDisplay}</div>
 

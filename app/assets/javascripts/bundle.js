@@ -30631,10 +30631,14 @@ var Dashboard = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
 
-    _this.state = { teamToggled: false };
+    _this.state = {
+      teamMenuToggled: false,
+      teamModalIsOpen: false
+    };
 
     _this.handleTeam = _this.handleTeam.bind(_this);
-    _this.handleTeamToggle = _this.handleTeamToggle.bind(_this);
+    _this.handleTeamMenuToggle = _this.handleTeamMenuToggle.bind(_this);
+    _this.handleTeamModalToggle = _this.handleTeamModalToggle.bind(_this);
     return _this;
   }
 
@@ -30661,14 +30665,22 @@ var Dashboard = function (_React$Component) {
       this.props.fetchTeam(teamId);
     }
   }, {
-    key: 'handleTeamToggle',
-    value: function handleTeamToggle(event) {
+    key: 'handleTeamMenuToggle',
+    value: function handleTeamMenuToggle(event) {
       event.preventDefault();
       this.setState({ teamToggled: !this.state.teamToggled });
     }
   }, {
     key: 'handleTeamModalToggle',
-    value: function handleTeamModalToggle(event) {}
+    value: function handleTeamModalToggle(event) {
+      event.preventDefault();
+      var teamModal = document.getElementById('team-modal');
+      if (teamModal.style.display === 'none') {
+        teamModal.style.display = 'block';
+      } else {
+        teamModal.style.display = 'none';
+      }
+    }
   }, {
     key: 'render',
     value: function render() {
@@ -30763,29 +30775,6 @@ var Dashboard = function (_React$Component) {
           'div',
           { className: 'hakuna-ui' },
           _react2.default.createElement(
-            'button',
-            { onClick: this.handleTeamModalToggle },
-            'Open modal'
-          ),
-          _react2.default.createElement(
-            'div',
-            { id: 'team-modal', className: 'modal' },
-            _react2.default.createElement(
-              'div',
-              { 'class': 'team-modal-content' },
-              _react2.default.createElement(
-                'button',
-                { onClick: this.handleTeamModalToggle },
-                '\xD7'
-              ),
-              _react2.default.createElement(
-                'p',
-                null,
-                'Some text in the Modal..'
-              )
-            )
-          ),
-          _react2.default.createElement(
             'div',
             { className: 'sidebar' },
             _react2.default.createElement(_sidebar_container2.default, null)
@@ -30813,7 +30802,7 @@ var Dashboard = function (_React$Component) {
                     'button',
                     {
                       className: 'settings-menu',
-                      onClick: this.handleTeamToggle },
+                      onClick: this.handleTeamMenuToggle },
                     _react2.default.createElement(
                       'div',
                       { className: 'current-team' },
