@@ -5,10 +5,10 @@
 
 .tasks-list{
   background-color: #F5F5DC;
-  height: 100%;
+  height: calc(100% - 25px);
   position: relative;
-  top: 10px;
-  left: 5%;
-  width: 90%;
+  top: 25px;
+  left: 20%;
+  width: 60%;
   border: solid 1px	#DCDCDC;
 }

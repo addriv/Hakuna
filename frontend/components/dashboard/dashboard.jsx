@@ -53,8 +53,26 @@ export default class Dashboard extends React.Component{
     }
 
     //Grab tasks if they exist
-    if (tasks){
+    if (tasks && this.props.projectDisplay === 0){
       tasksList = tasks.map((task, i) => {
+        return (
+          <li
+            id={ task.id }
+            key={i}>{ task.title }</li>
+        );
+      });
+
+      tasksUl = <ul>{ tasksList }</ul>;
+    }
+    else if (this.props.projectDisplay !== 0){
+      const projectTasks = [];
+      this.props.tasks.forEach(task => {
+        if (task.project_id === this.props.projectDisplay) {
+          projectTasks.push(task);
+        }
+      });
+
+      tasksList = projectTasks.map((task, i) => {
         return (
           <li
             id={ task.id }
@@ -97,7 +115,7 @@ export default class Dashboard extends React.Component{
               <div className='tasks-list'>
                 { tasksUl }
               </div>
-              
+
             </div>
 
           </div>

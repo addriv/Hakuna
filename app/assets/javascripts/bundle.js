@@ -30570,7 +30570,8 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     teams: (0, _selectors.teamsSelector)(state),
     entities: state.entities,
-    tasks: (0, _selectors.tasksSelector)(state)
+    tasks: (0, _selectors.tasksSelector)(state),
+    projectDisplay: state.ui.projectDisplay
   };
 };
 
@@ -30697,8 +30698,31 @@ var Dashboard = function (_React$Component) {
       }
 
       //Grab tasks if they exist
-      if (tasks) {
+      if (tasks && this.props.projectDisplay === 0) {
         tasksList = tasks.map(function (task, i) {
+          return _react2.default.createElement(
+            'li',
+            {
+              id: task.id,
+              key: i },
+            task.title
+          );
+        });
+
+        tasksUl = _react2.default.createElement(
+          'ul',
+          null,
+          tasksList
+        );
+      } else if (this.props.projectDisplay !== 0) {
+        var projectTasks = [];
+        this.props.tasks.forEach(function (task) {
+          if (task.project_id === _this3.props.projectDisplay) {
+            projectTasks.push(task);
+          }
+        });
+
+        tasksList = projectTasks.map(function (task, i) {
           return _react2.default.createElement(
             'li',
             {
@@ -30801,17 +30825,24 @@ var _sidebar2 = _interopRequireDefault(_sidebar);
 
 var _selectors = __webpack_require__(387);
 
+var _ui_actions = __webpack_require__(389);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
     entities: state.entities,
-    teamMembers: (0, _selectors.teamMembersSelector)(state)
+    teamMembers: (0, _selectors.teamMembersSelector)(state),
+    projects: (0, _selectors.projectsSelector)(state)
   };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    displayProject: function displayProject(projectId) {
+      return dispatch((0, _ui_actions.receiveProjectDisplay)(projectId));
+    }
+  };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_sidebar2.default);
@@ -30847,15 +30878,31 @@ var Sidebar = function (_React$Component) {
   function Sidebar(props) {
     _classCallCheck(this, Sidebar);
 
-    return _possibleConstructorReturn(this, (Sidebar.__proto__ || Object.getPrototypeOf(Sidebar)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Sidebar.__proto__ || Object.getPrototypeOf(Sidebar)).call(this, props));
+
+    _this.handleProject = _this.handleProject.bind(_this);
+    return _this;
   }
 
   _createClass(Sidebar, [{
+    key: 'handleProject',
+    value: function handleProject(event) {
+      event.preventDefault();
+      var projectId = parseInt(event.target.id);
+      this.props.displayProject(projectId);
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var members = void 0,
           membersList = void 0,
-          currentTeam = void 0;
+          currentTeam = void 0,
+          projects = void 0,
+          projectsList = void 0;
+
+      //Grab team members
       if (this.props.teamMembers) {
         members = this.props.teamMembers.map(function (member, i) {
           return _react2.default.createElement(
@@ -30874,6 +30921,26 @@ var Sidebar = function (_React$Component) {
         );
 
         currentTeam = this.props.entities.team.name;
+      }
+
+      //Grab projects
+      if (this.props.projects) {
+        projects = this.props.projects.map(function (project, i) {
+          return _react2.default.createElement(
+            'button',
+            {
+              onClick: _this2.handleProject,
+              key: i,
+              id: project.id },
+            project.name
+          );
+        });
+
+        projectsList = _react2.default.createElement(
+          'ul',
+          null,
+          projects
+        );
       }
 
       return _react2.default.createElement(
@@ -30898,7 +30965,12 @@ var Sidebar = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'sidebar-projects' },
-          'PROJECTS'
+          _react2.default.createElement(
+            'h2',
+            null,
+            'Projects'
+          ),
+          projectsList
         )
       );
     }
@@ -31071,10 +31143,13 @@ var _errors_reducer = __webpack_require__(383);
 
 var _entities_reducer = __webpack_require__(385);
 
+var _ui_reducer = __webpack_require__(388);
+
 var rootReducer = exports.rootReducer = (0, _redux.combineReducers)({
   session: _session_reducer.sessionReducer,
   errors: _errors_reducer.errorsReducer,
-  entities: _entities_reducer.entitiesReducer
+  entities: _entities_reducer.entitiesReducer,
+  ui: _ui_reducer.uiReducer
 });
 
 /***/ }),
@@ -33410,6 +33485,65 @@ var teamMembersSelector = exports.teamMembersSelector = function teamMembersSele
   if (members) {
     return Object.values(members);
   }
+};
+
+var projectsSelector = exports.projectsSelector = function projectsSelector(state) {
+  var projects = state.entities.projects;
+  if (projects) {
+    return Object.values(projects);
+  }
+};
+
+var listDisplaySelector = exports.listDisplaySelector = function listDisplaySelector(state) {};
+
+/***/ }),
+/* 388 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.uiReducer = undefined;
+
+var _ui_actions = __webpack_require__(389);
+
+var _defaultState = {
+  projectDisplay: 0
+};
+
+var uiReducer = exports.uiReducer = function uiReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _defaultState;
+  var action = arguments[1];
+
+  Object.freeze(state);
+  switch (action.type) {
+    case _ui_actions.RECEIVE_PROJECT_DISPLAY:
+      return { projectDisplay: action.projectId };
+    default:
+      return state;
+  }
+};
+
+/***/ }),
+/* 389 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var RECEIVE_PROJECT_DISPLAY = exports.RECEIVE_PROJECT_DISPLAY = 'RECEIVE_PROJECT_DISPLAY';
+
+var receiveProjectDisplay = exports.receiveProjectDisplay = function receiveProjectDisplay(projectId) {
+  return {
+    type: RECEIVE_PROJECT_DISPLAY,
+    projectId: projectId
+  };
 };
 
 /***/ })

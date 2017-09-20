@@ -18,3 +18,14 @@ export const teamMembersSelector = state => {
     return Object.values(members);
   }
 };
+
+export const projectsSelector = state => {
+  const projects = state.entities.projects;
+  if (projects){
+    return Object.values(projects);
+  }
+};
+
+export const listDisplaySelector = state => {
+
+};

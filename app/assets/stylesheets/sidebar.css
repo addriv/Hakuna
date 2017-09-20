@@ -1,7 +1,8 @@
 .sidebar{
   height: 100vh;
-  background-color: #C3E0E6;
+  background-color: #042C42;
   width: 240px;
+  color: white;
 }
 
 .sidebar > div{
@@ -33,4 +34,8 @@
 .sidebar > div> .spacer{
   border: solid black 1px;
   height: 20%;
+}
+
+.sidebar-projects > ul > button {
+  width: 100%;
 }

@@ -7,7 +7,8 @@ import { teamsSelector, tasksSelector } from '../../reducers/selectors';
 const mapStateToProps = state => ({
   teams: teamsSelector(state),
   entities: state.entities,
-  tasks: tasksSelector(state)
+  tasks: tasksSelector(state),
+  projectDisplay: state.ui.projectDisplay
 });
 
 const mapDispatchToProps = dispatch => ({

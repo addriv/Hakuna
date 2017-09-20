@@ -3,10 +3,21 @@ import React from 'react';
 export default class Sidebar extends React.Component {
   constructor(props){
     super(props);
+
+    this.handleProject = this.handleProject.bind(this);
   }
 
+  handleProject(event){
+    event.preventDefault();
+    const projectId = parseInt(event.target.id);
+    this.props.displayProject(projectId);
+  }
+
+
   render(){
-    let members, membersList, currentTeam;
+    let members, membersList, currentTeam, projects, projectsList;
+
+    //Grab team members
     if (this.props.teamMembers){
       members = this.props.teamMembers.map((member, i) => {
         return (
@@ -19,6 +30,20 @@ export default class Sidebar extends React.Component {
       membersList = <ul>{members}</ul>;
 
       currentTeam = this.props.entities.team.name;
+    }
+
+    //Grab projects
+    if (this.props.projects){
+      projects = this.props.projects.map((project, i) => {
+        return (
+          <button
+            onClick={this.handleProject}
+            key={i}
+            id={project.id}>{project.name}</button>
+        );
+      });
+
+      projectsList = <ul>{ projects }</ul>;
     }
 
     return (
@@ -37,7 +62,8 @@ export default class Sidebar extends React.Component {
         </div>
 
         <div className='sidebar-projects'>
-          PROJECTS
+          <h2>Projects</h2>
+          { projectsList }
         </div>
       </div>
     );
