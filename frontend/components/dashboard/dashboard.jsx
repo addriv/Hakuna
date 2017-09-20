@@ -1,4 +1,5 @@
 import React from 'react';
+import Modal from 'react-modal';
 import { Route, Redirect } from 'react-router-dom';
 import SidebarContainer from '../sidebar/sidebar_container';
 
@@ -7,12 +8,17 @@ export default class Dashboard extends React.Component{
     super(props);
     this.state = {
       teamMenuToggled: false,
-      teamModalIsOpen: false
+      teamModalIsOpen: false,
+      modalIsOpen: false
      };
 
     this.handleTeam = this.handleTeam.bind(this);
-    this.handleTeamMenuToggle = this.handleTeamMenuToggle.bind(this);
-    this.handleTeamModalToggle = this.handleTeamModalToggle.bind(this);
+    this.toggleTeamMenu = this.toggleTeamMenu.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
+
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+     this.closeModal = this.closeModal.bind(this);
   }
 
   componentDidMount(){
@@ -33,22 +39,29 @@ export default class Dashboard extends React.Component{
     this.props.fetchTeam(teamId);
   }
 
-
-  handleTeamMenuToggle(event){
+  toggleTeamMenu(event){
     event.preventDefault();
     this.setState({ teamToggled: !this.state.teamToggled });
   }
 
-  handleTeamModalToggle(event){
+  toggleModal(event){
     event.preventDefault();
-    const teamModal = document.getElementById('team-modal');
-    if (teamModal.style.display === 'none'){
-      teamModal.style.display = 'block';
-    }
-    else {
-     teamModal.style.display = 'none';
-    }
+    this.setState({ teamModalIsOpen: !this.state.teamModalIsOpen });
+    console.log(this.state.teamModalIsOpen);
   }
+
+  openModal() {
+     this.setState({modalIsOpen: true});
+   }
+
+   afterOpenModal() {
+     // references are now sync'd and can be accessed.
+     this.subtitle.style.color = '#f00';
+   }
+
+   closeModal() {
+     this.setState({modalIsOpen: false});
+   }
 
   render(){
     const entitiesExist = Object.keys(this.props.entities).length > 0;
@@ -130,7 +143,7 @@ export default class Dashboard extends React.Component{
                 <div className='user-teams'>
                   <button
                     className='settings-menu'
-                    onClick={this.handleTeamMenuToggle}>
+                    onClick={this.toggleTeamMenu}>
 
                     <div className='current-team'>{teamDisplay}</div>
 
@@ -148,10 +161,9 @@ export default class Dashboard extends React.Component{
               <nav className='bottom-bar'>
                 <div>
                   <h1>Welcome! This is {teamDisplay} Dashboard</h1>
-
-
                 </div>
               </nav>
+
             </nav>
 
             <div className='tasks-ui'>
@@ -170,3 +182,24 @@ export default class Dashboard extends React.Component{
   }
 
 }
+
+// <button onClick={this.toggleModal}>Open Modal</button>
+// <Modal
+//   isOpen={this.state.modalIsOpen}
+//  onAfterOpen={this.toggleModal}
+//  onRequestClose={this.toggleModal}
+//  style={customStyles}
+//  contentLabel="Example Modal">
+//
+//   <h2>Hello</h2>
+//   <button onClick={this.toggleModal}>close</button>
+//   <div>I am a modal</div>
+//   <form>
+//     <input />
+//     <button>tab navigation</button>
+//     <button>stays</button>
+//     <button>inside</button>
+//     <button>the modal</button>
+//   </form>
+//
+// </Modal>
