@@ -30905,12 +30905,19 @@ var Sidebar = function (_React$Component) {
       //Grab team members
       if (this.props.teamMembers) {
         members = this.props.teamMembers.map(function (member, i) {
+          var memberInitials = member.name.split(' ').map(function (name) {
+            return name[0];
+          }).join('');
           return _react2.default.createElement(
             'li',
             {
               key: i,
               id: member.id },
-            member.name
+            _react2.default.createElement(
+              'div',
+              { className: 'member' },
+              memberInitials
+            )
           );
         });
 
@@ -33510,6 +33517,8 @@ exports.uiReducer = undefined;
 
 var _ui_actions = __webpack_require__(389);
 
+var _navigation_actions = __webpack_require__(132);
+
 var _defaultState = {
   projectDisplay: 0
 };
@@ -33522,6 +33531,8 @@ var uiReducer = exports.uiReducer = function uiReducer() {
   switch (action.type) {
     case _ui_actions.RECEIVE_PROJECT_DISPLAY:
       return { projectDisplay: action.projectId };
+    case _navigation_actions.RECEIVE_TEAM:
+      return _defaultState;
     default:
       return state;
   }

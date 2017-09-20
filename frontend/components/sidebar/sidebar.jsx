@@ -20,10 +20,14 @@ export default class Sidebar extends React.Component {
     //Grab team members
     if (this.props.teamMembers){
       members = this.props.teamMembers.map((member, i) => {
+        const memberInitials = member.name
+          .split(' ')
+          .map(name => name[0])
+          .join('');
         return (
           <li
             key={i}
-            id={member.id}>{member.name}</li>
+            id={member.id}><div className='member'>{memberInitials}</div></li>
         );
       });
 

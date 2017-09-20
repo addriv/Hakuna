@@ -22,6 +22,19 @@
   height: 80px;
 }
 
+.sidebar-team-members > div > ul >li {
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  border: solid white 1px;
+}
+
+div.member{
+  position: relative;
+  left: 23%;
+  top: 20%;
+}
+
 .sidebar > div > img{
   height: 100px;
   padding-left: 10%;
