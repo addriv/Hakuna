@@ -32355,7 +32355,8 @@ var SettingsMenu = function (_React$Component) {
     value: function toggleNewTeamModal(event) {
       if (event) {
         event.preventDefault();
-        this.setState({ teamModalIsOpen: !this.state.teamModalIsOpen });
+        this.setState({ teamModalIsOpen: !this.state.teamModalIsOpen,
+          settingsModalIsOpen: false });
       }
     }
   }, {
@@ -32363,7 +32364,8 @@ var SettingsMenu = function (_React$Component) {
     value: function toggleSettingsModal(event) {
       if (event) {
         event.preventDefault();
-        this.setState({ settingsModalIsOpen: !this.state.settingsModalIsOpen });
+        this.setState({ settingsModalIsOpen: !this.state.settingsModalIsOpen,
+          teamModalIsOpen: false });
       }
     }
   }, {
@@ -32454,7 +32456,7 @@ var SettingsMenu = function (_React$Component) {
             _react2.default.createElement(
               'h2',
               null,
-              'Create Your Workspace'
+              'Workspace Settings'
             ),
             _react2.default.createElement(
               'button',

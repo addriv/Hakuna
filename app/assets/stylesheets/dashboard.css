@@ -97,12 +97,14 @@
   padding-right: 10px;
 }
 
-.create-team-btn{
-  background-color: #BBBBDA;
+.create-team-btn, .menu-logout-btn, .team-settings-btn{
+  background-color: white;
   height: 40px;
+  text-align: left;
+  border-radius: 1px;
 }
 
-.menu-logout-btn{
-  background-color: #EA9E7D;
-  height: 40px;
+.team-btn:hover, .create-team-btn:hover, .menu-logout-btn:hover, .team-settings-btn:hover{
+  background-color: #14aaf5;
+  color: white;
 }

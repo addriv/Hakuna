@@ -35,14 +35,16 @@ export default class SettingsMenu extends React.Component{
   toggleNewTeamModal(event){
     if (event){
       event.preventDefault();
-      this.setState({ teamModalIsOpen: !this.state.teamModalIsOpen });
+      this.setState({ teamModalIsOpen: !this.state.teamModalIsOpen,
+        settingsModalIsOpen: false });
     }
   }
 
   toggleSettingsModal(event){
     if (event){
       event.preventDefault();
-      this.setState({ settingsModalIsOpen: !this.state.settingsModalIsOpen });
+      this.setState({ settingsModalIsOpen: !this.state.settingsModalIsOpen,
+        teamModalIsOpen: false });
     }
   }
 
@@ -98,7 +100,7 @@ export default class SettingsMenu extends React.Component{
 
         <div className='new-team-form'>
           <div className='new-team-header'>
-            <h2>Create Your Workspace</h2>
+            <h2>Workspace Settings</h2>
             <button onClick={this.toggleSettingsModal}>X</button>
           </div>
 
