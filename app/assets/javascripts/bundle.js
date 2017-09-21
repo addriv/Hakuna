@@ -3312,7 +3312,7 @@ var logoutUser = exports.logoutUser = function logoutUser() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchTeams = exports.fetchTeam = exports.receiveTeam = exports.receiveTeams = exports.RECEIVE_TEAMS = exports.RECEIVE_TEAM = undefined;
+exports.fetchTeams = exports.fetchTeam = exports.receiveUserDisplay = exports.receiveTeam = exports.receiveTeams = exports.RECEIVE_USER_DISPLAY = exports.RECEIVE_TEAMS = exports.RECEIVE_TEAM = undefined;
 
 var _navigation_util = __webpack_require__(312);
 
@@ -3322,6 +3322,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var RECEIVE_TEAM = exports.RECEIVE_TEAM = 'RECEIVE_TEAM';
 var RECEIVE_TEAMS = exports.RECEIVE_TEAMS = 'RECEIVE_TEAMS';
+var RECEIVE_USER_DISPLAY = exports.RECEIVE_USER_DISPLAY = 'RECEIVE_USER_DISPLAY';
 
 var receiveTeams = exports.receiveTeams = function receiveTeams(teams) {
   return {
@@ -3334,6 +3335,13 @@ var receiveTeam = exports.receiveTeam = function receiveTeam(teamData) {
   return {
     type: RECEIVE_TEAM,
     teamData: teamData
+  };
+};
+
+var receiveUserDisplay = exports.receiveUserDisplay = function receiveUserDisplay(user) {
+  return {
+    type: RECEIVE_USER_DISPLAY,
+    user: user
   };
 };
 
@@ -14043,7 +14051,7 @@ document.addEventListener('DOMContentLoaded', function () {
   //Bootstrap the user
   var store = void 0;
   if (window.currentUser) {
-    var preloadedState = { session: { currentUser: window.currentUser } };
+    var preloadedState = { session: { currentUser: window.currentUser, teams: null } };
     store = (0, _store.configureStore)(preloadedState);
     delete window.currentUser;
   } else {
@@ -32734,9 +32742,9 @@ exports.rootReducer = undefined;
 
 var _redux = __webpack_require__(34);
 
-var _session_reducer = __webpack_require__(333);
+var _session_reducer = __webpack_require__(405);
 
-var _errors_reducer = __webpack_require__(401);
+var _errors_reducer = __webpack_require__(406);
 
 var _entities_reducer = __webpack_require__(403);
 
@@ -32750,51 +32758,7 @@ var rootReducer = exports.rootReducer = (0, _redux.combineReducers)({
 });
 
 /***/ }),
-/* 333 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.sessionReducer = undefined;
-
-var _session_actions = __webpack_require__(27);
-
-var _navigation_actions = __webpack_require__(28);
-
-var _account_actions = __webpack_require__(142);
-
-var _merge = __webpack_require__(334);
-
-var _merge2 = _interopRequireDefault(_merge);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var _defaultState = {
-  current_user: null
-};
-
-var sessionReducer = exports.sessionReducer = function sessionReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _defaultState;
-  var action = arguments[1];
-
-  Object.freeze(state);
-  switch (action.type) {
-    case _session_actions.RECEIVE_CURRENT_USER:
-      return { currentUser: action.currentUser };
-    case _navigation_actions.RECEIVE_TEAMS:
-      return (0, _merge2.default)({}, state, { teams: action.teams });
-    case _account_actions.RECEIVE_NEW_TEAM:
-      return (0, _merge2.default)({}, state, { teams: action.team });
-    default:
-      return state;
-  }
-};
-
-/***/ }),
+/* 333 */,
 /* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -34949,58 +34913,8 @@ module.exports = isIterateeCall;
 
 
 /***/ }),
-/* 401 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.errorsReducer = undefined;
-
-var _redux = __webpack_require__(34);
-
-var _session_errors_reducer = __webpack_require__(402);
-
-var errorsReducer = exports.errorsReducer = (0, _redux.combineReducers)({
-  session: _session_errors_reducer.sessionErrorsReducer
-});
-
-/***/ }),
-/* 402 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.sessionErrorsReducer = undefined;
-
-var _errors_actions = __webpack_require__(49);
-
-var _session_actions = __webpack_require__(27);
-
-var sessionErrorsReducer = exports.sessionErrorsReducer = function sessionErrorsReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-  var action = arguments[1];
-
-  Object.freeze(state);
-  switch (action.type) {
-    case _errors_actions.RECEIVE_SESSION_ERRORS:
-      return action.errors;
-    case _session_actions.RECEIVE_CURRENT_USER:
-    case _errors_actions.CLEAR_SESSION_ERRORS:
-      return [];
-    default:
-      return state;
-  }
-};
-
-/***/ }),
+/* 401 */,
+/* 402 */,
 /* 403 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -35057,8 +34971,159 @@ var uiReducer = exports.uiReducer = function uiReducer() {
   switch (action.type) {
     case _ui_actions.RECEIVE_PROJECT_DISPLAY:
       return { projectDisplay: action.projectId };
+    case RECEIVE_USER_DISPLAY:
+
     case _navigation_actions.RECEIVE_TEAM:
       return _defaultState;
+    default:
+      return state;
+  }
+};
+
+/***/ }),
+/* 405 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.sessionReducer = undefined;
+
+var _redux = __webpack_require__(34);
+
+var _current_user_reducer = __webpack_require__(408);
+
+var _teams_reducer = __webpack_require__(409);
+
+var _merge = __webpack_require__(334);
+
+var _merge2 = _interopRequireDefault(_merge);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var sessionReducer = exports.sessionReducer = (0, _redux.combineReducers)({
+  currentUser: _current_user_reducer.currentUserReducer,
+  teams: _teams_reducer.teamsReducer
+});
+
+/***/ }),
+/* 406 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.errorsReducer = undefined;
+
+var _redux = __webpack_require__(34);
+
+var _session_errors_reducer = __webpack_require__(407);
+
+var errorsReducer = exports.errorsReducer = (0, _redux.combineReducers)({
+  session: _session_errors_reducer.sessionErrorsReducer
+});
+
+/***/ }),
+/* 407 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.sessionErrorsReducer = undefined;
+
+var _errors_actions = __webpack_require__(49);
+
+var _session_actions = __webpack_require__(27);
+
+var sessionErrorsReducer = exports.sessionErrorsReducer = function sessionErrorsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments[1];
+
+  Object.freeze(state);
+  switch (action.type) {
+    case _errors_actions.RECEIVE_SESSION_ERRORS:
+      return action.errors;
+    case _session_actions.RECEIVE_CURRENT_USER:
+    case _errors_actions.CLEAR_SESSION_ERRORS:
+      return [];
+    default:
+      return state;
+  }
+};
+
+/***/ }),
+/* 408 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.currentUserReducer = undefined;
+
+var _session_actions = __webpack_require__(27);
+
+var _navigation_actions = __webpack_require__(28);
+
+var _account_actions = __webpack_require__(142);
+
+var currentUserReducer = exports.currentUserReducer = function currentUserReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments[1];
+
+  Object.freeze(state);
+  switch (action.type) {
+    case _session_actions.RECEIVE_CURRENT_USER:
+      return action.currentUser;
+    default:
+      return state;
+  }
+};
+
+/***/ }),
+/* 409 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.teamsReducer = undefined;
+
+var _navigation_actions = __webpack_require__(28);
+
+var _account_actions = __webpack_require__(142);
+
+var _merge = __webpack_require__(334);
+
+var _merge2 = _interopRequireDefault(_merge);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var teamsReducer = exports.teamsReducer = function teamsReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var action = arguments[1];
+
+  Object.freeze(state);
+  switch (action.type) {
+    case _navigation_actions.RECEIVE_TEAMS:
+      return action.teams;
+    case _account_actions.RECEIVE_NEW_TEAM:
+      return (0, _merge2.default)({}, state, { teams: action.team });
     default:
       return state;
   }

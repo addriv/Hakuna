@@ -10,6 +10,8 @@ export const uiReducer = (state = _defaultState, action) => {
   switch(action.type){
     case RECEIVE_PROJECT_DISPLAY:
       return { projectDisplay: action.projectId };
+    case RECEIVE_USER_DISPLAY:
+      
     case RECEIVE_TEAM:
       return _defaultState;
     default:

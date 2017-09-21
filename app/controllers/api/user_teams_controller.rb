@@ -14,5 +14,4 @@ class Api::UserTeamsController < ApplicationController
   def user_team_params
     params.require(:team).permit(:id, :name, :lead_id)
   end
-
 end
