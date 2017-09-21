@@ -12,5 +12,7 @@ Rails.application.routes.draw do
     resource :sessions, only: %i(create destroy)
 
     resources :tasks, only: %i(index show create update destroy)
+
+    resources :user_teams, only: %i(destroy)
   end
 end
