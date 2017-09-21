@@ -28,7 +28,7 @@ export default class LoginForm extends React.Component {
 
   handleDemoLogin(event){
     event.preventDefault();
-    
+
     const demoAcc = {
       user: {
         email: 'demo@email.com',
@@ -79,12 +79,16 @@ export default class LoginForm extends React.Component {
                   value={this.state.password}
                   placeholder='Password'></input>
 
-                <div className='login-btn'>
+
+                <div className='login-form-buttons'>
                   <button onClick={this.handleSubmit}>LOG IN</button>
+                  <button onClick={this.handleDemoLogin}>DEMO</button>
+                </div>
+                
+                <div className='login-btn'>
                 </div>
 
                 <div className='demo-btn'>
-                  <button onClick={this.handleDemoLogin}>DEMO</button>
                 </div>
 
                 {errors}

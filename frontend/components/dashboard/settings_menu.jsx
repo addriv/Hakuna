@@ -104,7 +104,7 @@ export default class SettingsMenu extends React.Component{
     }
 
     return (
-      <div>
+      <div className='settings-dropdown'>
         { this.newTeamModalContent() }
 
         <ul>

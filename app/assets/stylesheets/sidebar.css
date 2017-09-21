@@ -45,6 +45,8 @@
   position: relative;
   top: 30%;
   color: white;
+  font-size: 10px;
+  font-weight: lighter;
 }
 
 .member-icon-user-0{

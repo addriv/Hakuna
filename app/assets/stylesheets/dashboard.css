@@ -37,21 +37,21 @@
 
 
 .view-user-tasks{
-  background-color: white;
-  border: solid black 1px;
+  background-color: transparent;
   width: 200px;
   height: 40px;
   padding: 0;
   margin: 0;
+  font-size: 20px;
 }
 
 .settings-menu{
   list-style: none;
   display: flex;
   flex-direction: column;
-  z-index: 1;
   position: fixed;
   right: 10px;
+  z-index: 1;
 }
 
 .settings-menu > div > ul{
@@ -61,15 +61,15 @@
 
 .team-btn{
   background-color: white;
-  border: solid black 1px;
-  width: 200px;
+  width: min(200px, 100%);
   height: 40px;
   font-size: 20px;
+  text-align: left;
 }
 
 .settings-menu-btn {
-  background-color: white;
-  height: 100%;
+  background-color: transparent;
+  height: 40px;
   padding: 0;
   margin: 0;
   display: flex;
@@ -77,23 +77,28 @@
   justify-content: flex-end;
 }
 
+.settings-dropdown {
+  border: solid black 1px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  position: relative;
+}
+
 .current-team{
-  width: calc(100% - 35px);
   height: 100%;
   font-size: 20px;
   padding-top: 5px;
   padding-right: 10px;
-  position: relative;
 }
 
 .create-team-btn{
   background-color: #BBBBDA;
-  border: solid black 1px;
   height: 40px;
 }
 
 .menu-logout-btn{
   background-color: #EA9E7D;
-  border: solid black 1px;
   height: 40px;
 }
