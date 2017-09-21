@@ -1,5 +1,6 @@
 import { RECEIVE_CURRENT_USER } from '../actions/session_actions';
 import { RECEIVE_TEAMS } from '../actions/navigation_actions';
+import { RECEIVE_NEW_TEAM } from '../actions/account_actions';
 import merge from 'lodash/merge';
 
 const _defaultState = {
@@ -13,6 +14,8 @@ export const sessionReducer = (state = _defaultState, action) => {
       return { currentUser: action.currentUser };
     case RECEIVE_TEAMS:
       return  merge({}, state, { teams: action.teams });
+    case RECEIVE_NEW_TEAM:
+      return merge({}, state, { teams: action.team });
     default:
       return state;
   }

@@ -14,6 +14,10 @@ export default class Dashboard extends React.Component{
     this.toggleSettingsMenu = this.toggleSettingsMenu.bind(this);
   }
 
+  componentWillReceiveProps(newProps){
+    this.setState({ settingsMenuIsOpen: false });
+  }
+
   componentDidMount(){
     const getFirstTeam = (ajaxResponse) => {
       const teams = ajaxResponse.teams;
@@ -37,27 +41,11 @@ export default class Dashboard extends React.Component{
     const tasks = this.props.tasks;
 
     //Declare variables to be rendered
-    let teamDisplay, teamsList, teamsUl, tasksList, tasksUl, settingsMenu;
+    let teamDisplay, tasksList, tasksUl, settingsMenu;
 
     //Grab team being displayed
     if (entitiesExist){
       teamDisplay = this.props.entities.team.name;
-    }
-
-    //Grab teams if they exist
-    if (teams){
-      teamsList = teams.map((team, i) => {
-        if (team.name !== teamDisplay){
-          return <button
-            onClick={this.handleTeamSelect}
-            id={team.id}
-            key={i}>{team.name}</button>;
-        }
-      });
-
-      if (this.state.teamToggled){
-        teamsUl = <ul>{ teamsList }</ul>;
-      }
     }
 
     //Grab tasks if they exist
@@ -91,7 +79,6 @@ export default class Dashboard extends React.Component{
       tasksUl = <ul>{ tasksList }</ul>;
     }
 
-    //
     if (this.state.settingsMenuIsOpen){
       settingsMenu = <SettingsMenuContainer />;
     }

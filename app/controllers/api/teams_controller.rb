@@ -4,7 +4,7 @@ class Api::TeamsController < ApplicationController
     if @team
       render :team
     else
-      render json: @team.errors.full_messages, status: 404
+      render json: [ 'No team found' ], status: 404
     end
   end
 
@@ -13,9 +13,22 @@ class Api::TeamsController < ApplicationController
     render :index
   end
 
+  def create
+    @team = Team.new(team_params)
+    @team.lead_id = current_user.id
+
+    if @team.save
+      @user_team = UserTeam.create!(member_id: current_user.id, team_id: @team.id)
+      render :create
+    else
+      render json: @team.errors.full_messages, status: 422
+    end
+
+  end
+
   private
 
   def team_params
-    params.require(:team).permit(:id)
+    params.require(:team).permit(:id, :name)
   end
 end

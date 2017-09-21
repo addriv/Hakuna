@@ -22,7 +22,7 @@ export default class Sidebar extends React.Component {
       members = this.props.teamMembers.map((member, i) => {
         const memberInitials = member.name
           .split(' ')
-          .map(name => name[0])
+          .map(name => name[0]);
         return (
           <li
             key={i}
