@@ -10,34 +10,27 @@
   height: 100%;
 }
 
-.sidebar-team-members > h1{
-  margin: 0;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  border-bottom: solid 1px black;
-  text-align: center
-}
-
 .sidebar-team-members > div{
-  height: 80px;
+  padding: 3px;
 }
 
-.sidebar-team-members > div > ul >li {
+.sidebar-team-members > ul >li {
   border-radius: 33px;
   border: dashed white 1px;
   width: 33px;
   height: 33px;
 }
-.sidebar-team-members > div > ul {
+.sidebar-team-members > ul {
   display: flex;
   flex-flow: wrap;
+  margin-bottom: 5px;
 }
 
 [class^="member-icon"]{
   width: 35px;
   height: 35px;
   border-radius: 35px;
-  margin: 0 2px;
+  margin: 3px 2px;
   position: relative;
   padding: 0;
 }
@@ -90,14 +83,32 @@ div.member{
   padding-right: 10%;
   padding-top: 5px;
   padding-bottom: 5px;
-  border-bottom: solid 1px black;
 }
 
 .sidebar > div> .spacer{
-  border: solid black 1px;
-  height: 20%;
+  height: 50px;
 }
 
 .sidebar-projects > ul > button {
   width: 100%;
+  background-color: transparent;
+  font-size: 13px;
+  height: 40px;
+  color: white;
+  text-align: left;
+  margin-left: 10px;
+}
+
+.sidebar-team-members > #team{
+  font-size: 20px;
+  padding: 5px;
+  color: gray;
+  font-weight: lighter;
+}
+
+.sidebar-projects > #projects-header{
+  font-size: 15px;
+  color: gray;
+  padding: 5px;
+  font-weight: lighter;
 }

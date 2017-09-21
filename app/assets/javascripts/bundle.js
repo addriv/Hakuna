@@ -32182,23 +32182,19 @@ var Sidebar = function (_React$Component) {
           'div',
           { className: 'sidebar-team-members' },
           _react2.default.createElement(
-            'h1',
-            null,
-            currentTeam
-          ),
-          _react2.default.createElement(
             'div',
-            null,
-            membersList
-          )
+            { id: 'team' },
+            currentTeam + ' Team Members'
+          ),
+          membersList
         ),
         _react2.default.createElement('div', { className: 'spacer' }),
         _react2.default.createElement(
           'div',
           { className: 'sidebar-projects' },
           _react2.default.createElement(
-            'h2',
-            null,
+            'div',
+            { id: 'projects-header' },
             'Projects'
           ),
           projectsList

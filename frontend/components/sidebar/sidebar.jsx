@@ -58,10 +58,9 @@ export default class Sidebar extends React.Component {
         <img src='http://res.cloudinary.com/dcl72qrya/image/upload/v1505802948/full_logo_full_yfxljp.png'></img>
 
         <div className='sidebar-team-members'>
-          <h1>{ currentTeam }</h1>
-          <div>
-            { membersList }
-          </div>
+          <div id='team'>{ `${currentTeam} Team Members` }</div>
+
+          { membersList }
         </div>
 
         <div className='spacer'>
@@ -69,7 +68,7 @@ export default class Sidebar extends React.Component {
         </div>
 
         <div className='sidebar-projects'>
-          <h2>Projects</h2>
+          <div id='projects-header'>Projects</div>
           { projectsList }
         </div>
       </div>
