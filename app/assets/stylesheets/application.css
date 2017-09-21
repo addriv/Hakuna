@@ -249,3 +249,7 @@ form > input{
   flex-direction: row;
   height: 100%;
 }
+
+button {
+  outline: 0;
+}

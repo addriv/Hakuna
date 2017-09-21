@@ -23,6 +23,7 @@
  position: relative;
  margin-top: 17px;
  color: white;
+ background-color: #14aaf5
 }
 
 .new-team-form > form >label{
@@ -42,4 +43,5 @@
   left: 410px;
   width: 144px;
   color: white;
+  background-color: #14aaf5
 }
