@@ -51,7 +51,7 @@
   flex-direction: column;
   z-index: 1;
   position: fixed;
-  right: 0%;
+  right: 10px;
 }
 
 .settings-menu > div > ul{
@@ -62,13 +62,14 @@
 .team-btn{
   background-color: white;
   border: solid black 1px;
-  width: 100%;
+  width: 200px;
+  height: 40px;
+  font-size: 20px;
 }
 
 .settings-menu-btn {
   background-color: white;
-  border: solid black 1px;
-  height: 40px;
+  height: 100%;
   padding: 0;
   margin: 0;
   display: flex;
@@ -85,28 +86,14 @@
   position: relative;
 }
 
-.current-user-icon{
-  width: 30px;
-  height: 30px;
-  border-radius: 30px;
-  position: relative;
-  padding: 0;
-  margin: 0;
-  background-color: #F94449;
-}
-
-.current-user-icon > div{
-  position: relative;
-  top: 30%;
-  color: white;
-}
-
 .create-team-btn{
   background-color: #BBBBDA;
   border: solid black 1px;
+  height: 40px;
 }
 
 .menu-logout-btn{
   background-color: #EA9E7D;
   border: solid black 1px;
+  height: 40px;
 }

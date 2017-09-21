@@ -22,10 +22,10 @@ ActiveRecord::Base.connection.execute("TRUNCATE TABLE tasks RESTART IDENTITY")
 
 #Seed tables with test data
 #users
-user1 = User.create!(name: "John Doe", email: "demo@email.com", password: "demo123")
-user2 = User.create!(name: "Jane Doe", email: "demo1@email.com", password: "demo123")
-user3 = User.create!(name: "Jonathan Doe", email: "demo2@email.com", password: "demo123")
-user4 = User.create!(name: "Janine Doe", email: "demo3@email.com", password: "demo123")
+user1 = User.create!(name: "Andrew Reynolds", email: "demo@email.com", password: "demo123")
+user2 = User.create!(name: "John Smith", email: "demo1@email.com", password: "demo123")
+user3 = User.create!(name: "Cathy Foster", email: "demo2@email.com", password: "demo123")
+user4 = User.create!(name: "Rebecca Lee", email: "demo3@email.com", password: "demo123")
 
 #teams
 team1 = Team.create!(name: "Fullstack", lead_id: user1.id)

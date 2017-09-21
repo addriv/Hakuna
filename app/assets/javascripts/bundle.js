@@ -31110,7 +31110,7 @@ var Dashboard = function (_React$Component) {
                     ),
                     _react2.default.createElement(
                       'div',
-                      { className: 'current-user-icon' },
+                      { className: 'member-icon-user-0' },
                       _react2.default.createElement(
                         'div',
                         null,
@@ -32012,7 +32012,8 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     entities: state.entities,
     teamMembers: (0, _selectors.teamMembersSelector)(state),
-    projects: (0, _selectors.projectsSelector)(state)
+    projects: (0, _selectors.projectsSelector)(state),
+    currentUserInitials: (0, _selectors.currentUserInitials)(state)
   };
 };
 
@@ -32081,34 +32082,35 @@ var Sidebar = function (_React$Component) {
           projects = void 0,
           projectsList = void 0;
 
-      //Grab team members
-      if (this.props.teamMembers) {
-        members = this.props.teamMembers.map(function (member, i) {
-          var memberInitials = member.name.split(' ').map(function (name) {
-            return name[0];
-          });
-          return _react2.default.createElement(
-            'li',
-            {
-              key: i,
-              id: member.id },
-            _react2.default.createElement(
-              'div',
-              { className: 'member' },
-              memberInitials
-            )
-          );
-        });
-
-        membersList = _react2.default.createElement(
-          'ul',
-          null,
-          members
+      var memberButton = function memberButton(initials, i) {
+        return _react2.default.createElement(
+          'button',
+          { className: 'member-icon-user-' + i, key: i, id: i },
+          _react2.default.createElement(
+            'div',
+            null,
+            initials
+          )
         );
+      };
 
-        currentTeam = this.props.entities.team.name;
+      var membersGrid = [memberButton(this.props.currentUserInitials, 0)];
+      for (var j = 1; j < 8; j++) {
+        if (this.props.teamMembers && this.props.teamMembers[j - 1]) {
+          var memberInitials = this.props.teamMembers[j - 1].name.split(' ').map(function (name) {
+            return name[0];
+          }).join('');
+
+          membersGrid.push(memberButton(memberInitials, j));
+        } else {
+          membersGrid.push(_react2.default.createElement('li', { className: 'member-icon-blank', key: j, id: j }));
+        }
       }
-
+      membersList = _react2.default.createElement(
+        'ul',
+        null,
+        membersGrid
+      );
       //Grab projects
       if (this.props.projects) {
         projects = this.props.projects.map(function (project, i) {
@@ -32164,6 +32166,25 @@ var Sidebar = function (_React$Component) {
 
   return Sidebar;
 }(_react2.default.Component);
+
+//Grab team members
+// if (this.props.teamMembers){
+//   members = this.props.teamMembers.map((member, i) => {
+//     const memberInitials = member.name
+//       .split(' ')
+//       .map(name => name[0]);
+//     return (
+//       <li
+//         key={i}
+//         id={member.id}><div className='member'>{memberInitials}</div></li>
+//     );
+//   });
+//
+//   membersList = <ul>{members}</ul>;
+//
+//   currentTeam = this.props.entities.team.name;
+// }
+
 
 exports.default = Sidebar;
 

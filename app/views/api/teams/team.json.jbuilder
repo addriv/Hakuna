@@ -4,8 +4,10 @@ end
 
 json.members do
   @team.members.each do |member|
-    json.set! member.id do
-      json.extract! member, :id, :name, :email
+    if member.id != current_user.id
+      json.set! member.id do
+        json.extract! member, :id, :name, :email
+      end
     end
   end
 end

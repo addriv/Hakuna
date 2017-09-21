@@ -13,28 +13,28 @@ export default class Sidebar extends React.Component {
     this.props.displayProject(projectId);
   }
 
-
   render(){
     let members, membersList, currentTeam, projects, projectsList;
 
-    //Grab team members
-    if (this.props.teamMembers){
-      members = this.props.teamMembers.map((member, i) => {
-        const memberInitials = member.name
-          .split(' ')
-          .map(name => name[0]);
-        return (
-          <li
-            key={i}
-            id={member.id}><div className='member'>{memberInitials}</div></li>
-        );
-      });
+    const memberButton= (initials, i) => (
+      <button className={`member-icon-user-${i}`} key={i} id={i} ><div>{initials}</div></button>
+    );
 
-      membersList = <ul>{members}</ul>;
+    let membersGrid = [memberButton(this.props.currentUserInitials, 0)];
+    for (let j = 1; j < 8; j++){
+      if (this.props.teamMembers && this.props.teamMembers[j-1]){
+        let memberInitials = this.props.teamMembers[j-1].name
+             .split(' ')
+             .map(name => name[0])
+             .join('');
 
-      currentTeam = this.props.entities.team.name;
+        membersGrid.push(memberButton(memberInitials, j));
+      }
+      else {
+        membersGrid.push(<li className='member-icon-blank' key={j} id={j}></li>);
+      }
     }
-
+    membersList = <ul>{membersGrid}</ul>;
     //Grab projects
     if (this.props.projects){
       projects = this.props.projects.map((project, i) => {
@@ -72,3 +72,21 @@ export default class Sidebar extends React.Component {
     );
   }
 }
+
+//Grab team members
+// if (this.props.teamMembers){
+//   members = this.props.teamMembers.map((member, i) => {
+//     const memberInitials = member.name
+//       .split(' ')
+//       .map(name => name[0]);
+//     return (
+//       <li
+//         key={i}
+//         id={member.id}><div className='member'>{memberInitials}</div></li>
+//     );
+//   });
+//
+//   membersList = <ul>{members}</ul>;
+//
+//   currentTeam = this.props.entities.team.name;
+// }
