@@ -13575,7 +13575,7 @@ var receiveProjectDisplay = exports.receiveProjectDisplay = function receiveProj
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createTeam = exports.RECEIVE_NEW_TEAM = undefined;
+exports.removeTeam = exports.createTeam = exports.RECEIVE_NEW_TEAM = undefined;
 
 var _account_util = __webpack_require__(327);
 
@@ -13601,6 +13601,10 @@ var createTeam = exports.createTeam = function createTeam(team) {
     });
     return ajax;
   };
+};
+
+var removeTeam = exports.removeTeam = function removeTeam(team) {
+  return function (dispatch) {};
 };
 
 /***/ }),
@@ -32496,6 +32500,13 @@ var SettingsMenu = function (_React$Component) {
         'Create New Workspace'
       );
 
+      var leaveTeamButton = _react2.default.createElement(
+        'button',
+        { className: 'leave-team-btn'
+        },
+        'Remove me from this Workspace'
+      );
+
       var logoutButton = _react2.default.createElement(
         'button',
         { className: 'menu-logout-btn',
@@ -32537,6 +32548,7 @@ var SettingsMenu = function (_React$Component) {
           teamsList,
           newTeamButton,
           teamSettingsButton,
+          leaveTeamButton,
           logoutButton
         )
       );

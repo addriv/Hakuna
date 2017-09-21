@@ -19,3 +19,6 @@ export const createTeam = team => dispatch => {
     );
   return ajax;
 };
+
+export const removeTeam = team => dispatch => {
+};

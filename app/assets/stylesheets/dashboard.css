@@ -88,6 +88,7 @@
   flex-direction: column;
   z-index: 1;
   position: relative;
+  border-radius: 5px;
 }
 
 .current-team{
@@ -97,7 +98,7 @@
   padding-right: 10px;
 }
 
-.create-team-btn, .menu-logout-btn, .team-settings-btn{
+.create-team-btn, .menu-logout-btn, .team-settings-btn, .leave-team-btn{
   background-color: white;
   height: 40px;
   text-align: left;
@@ -108,7 +109,7 @@
   color: #14aaf5;
 }
 
-.team-btn:hover, .create-team-btn:hover, .menu-logout-btn:hover, .team-settings-btn:hover{
+.team-btn:hover, .create-team-btn:hover, .menu-logout-btn:hover, .team-settings-btn:hover, .leave-team-btn:hover{
   background-color: #14aaf5;
   color: white;
 }

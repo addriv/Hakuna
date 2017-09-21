@@ -126,6 +126,11 @@ export default class SettingsMenu extends React.Component{
         onClick={this.toggleNewTeamModal}>Create New Workspace</button>
     );
 
+    const leaveTeamButton = (
+      <button className='leave-team-btn'
+        >Remove me from this Workspace</button>
+    );
+
     const logoutButton = (
       <button className='menu-logout-btn'
         onClick={this.props.logout}>Log Out</button>
@@ -136,6 +141,8 @@ export default class SettingsMenu extends React.Component{
         onClick={this.toggleSettingsModal}>
         {`${currentTeam.name} Settings`}</button>
     );
+
+
 
     if (this.props.teams){
       teamsList = teams.map((team, i) => {
@@ -157,6 +164,7 @@ export default class SettingsMenu extends React.Component{
           { teamsList }
           { newTeamButton }
           { teamSettingsButton }
+          { leaveTeamButton }
           { logoutButton }
         </ul>
 
