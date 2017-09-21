@@ -1,6 +1,6 @@
 .sidebar{
   height: 100vh;
-  background-color: #042C42;
+  background-color: #222b37;
   width: 240px;
   color: white;
 }
@@ -23,8 +23,11 @@
 }
 
 .sidebar-team-members > div > ul >li {
-  border-radius: 30px;
-  border: solid white 1px;
+  border-radius: 33px;
+  border: dashed white 1px;
+  width: 33px;
+  height: 33px;
+  background-color:
 }
 .sidebar-team-members > div > ul {
   display: flex;
@@ -34,10 +37,10 @@
 [class^="member-icon"]{
   width: 35px;
   height: 35px;
-  border-radius: 30px;
+  border-radius: 35px;
+  margin: 0 2px;
   position: relative;
   padding: 0;
-  margin: 0;
 }
 
 [class^="member-icon-user"] > div{

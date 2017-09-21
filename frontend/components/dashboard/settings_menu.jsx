@@ -15,10 +15,14 @@ const newTeamModalStyles = {
 export default class SettingsMenu extends React.Component{
   constructor(props){
     super(props);
-    this.state = { name: '', teamModalIsOpen: false };
+    this.state = {
+      name: '',
+      teamModalIsOpen: false,
+      settingsModalIsOpen: false };
 
     this.handleTeamSelect = this.handleTeamSelect.bind(this);
     this.toggleNewTeamModal = this.toggleNewTeamModal.bind(this);
+    this.toggleSettingsModal = this.toggleSettingsModal.bind(this);
     this.teamFormSubmit = this.teamFormSubmit.bind(this);
   }
 
@@ -32,6 +36,13 @@ export default class SettingsMenu extends React.Component{
     if (event){
       event.preventDefault();
       this.setState({ teamModalIsOpen: !this.state.teamModalIsOpen });
+    }
+  }
+
+  toggleSettingsModal(event){
+    if (event){
+      event.preventDefault();
+      this.setState({ settingsModalIsOpen: !this.state.settingsModalIsOpen });
     }
   }
 
@@ -76,6 +87,33 @@ export default class SettingsMenu extends React.Component{
     );
   }
 
+  teamSettingsModalContent(){
+    return (
+      <Modal
+        isOpen={this.state.settingsModalIsOpen}
+        onAfterOpen={this.toggleSettingsModal}
+        onRequestClose={this.toggleSettingsModal}
+        style={newTeamModalStyles}
+        contentLabel="Example Modal">
+
+        <div className='new-team-form'>
+          <div className='new-team-header'>
+            <h2>Create Your Workspace</h2>
+            <button onClick={this.toggleSettingsModal}>X</button>
+          </div>
+
+          <form>
+            <label>WORKSPACE NAME</label>
+            <input onChange={this.handleTeamFormInput('name')}
+              value={this.state.name} placeholder='Team Name'/>
+          </form>
+
+          <button onClick={this.teamFormSubmit}>Create Workspace</button>
+        </div>
+      </Modal>
+    );
+  }
+
   render(){
     let teamsList, teamsUl;
     const teams = this.props.teams;
@@ -89,6 +127,12 @@ export default class SettingsMenu extends React.Component{
     const logoutButton = (
       <button className='menu-logout-btn'
         onClick={this.props.logout}>Log Out</button>
+    );
+
+    const teamSettingsButton = (
+      <button className='team-settings-btn'
+        onClick={this.toggleSettingsModal}>
+        {`${currentTeam.name} Settings`}</button>
     );
 
     if (this.props.teams){
@@ -106,10 +150,11 @@ export default class SettingsMenu extends React.Component{
     return (
       <div className='settings-dropdown'>
         { this.newTeamModalContent() }
-
+        { this.teamSettingsModalContent() }
         <ul>
           { teamsList }
           { newTeamButton }
+          { teamSettingsButton }
           { logoutButton }
         </ul>
 

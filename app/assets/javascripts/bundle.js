@@ -32121,6 +32121,10 @@ var Sidebar = function (_React$Component) {
           projects = void 0,
           projectsList = void 0;
 
+      if (this.props.entities.team) {
+        currentTeam = this.props.entities.team.name;
+      }
+
       var memberButton = function memberButton(initials, i) {
         return _react2.default.createElement(
           'button',
@@ -32134,7 +32138,7 @@ var Sidebar = function (_React$Component) {
       };
 
       var membersGrid = [memberButton(this.props.currentUserInitials, 0)];
-      for (var j = 1; j < 8; j++) {
+      for (var j = 1; j < 12; j++) {
         if (this.props.teamMembers && this.props.teamMembers[j - 1]) {
           var memberInitials = this.props.teamMembers[j - 1].name.split(' ').map(function (name) {
             return name[0];
@@ -32327,10 +32331,14 @@ var SettingsMenu = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (SettingsMenu.__proto__ || Object.getPrototypeOf(SettingsMenu)).call(this, props));
 
-    _this.state = { name: '', teamModalIsOpen: false };
+    _this.state = {
+      name: '',
+      teamModalIsOpen: false,
+      settingsModalIsOpen: false };
 
     _this.handleTeamSelect = _this.handleTeamSelect.bind(_this);
     _this.toggleNewTeamModal = _this.toggleNewTeamModal.bind(_this);
+    _this.toggleSettingsModal = _this.toggleSettingsModal.bind(_this);
     _this.teamFormSubmit = _this.teamFormSubmit.bind(_this);
     return _this;
   }
@@ -32348,6 +32356,14 @@ var SettingsMenu = function (_React$Component) {
       if (event) {
         event.preventDefault();
         this.setState({ teamModalIsOpen: !this.state.teamModalIsOpen });
+      }
+    }
+  }, {
+    key: 'toggleSettingsModal',
+    value: function toggleSettingsModal(event) {
+      if (event) {
+        event.preventDefault();
+        this.setState({ settingsModalIsOpen: !this.state.settingsModalIsOpen });
       }
     }
   }, {
@@ -32419,6 +32435,53 @@ var SettingsMenu = function (_React$Component) {
       );
     }
   }, {
+    key: 'teamSettingsModalContent',
+    value: function teamSettingsModalContent() {
+      return _react2.default.createElement(
+        _reactModal2.default,
+        {
+          isOpen: this.state.settingsModalIsOpen,
+          onAfterOpen: this.toggleSettingsModal,
+          onRequestClose: this.toggleSettingsModal,
+          style: newTeamModalStyles,
+          contentLabel: 'Example Modal' },
+        _react2.default.createElement(
+          'div',
+          { className: 'new-team-form' },
+          _react2.default.createElement(
+            'div',
+            { className: 'new-team-header' },
+            _react2.default.createElement(
+              'h2',
+              null,
+              'Create Your Workspace'
+            ),
+            _react2.default.createElement(
+              'button',
+              { onClick: this.toggleSettingsModal },
+              'X'
+            )
+          ),
+          _react2.default.createElement(
+            'form',
+            null,
+            _react2.default.createElement(
+              'label',
+              null,
+              'WORKSPACE NAME'
+            ),
+            _react2.default.createElement('input', { onChange: this.handleTeamFormInput('name'),
+              value: this.state.name, placeholder: 'Team Name' })
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.teamFormSubmit },
+            'Create Workspace'
+          )
+        )
+      );
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this4 = this;
@@ -32442,6 +32505,13 @@ var SettingsMenu = function (_React$Component) {
         'Log Out'
       );
 
+      var teamSettingsButton = _react2.default.createElement(
+        'button',
+        { className: 'team-settings-btn',
+          onClick: this.toggleSettingsModal },
+        currentTeam.name + ' Settings'
+      );
+
       if (this.props.teams) {
         teamsList = teams.map(function (team, i) {
           if (team.name !== currentTeam.name) {
@@ -32462,11 +32532,13 @@ var SettingsMenu = function (_React$Component) {
         'div',
         { className: 'settings-dropdown' },
         this.newTeamModalContent(),
+        this.teamSettingsModalContent(),
         _react2.default.createElement(
           'ul',
           null,
           teamsList,
           newTeamButton,
+          teamSettingsButton,
           logoutButton
         )
       );

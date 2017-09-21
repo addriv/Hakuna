@@ -16,12 +16,16 @@ export default class Sidebar extends React.Component {
   render(){
     let members, membersList, currentTeam, projects, projectsList;
 
+    if (this.props.entities.team){
+      currentTeam = this.props.entities.team.name;
+    }
+
     const memberButton= (initials, i) => (
       <button className={`member-icon-user-${i}`} key={i} id={i} ><div>{initials}</div></button>
     );
 
     let membersGrid = [memberButton(this.props.currentUserInitials, 0)];
-    for (let j = 1; j < 8; j++){
+    for (let j = 1; j < 12; j++){
       if (this.props.teamMembers && this.props.teamMembers[j-1]){
         let memberInitials = this.props.teamMembers[j-1].name
              .split(' ')
