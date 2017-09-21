@@ -33,6 +33,7 @@ export default class SignupForm extends React.Component {
       errors = sessionErrors.map((error, i) => (
         <li key={i}>{error}</li>
       ));
+      errors = <ul>{errors}</ul>;
     }
 
     return (
@@ -47,7 +48,7 @@ export default class SignupForm extends React.Component {
 
           </div>
 
-          <div className='test'>
+          <div className='signup-elements'>
             <div  className='signup-form'>
               <form>
                 <h2>Sign Up</h2>
@@ -71,10 +72,11 @@ export default class SignupForm extends React.Component {
                   value={this.state.password}></input>
 
                 <div className='signup-btn'>
+                  { errors }
                   <button onClick={this.handleSubmit}>SIGN UP</button>
                 </div>
 
-                {errors}
+
               </form>
             </div>
             <div className='login'>

@@ -30513,6 +30513,11 @@ var SignupForm = function (_React$Component) {
             error
           );
         });
+        errors = _react2.default.createElement(
+          'ul',
+          null,
+          errors
+        );
       }
 
       return _react2.default.createElement(
@@ -30537,7 +30542,7 @@ var SignupForm = function (_React$Component) {
           ),
           _react2.default.createElement(
             'div',
-            { className: 'test' },
+            { className: 'signup-elements' },
             _react2.default.createElement(
               'div',
               { className: 'signup-form' },
@@ -30579,13 +30584,13 @@ var SignupForm = function (_React$Component) {
                 _react2.default.createElement(
                   'div',
                   { className: 'signup-btn' },
+                  errors,
                   _react2.default.createElement(
                     'button',
                     { onClick: this.handleSubmit },
                     'SIGN UP'
                   )
-                ),
-                errors
+                )
               )
             ),
             _react2.default.createElement(
@@ -30865,6 +30870,7 @@ var LoginForm = function (_React$Component) {
                 _react2.default.createElement(
                   'div',
                   { className: 'login-form-buttons' },
+                  errors,
                   _react2.default.createElement(
                     'button',
                     { onClick: this.handleSubmit },
@@ -30875,10 +30881,7 @@ var LoginForm = function (_React$Component) {
                     { onClick: this.handleDemoLogin },
                     'DEMO'
                   )
-                ),
-                _react2.default.createElement('div', { className: 'login-btn' }),
-                _react2.default.createElement('div', { className: 'demo-btn' }),
-                errors
+                )
               )
             ),
             _react2.default.createElement(

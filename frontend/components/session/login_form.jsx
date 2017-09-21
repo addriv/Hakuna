@@ -81,17 +81,12 @@ export default class LoginForm extends React.Component {
 
 
                 <div className='login-form-buttons'>
+                  {errors}
+
                   <button onClick={this.handleSubmit}>LOG IN</button>
                   <button onClick={this.handleDemoLogin}>DEMO</button>
                 </div>
                 
-                <div className='login-btn'>
-                </div>
-
-                <div className='demo-btn'>
-                </div>
-
-                {errors}
               </form>
             </div>
 

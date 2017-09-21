@@ -88,6 +88,9 @@ html, body {
   flex-direction: column;
 }
 
+.signup-elements{
+}
+
 .signup-form > form, .login-form > form{
   display: flex;
   flex-direction: column;
@@ -95,7 +98,6 @@ html, body {
 
 .login-form, .signup-form {
   width: 405px;
-  height: 100%;
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -106,36 +108,74 @@ html, body {
   list-style: none;
 }
 
+.signup-btn > ul{
+  /*padding-top: 10px;*/
+  padding: 10px;
+  /*display: flex;
+  flex-direction: column;*/
+}
+
+.login-form-buttons > li {
+  padding: 10px;
+  margin: 3px;
+}
+
+.login-form{
+  height: 300px;
+}
+
+.signup-form{
+  height: 325px;
+}
+
 button{
-  background-color: #796eff;
-  font-family: Helvetica, Arial, sans-serif;
   border-radius: 3px;
   border: 0;
   box-shadow: none;
+  font-weight: lighter;
 }
 
 .login-form > form > h2, .signup-form > form > h2{
-  text-align: right;
-  margin-right: 20px;
+  text-align: center;
   margin-bottom: 10px;
 }
 
-.login-btn, .signup-btn, .demo-btn{
+/*.login-btn, .signup-btn, .demo-btn{
   display: flex;
   justify-content: flex-end;
   padding: 0;
   width: 30px;
   margin-top: 10px;
+}*/
+
+button{
+  cursor: pointer;
 }
 
-.login-form-buttons{
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.signup-btn > button{
+  margin: 10px;
+  height: 25px;
+  background-color: #796eff;
+  color: white;
+}
+
+.login-form-buttons, .signup-btn{
   justify-content: flex-end;
   display: flex;
 }
 
 .login-form-buttons > button{
+  color: white;
   width: 55px;
   margin: 10px;
+  height: 25px;
+  background-color: #796eff;
 }
 
 .login-form > label, .signup-form > label{
@@ -161,21 +201,33 @@ form > input{
 
 .signup, .login{
   display: flex;
-  height: 20px;
+  height: 30px;
+  margin-top: 5px;
   justify-content: flex-end;
 }
 
 .signup > p, .login > p {
   padding: 0;
-  margin: 2px;
+  margin: 0;
+  color: white;
+  font-weight: lighter;
+  margin-right: 5px;
+  margin-top: 3px;
 }
 
 .signup-link, .login-link {
     background-color: #796eff;
-    padding: 3px;
+    height: 10px;
+    padding-top: 3px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    width: 45px;
+    text-align: center;
     border-radius: 3px;
     text-decoration: none;
-    color: initial;
+    color: white;
+    font-weight: lighter;
     font-size: 11px;
     font-family: Helvetica, Arial, sans-serif;
 }

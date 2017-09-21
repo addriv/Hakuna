@@ -23,18 +23,17 @@
 }
 
 .sidebar-team-members > div > ul >li {
-  width: 30px;
-  height: 30px;
   border-radius: 30px;
   border: solid white 1px;
 }
 .sidebar-team-members > div > ul {
   display: flex;
+  flex-flow: wrap;
 }
 
 [class^="member-icon"]{
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   border-radius: 30px;
   position: relative;
   padding: 0;
