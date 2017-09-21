@@ -30928,6 +30928,10 @@ var _sidebar_container = __webpack_require__(322);
 
 var _sidebar_container2 = _interopRequireDefault(_sidebar_container);
 
+var _settings_menu_container = __webpack_require__(401);
+
+var _settings_menu_container2 = _interopRequireDefault(_settings_menu_container);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -30945,18 +30949,10 @@ var Dashboard = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
 
     _this.state = {
-      teamMenuToggled: false,
-      teamModalIsOpen: false,
-      modalIsOpen: false
+      settingsMenuIsOpen: false
     };
 
-    _this.handleTeam = _this.handleTeam.bind(_this);
-    _this.toggleTeamMenu = _this.toggleTeamMenu.bind(_this);
-    _this.toggleModal = _this.toggleModal.bind(_this);
-
-    _this.openModal = _this.openModal.bind(_this);
-    _this.afterOpenModal = _this.afterOpenModal.bind(_this);
-    _this.closeModal = _this.closeModal.bind(_this);
+    _this.toggleSettingsMenu = _this.toggleSettingsMenu.bind(_this);
     return _this;
   }
 
@@ -30976,40 +30972,10 @@ var Dashboard = function (_React$Component) {
       });
     }
   }, {
-    key: 'handleTeam',
-    value: function handleTeam(event) {
+    key: 'toggleSettingsMenu',
+    value: function toggleSettingsMenu(event) {
       event.preventDefault();
-      var teamId = parseInt(event.target.id);
-      this.props.fetchTeam(teamId);
-    }
-  }, {
-    key: 'toggleTeamMenu',
-    value: function toggleTeamMenu(event) {
-      event.preventDefault();
-      this.setState({ teamToggled: !this.state.teamToggled });
-    }
-  }, {
-    key: 'toggleModal',
-    value: function toggleModal(event) {
-      event.preventDefault();
-      this.setState({ teamModalIsOpen: !this.state.teamModalIsOpen });
-      console.log(this.state.teamModalIsOpen);
-    }
-  }, {
-    key: 'openModal',
-    value: function openModal() {
-      this.setState({ modalIsOpen: true });
-    }
-  }, {
-    key: 'afterOpenModal',
-    value: function afterOpenModal() {
-      // references are now sync'd and can be accessed.
-      this.subtitle.style.color = '#f00';
-    }
-  }, {
-    key: 'closeModal',
-    value: function closeModal() {
-      this.setState({ modalIsOpen: false });
+      this.setState({ settingsMenuIsOpen: !this.state.settingsMenuIsOpen });
     }
   }, {
     key: 'render',
@@ -31023,9 +30989,10 @@ var Dashboard = function (_React$Component) {
       //Declare variables to be rendered
       var teamDisplay = void 0,
           teamsList = void 0,
-          teamsUl = void 0;
-      var tasksList = void 0,
-          tasksUl = void 0;
+          teamsUl = void 0,
+          tasksList = void 0,
+          tasksUl = void 0,
+          settingsMenu = void 0;
 
       //Grab team being displayed
       if (entitiesExist) {
@@ -31039,7 +31006,7 @@ var Dashboard = function (_React$Component) {
             return _react2.default.createElement(
               'button',
               {
-                onClick: _this3.handleTeam,
+                onClick: _this3.handleTeamSelect,
                 id: team.id,
                 key: i },
               team.name
@@ -31098,6 +31065,11 @@ var Dashboard = function (_React$Component) {
         );
       }
 
+      //
+      if (this.state.settingsMenuIsOpen) {
+        settingsMenu = _react2.default.createElement(_settings_menu_container2.default, null);
+      }
+
       return _react2.default.createElement(
         'div',
         null,
@@ -31127,12 +31099,12 @@ var Dashboard = function (_React$Component) {
                 ),
                 _react2.default.createElement(
                   'div',
-                  { className: 'user-teams' },
+                  { className: 'settings-menu' },
                   _react2.default.createElement(
                     'button',
                     {
-                      className: 'settings-menu',
-                      onClick: this.toggleTeamMenu },
+                      className: 'settings-menu-btn',
+                      onClick: this.toggleSettingsMenu },
                     _react2.default.createElement(
                       'div',
                       { className: 'current-team' },
@@ -31140,7 +31112,7 @@ var Dashboard = function (_React$Component) {
                     ),
                     _react2.default.createElement(
                       'div',
-                      { className: 'current-user' },
+                      { className: 'current-user-icon' },
                       _react2.default.createElement(
                         'div',
                         null,
@@ -31148,7 +31120,7 @@ var Dashboard = function (_React$Component) {
                       )
                     )
                   ),
-                  teamsUl
+                  settingsMenu
                 )
               ),
               _react2.default.createElement(
@@ -34676,6 +34648,232 @@ var uiReducer = exports.uiReducer = function uiReducer() {
       return state;
   }
 };
+
+/***/ }),
+/* 401 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(25);
+
+var _settings_menu = __webpack_require__(402);
+
+var _settings_menu2 = _interopRequireDefault(_settings_menu);
+
+var _session_actions = __webpack_require__(35);
+
+var _navigation_actions = __webpack_require__(36);
+
+var _selectors = __webpack_require__(139);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    teams: (0, _selectors.teamsSelector)(state),
+    entities: state.entities
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    logout: function logout() {
+      return dispatch((0, _session_actions.logoutUser)());
+    },
+    fetchTeam: function fetchTeam(team) {
+      return dispatch((0, _navigation_actions.fetchTeam)(team));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_settings_menu2.default);
+
+/***/ }),
+/* 402 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactModal = __webpack_require__(315);
+
+var _reactModal2 = _interopRequireDefault(_reactModal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
+
+var SettingsMenu = function (_React$Component) {
+  _inherits(SettingsMenu, _React$Component);
+
+  function SettingsMenu(props) {
+    _classCallCheck(this, SettingsMenu);
+
+    var _this = _possibleConstructorReturn(this, (SettingsMenu.__proto__ || Object.getPrototypeOf(SettingsMenu)).call(this, props));
+
+    _this.state = { teamModalIsOpen: false };
+
+    _this.handleTeamSelect = _this.handleTeamSelect.bind(_this);
+    _this.toggleNewTeamModal = _this.toggleNewTeamModal.bind(_this);
+    return _this;
+  }
+
+  _createClass(SettingsMenu, [{
+    key: 'handleTeamSelect',
+    value: function handleTeamSelect(event) {
+      event.preventDefault();
+      var teamId = parseInt(event.target.id);
+      this.props.fetchTeam(teamId);
+    }
+  }, {
+    key: 'toggleNewTeamModal',
+    value: function toggleNewTeamModal(event) {
+      event.preventDefault();
+      this.setState({ teamModalIsOpen: !this.state.teamModalIsOpen });
+    }
+  }, {
+    key: 'newTeamModalContent',
+    value: function newTeamModalContent() {
+      return _react2.default.createElement(
+        _reactModal2.default,
+        {
+          isOpen: this.state.teamModalIsOpen,
+          onAfterOpen: this.toggleNewTeamModal,
+          onRequestClose: this.toggleNewTeamModal,
+          style: customStyles,
+          contentLabel: 'Example Modal' },
+        _react2.default.createElement(
+          'h2',
+          null,
+          'Hello'
+        ),
+        _react2.default.createElement(
+          'button',
+          { onClick: this.toggleNewTeamModal },
+          'close'
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          'I am a modal'
+        ),
+        _react2.default.createElement(
+          'form',
+          null,
+          _react2.default.createElement('input', null),
+          _react2.default.createElement(
+            'button',
+            null,
+            'tab navigation'
+          ),
+          _react2.default.createElement(
+            'button',
+            null,
+            'stays'
+          ),
+          _react2.default.createElement(
+            'button',
+            null,
+            'inside'
+          ),
+          _react2.default.createElement(
+            'button',
+            null,
+            'the modal'
+          )
+        )
+      );
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var teamsList = void 0,
+          teamsUl = void 0;
+      var teams = this.props.teams;
+      var currentTeam = this.props.entities.team;
+
+      var newTeamButton = _react2.default.createElement(
+        'button',
+        { className: 'create-team-btn',
+          onClick: this.toggleNewTeamModal },
+        'Create New Team'
+      );
+
+      var logoutButton = _react2.default.createElement(
+        'button',
+        { className: 'menu-logout-btn',
+          onClick: this.props.handleTeamSelect },
+        'Log Out'
+      );
+
+      if (this.props.teams) {
+        teamsList = teams.map(function (team, i) {
+          if (team.name !== currentTeam.name) {
+            return _react2.default.createElement(
+              'button',
+              {
+                className: 'team-btn',
+                onClick: _this2.handleTeamSelect,
+                id: team.id,
+                key: i },
+              team.name
+            );
+          }
+        });
+      }
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        this.newTeamModalContent(),
+        _react2.default.createElement(
+          'ul',
+          null,
+          teamsList,
+          newTeamButton,
+          logoutButton
+        )
+      );
+    }
+  }]);
+
+  return SettingsMenu;
+}(_react2.default.Component);
+
+exports.default = SettingsMenu;
 
 /***/ })
 /******/ ]);

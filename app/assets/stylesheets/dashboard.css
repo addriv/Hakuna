@@ -35,7 +35,17 @@
   display: flex;
 }
 
-.user-teams{
+
+.view-user-tasks{
+  background-color: white;
+  border: solid black 1px;
+  width: 200px;
+  height: 40px;
+  padding: 0;
+  margin: 0;
+}
+
+.settings-menu{
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -45,18 +55,18 @@
   right: 0%;
 }
 
-.user-teams > ul{
+.settings-menu > div > ul{
   display: flex;
   flex-direction: column;
 }
 
-.user-teams > ul > button{
+.team-btn{
   background-color: white;
   border: solid black 1px;
   width: 100%;
 }
 
-.settings-menu {
+.settings-menu-btn {
   background-color: white;
   border: solid black 1px;
   width: 100%;
@@ -75,16 +85,7 @@
   padding-top: 5px;
 }
 
-.view-user-tasks{
-  background-color: white;
-  border: solid black 1px;
-  width: 125px;
-  height: 40px;
-  padding: 0;
-  margin: 0;
-}
-
-.current-user{
+.current-user-icon{
   width: 30px;
   height: 30px;
   border-radius: 30px;
@@ -95,8 +96,18 @@
   background-color: #F94449;
 }
 
-.current-user > div{
+.current-user-icon > div{
   position: relative;
   top: 30%;
   color: white;
+}
+
+.create-team-btn{
+  background-color: #BBBBDA;
+  border: solid black 1px;
+}
+
+.menu-logout-btn{
+  background-color: #EA9E7D;
+  border: solid black 1px;
 }

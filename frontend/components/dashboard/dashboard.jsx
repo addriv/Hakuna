@@ -2,23 +2,16 @@ import React from 'react';
 import Modal from 'react-modal';
 import { Route, Redirect } from 'react-router-dom';
 import SidebarContainer from '../sidebar/sidebar_container';
+import SettingsMenuContainer from './settings_menu_container';
 
 export default class Dashboard extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      teamMenuToggled: false,
-      teamModalIsOpen: false,
-      modalIsOpen: false
+      settingsMenuIsOpen: false,
      };
 
-    this.handleTeam = this.handleTeam.bind(this);
-    this.toggleTeamMenu = this.toggleTeamMenu.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
-
-    this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
-     this.closeModal = this.closeModal.bind(this);
+    this.toggleSettingsMenu = this.toggleSettingsMenu.bind(this);
   }
 
   componentDidMount(){
@@ -33,35 +26,10 @@ export default class Dashboard extends React.Component{
     );
   }
 
-  handleTeam(event){
+  toggleSettingsMenu(event){
     event.preventDefault();
-    const teamId = parseInt(event.target.id);
-    this.props.fetchTeam(teamId);
+    this.setState({ settingsMenuIsOpen: !this.state.settingsMenuIsOpen });
   }
-
-  toggleTeamMenu(event){
-    event.preventDefault();
-    this.setState({ teamToggled: !this.state.teamToggled });
-  }
-
-  toggleModal(event){
-    event.preventDefault();
-    this.setState({ teamModalIsOpen: !this.state.teamModalIsOpen });
-    console.log(this.state.teamModalIsOpen);
-  }
-
-  openModal() {
-     this.setState({modalIsOpen: true});
-   }
-
-   afterOpenModal() {
-     // references are now sync'd and can be accessed.
-     this.subtitle.style.color = '#f00';
-   }
-
-   closeModal() {
-     this.setState({modalIsOpen: false});
-   }
 
   render(){
     const entitiesExist = Object.keys(this.props.entities).length > 0;
@@ -69,8 +37,7 @@ export default class Dashboard extends React.Component{
     const tasks = this.props.tasks;
 
     //Declare variables to be rendered
-    let teamDisplay, teamsList, teamsUl;
-    let tasksList, tasksUl;
+    let teamDisplay, teamsList, teamsUl, tasksList, tasksUl, settingsMenu;
 
     //Grab team being displayed
     if (entitiesExist){
@@ -82,7 +49,7 @@ export default class Dashboard extends React.Component{
       teamsList = teams.map((team, i) => {
         if (team.name !== teamDisplay){
           return <button
-            onClick={this.handleTeam}
+            onClick={this.handleTeamSelect}
             id={team.id}
             key={i}>{team.name}</button>;
         }
@@ -124,6 +91,11 @@ export default class Dashboard extends React.Component{
       tasksUl = <ul>{ tasksList }</ul>;
     }
 
+    //
+    if (this.state.settingsMenuIsOpen){
+      settingsMenu = <SettingsMenuContainer />;
+    }
+
     return (
       <div>
         <div className='hakuna-ui'>
@@ -140,19 +112,20 @@ export default class Dashboard extends React.Component{
                   className='view-user-tasks'
                   >My Tasks</button>
 
-                <div className='user-teams'>
+                <div className='settings-menu'>
+
                   <button
-                    className='settings-menu'
-                    onClick={this.toggleTeamMenu}>
+                    className='settings-menu-btn'
+                    onClick={this.toggleSettingsMenu}>
 
                     <div className='current-team'>{teamDisplay}</div>
 
-                    <div className='current-user'>
+                    <div className='current-user-icon'>
                       <div>{this.props.userInitials}</div>
                     </div>
                   </button>
 
-                  { teamsUl }
+                  { settingsMenu }
 
                 </div>
 
