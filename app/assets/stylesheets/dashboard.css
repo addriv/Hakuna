@@ -61,7 +61,10 @@
 
 .team-btn{
   background-color: white;
-  /*width: min(200px, 100%);*/
+  border-bottom: solid gray 1px;
+  min-width: 200px;
+  border-radius: 1px;
+  margin: 0px 10px;
   height: 40px;
   font-size: 20px;
   text-align: left;
@@ -79,6 +82,7 @@
 
 .settings-dropdown {
   border: solid black 1px;
+  background-color: white;
   list-style: none;
   display: flex;
   flex-direction: column;
