@@ -1,6 +1,6 @@
 class Api::UserTeamsController < ApplicationController
   def destroy
-    @user_team = current_user.user_teams.find_by_id(params[:id])
+    @user_team = current_user.user_teams.find_by_team_id(params[:id])
     if @user_team
       @user_team.destroy
       render :destroy
@@ -9,6 +9,10 @@ class Api::UserTeamsController < ApplicationController
     end
   end
 
+  private
+
+  def user_team_params
+    params.require(:team).permit(:id, :name, :lead_id)
+  end
 
 end
- 

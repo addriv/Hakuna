@@ -13575,11 +13575,13 @@ var receiveProjectDisplay = exports.receiveProjectDisplay = function receiveProj
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.removeTeam = exports.createTeam = exports.RECEIVE_NEW_TEAM = undefined;
+exports.leaveTeam = exports.createTeam = exports.RECEIVE_NEW_TEAM = undefined;
 
 var _account_util = __webpack_require__(327);
 
 var accountUtil = _interopRequireWildcard(_account_util);
+
+var _navigation_actions = __webpack_require__(28);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -13603,8 +13605,12 @@ var createTeam = exports.createTeam = function createTeam(team) {
   };
 };
 
-var removeTeam = exports.removeTeam = function removeTeam(team) {
-  return function (dispatch) {};
+var leaveTeam = exports.leaveTeam = function leaveTeam(team) {
+  return function (dispatch) {
+    accountUtil.leaveTeam(team).then(function (response) {
+      dispatch((0, _navigation_actions.fetchTeams)());
+    });
+  };
 };
 
 /***/ }),
@@ -32275,6 +32281,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     createTeam: function createTeam(team) {
       return dispatch((0, _account_actions.createTeam)(team));
+    },
+    leaveTeam: function leaveTeam(team) {
+      return dispatch((0, _account_actions.leaveTeam)(team));
     }
   };
 };
@@ -32340,6 +32349,7 @@ var SettingsMenu = function (_React$Component) {
     _this.toggleNewTeamModal = _this.toggleNewTeamModal.bind(_this);
     _this.toggleSettingsModal = _this.toggleSettingsModal.bind(_this);
     _this.teamFormSubmit = _this.teamFormSubmit.bind(_this);
+    _this.handleLeaveTeam = _this.handleLeaveTeam.bind(_this);
     return _this;
   }
 
@@ -32388,6 +32398,13 @@ var SettingsMenu = function (_React$Component) {
         var teamId = Object.keys(response)[0];
         _this3.props.fetchTeam(teamId);
       });
+    }
+  }, {
+    key: 'handleLeaveTeam',
+    value: function handleLeaveTeam(event) {
+      event.preventDefault();
+      var team = this.props.entities.team;
+      this.props.leaveTeam({ team: team });
     }
   }, {
     key: 'newTeamModalContent',
@@ -32502,8 +32519,8 @@ var SettingsMenu = function (_React$Component) {
 
       var leaveTeamButton = _react2.default.createElement(
         'button',
-        { className: 'leave-team-btn'
-        },
+        { className: 'leave-team-btn',
+          onClick: this.handleLeaveTeam },
         'Remove me from this Workspace'
       );
 
@@ -32575,6 +32592,13 @@ var createTeam = exports.createTeam = function createTeam(team) {
     method: 'POST',
     url: 'api/teams',
     data: team
+  });
+};
+
+var leaveTeam = exports.leaveTeam = function leaveTeam(team) {
+  return $.ajax({
+    method: 'DELETE',
+    url: 'api/user_teams/' + team.team.id
   });
 };
 
@@ -34991,8 +35015,6 @@ exports.entitiesReducer = undefined;
 var _redux = __webpack_require__(34);
 
 var _navigation_actions = __webpack_require__(28);
-
-// import { teamsReducer } from './teams_reducer';
 
 var entitiesReducer = exports.entitiesReducer = function entitiesReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};

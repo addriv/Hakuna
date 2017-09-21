@@ -5,3 +5,12 @@ export const createTeam = team => (
     data: team
   })
 );
+
+export const leaveTeam = team => {
+  return (
+  $.ajax({
+    method: 'DELETE',
+    url: `api/user_teams/${team.team.id}`
+  })
+);
+};

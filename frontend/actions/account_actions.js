@@ -1,4 +1,5 @@
 import * as accountUtil from '../util/account_util';
+import { fetchTeams } from './navigation_actions';
 
 export const RECEIVE_NEW_TEAM = 'RECEIVE_NEW_TEAM';
 
@@ -20,5 +21,10 @@ export const createTeam = team => dispatch => {
   return ajax;
 };
 
-export const removeTeam = team => dispatch => {
+export const leaveTeam = team => dispatch => {
+  accountUtil.leaveTeam(team).then(
+    (response) => {
+      dispatch(fetchTeams());
+    }
+  );
 };

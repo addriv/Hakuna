@@ -24,6 +24,7 @@ export default class SettingsMenu extends React.Component{
     this.toggleNewTeamModal = this.toggleNewTeamModal.bind(this);
     this.toggleSettingsModal = this.toggleSettingsModal.bind(this);
     this.teamFormSubmit = this.teamFormSubmit.bind(this);
+    this.handleLeaveTeam = this.handleLeaveTeam.bind(this);
   }
 
   handleTeamSelect(event){
@@ -60,6 +61,12 @@ export default class SettingsMenu extends React.Component{
         const teamId = Object.keys(response)[0];
         this.props.fetchTeam(teamId);
     });
+  }
+
+  handleLeaveTeam(event){
+    event.preventDefault();
+    const team = this.props.entities.team;
+    this.props.leaveTeam({ team });
   }
 
   newTeamModalContent(){
@@ -128,7 +135,7 @@ export default class SettingsMenu extends React.Component{
 
     const leaveTeamButton = (
       <button className='leave-team-btn'
-        >Remove me from this Workspace</button>
+        onClick={this.handleLeaveTeam}>Remove me from this Workspace</button>
     );
 
     const logoutButton = (
@@ -141,8 +148,6 @@ export default class SettingsMenu extends React.Component{
         onClick={this.toggleSettingsModal}>
         {`${currentTeam.name} Settings`}</button>
     );
-
-
 
     if (this.props.teams){
       teamsList = teams.map((team, i) => {
