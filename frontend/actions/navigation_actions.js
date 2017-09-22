@@ -30,3 +30,9 @@ export const fetchTeams = () => dispatch => (
     (response) => dispatch(receiveTeams(response))
   )
 );
+
+export const updateTeam = team => dispatch => (
+  navUtil.updateTeam(team).then(
+    (response) => dispatch(receiveTeam(response))
+  )
+);

@@ -27,3 +27,11 @@ export const objectComparisonByKeys = (obj1, obj2) => {
 
   return true;
 };
+
+export const updateTeam = team => {
+  return $.ajax({
+    method: 'PATCH',
+    url: `api/teams/${team.id}`,
+    data: { team }
+  });
+};

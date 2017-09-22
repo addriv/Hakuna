@@ -20,6 +20,8 @@ export default class SettingsMenu extends React.Component{
     super(props);
     this.state = {
       name: '',
+      updateName: this.props.entities.team.name,
+      updateId: this.props.entities.team.id,
       teamModalIsOpen: false,
       settingsModalIsOpen: false,
       leaveTeamModalIsOpen: false };
@@ -30,6 +32,7 @@ export default class SettingsMenu extends React.Component{
     this.teamFormSubmit = this.teamFormSubmit.bind(this);
     this.handleLeaveTeam = this.handleLeaveTeam.bind(this);
     this.toggleLeaveTeamModal = this.toggleLeaveTeamModal.bind(this);
+    this.handleTeamUpdate = this.handleTeamUpdate.bind(this);
   }
 
   handleTeamSelect(event){
@@ -79,6 +82,12 @@ export default class SettingsMenu extends React.Component{
     event.preventDefault();
     const team = this.props.entities.team;
     this.props.leaveTeam({ team });
+  }
+
+  handleTeamUpdate(event){
+    event.preventDefault();
+    const updatedData = { id: this.state.id, name: this.state.updateName };
+    this.props.updateTeam(updatedData);
   }
 
   confirmLeaveTeamModal(){
@@ -150,11 +159,11 @@ export default class SettingsMenu extends React.Component{
 
           <form>
             <label>WORKSPACE NAME</label>
-            <input onChange={this.handleTeamFormInput('name')}
-              value={this.state.name} placeholder='Team Name'/>
+            <input onChange={this.handleTeamFormInput('updateName')}
+              value={this.state.updateName}/>
           </form>
 
-          <button onClick={this.teamFormSubmit}>Create Workspace</button>
+          <button onClick={this.handleTeamUpdate}>Update Workspace</button>
         </div>
       </Modal>
     );

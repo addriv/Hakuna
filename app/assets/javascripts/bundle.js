@@ -3312,7 +3312,7 @@ var logoutUser = exports.logoutUser = function logoutUser() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchTeams = exports.fetchTeam = exports.receiveUserDisplay = exports.receiveTeam = exports.receiveTeams = exports.RECEIVE_USER_DISPLAY = exports.RECEIVE_TEAMS = exports.RECEIVE_TEAM = undefined;
+exports.updateTeam = exports.fetchTeams = exports.fetchTeam = exports.receiveUserDisplay = exports.receiveTeam = exports.receiveTeams = exports.RECEIVE_USER_DISPLAY = exports.RECEIVE_TEAMS = exports.RECEIVE_TEAM = undefined;
 
 var _navigation_util = __webpack_require__(312);
 
@@ -3357,6 +3357,14 @@ var fetchTeams = exports.fetchTeams = function fetchTeams() {
   return function (dispatch) {
     return navUtil.fetchTeams().then(function (response) {
       return dispatch(receiveTeams(response));
+    });
+  };
+};
+
+var updateTeam = exports.updateTeam = function updateTeam(team) {
+  return function (dispatch) {
+    return navUtil.updateTeam(team).then(function (response) {
+      return dispatch(receiveTeam(response));
     });
   };
 };
@@ -30706,6 +30714,14 @@ var objectComparisonByKeys = exports.objectComparisonByKeys = function objectCom
   return true;
 };
 
+var updateTeam = exports.updateTeam = function updateTeam(team) {
+  return $.ajax({
+    method: 'PATCH',
+    url: 'api/teams/' + team.id,
+    data: { team: team }
+  });
+};
+
 /***/ }),
 /* 313 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -32360,6 +32376,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     leaveTeam: function leaveTeam(team) {
       return dispatch((0, _account_actions.leaveTeam)(team));
+    },
+    updateTeam: function updateTeam(team) {
+      return dispatch((0, _navigation_actions.updateTeam)(team));
     }
   };
 };
@@ -32421,6 +32440,8 @@ var SettingsMenu = function (_React$Component) {
 
     _this.state = {
       name: '',
+      updateName: _this.props.entities.team.name,
+      updateId: _this.props.entities.team.id,
       teamModalIsOpen: false,
       settingsModalIsOpen: false,
       leaveTeamModalIsOpen: false };
@@ -32431,6 +32452,7 @@ var SettingsMenu = function (_React$Component) {
     _this.teamFormSubmit = _this.teamFormSubmit.bind(_this);
     _this.handleLeaveTeam = _this.handleLeaveTeam.bind(_this);
     _this.toggleLeaveTeamModal = _this.toggleLeaveTeamModal.bind(_this);
+    _this.handleTeamUpdate = _this.handleTeamUpdate.bind(_this);
     return _this;
   }
 
@@ -32494,6 +32516,13 @@ var SettingsMenu = function (_React$Component) {
       event.preventDefault();
       var team = this.props.entities.team;
       this.props.leaveTeam({ team: team });
+    }
+  }, {
+    key: 'handleTeamUpdate',
+    value: function handleTeamUpdate(event) {
+      event.preventDefault();
+      var updatedData = { id: this.state.id, name: this.state.updateName };
+      this.props.updateTeam(updatedData);
     }
   }, {
     key: 'confirmLeaveTeamModal',
@@ -32621,13 +32650,13 @@ var SettingsMenu = function (_React$Component) {
               null,
               'WORKSPACE NAME'
             ),
-            _react2.default.createElement('input', { onChange: this.handleTeamFormInput('name'),
-              value: this.state.name, placeholder: 'Team Name' })
+            _react2.default.createElement('input', { onChange: this.handleTeamFormInput('updateName'),
+              value: this.state.updateName })
           ),
           _react2.default.createElement(
             'button',
-            { onClick: this.teamFormSubmit },
-            'Create Workspace'
+            { onClick: this.handleTeamUpdate },
+            'Update Workspace'
           )
         )
       );

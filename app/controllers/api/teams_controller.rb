@@ -26,6 +26,15 @@ class Api::TeamsController < ApplicationController
 
   end
 
+  def update
+    @team = current_user.teams_led.find_by_id(params[:id])
+    if @team.update_attributes(team_params)
+      render :team
+    else
+      render json: @team.errors.full_messages, status: 404
+    end
+  end
+
   private
 
   def team_params
