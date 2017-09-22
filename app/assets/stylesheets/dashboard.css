@@ -31,7 +31,7 @@
 
 .top-bar {
   box-shadow: 5px 5px 5px -5px rgba(0,0,0,0.3);
-  height: 40px;
+  height: 42px;
   display: flex;
 }
 
@@ -94,8 +94,7 @@
 .current-team{
   height: 100%;
   font-size: 20px;
-  padding-top: 5px;
-  padding-right: 10px;
+  padding: 10px;
 }
 
 .create-team-btn, .menu-logout-btn, .team-settings-btn, .leave-team-btn{

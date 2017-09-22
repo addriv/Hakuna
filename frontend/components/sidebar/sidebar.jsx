@@ -21,7 +21,7 @@ export default class Sidebar extends React.Component {
     }
 
     const memberButton= (initials, i, memberId) => (
-      <button className={`member-icon-user-${i}`} data-member={memberId} key={i} id={i} ><div>{initials}</div></button>
+      <button className={`member-icon-user-${i}`} data-member={memberId} key={i} id={i} >{initials}</button>
     );
 
     let membersGrid = [memberButton(this.props.currentUserInitials, 0)];

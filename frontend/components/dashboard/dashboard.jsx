@@ -148,9 +148,9 @@ export default class Dashboard extends React.Component{
 
                     <div className='current-team'>{teamDisplay}</div>
 
-                    <div className='member-icon-user-0'>
-                      <div>{this.props.userInitials}</div>
-                    </div>
+                    <button className='member-icon-user-0'>
+                      {this.props.userInitials}
+                    </button>
                   </button>
 
                   { settingsMenu }

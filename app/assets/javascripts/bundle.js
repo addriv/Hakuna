@@ -31242,13 +31242,9 @@ var Dashboard = function (_React$Component) {
                       teamDisplay
                     ),
                     _react2.default.createElement(
-                      'div',
+                      'button',
                       { className: 'member-icon-user-0' },
-                      _react2.default.createElement(
-                        'div',
-                        null,
-                        this.props.userInitials
-                      )
+                      this.props.userInitials
                     )
                   ),
                   settingsMenu
@@ -32229,11 +32225,7 @@ var Sidebar = function (_React$Component) {
         return _react2.default.createElement(
           'button',
           { className: 'member-icon-user-' + i, 'data-member': memberId, key: i, id: i },
-          _react2.default.createElement(
-            'div',
-            null,
-            initials
-          )
+          initials
         );
       };
 
