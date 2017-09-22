@@ -2,6 +2,9 @@ import React from 'react';
 import Modal from 'react-modal';
 
 const newTeamModalStyles = {
+  overlay: {
+    backgroundColor: 'rgba(95, 95, 95, 0.75)'
+  },
   content : {
     top                   : '40%',
     left                  : '50%',
@@ -18,13 +21,15 @@ export default class SettingsMenu extends React.Component{
     this.state = {
       name: '',
       teamModalIsOpen: false,
-      settingsModalIsOpen: false };
+      settingsModalIsOpen: false,
+      leaveTeamModalIsOpen: false };
 
     this.handleTeamSelect = this.handleTeamSelect.bind(this);
     this.toggleNewTeamModal = this.toggleNewTeamModal.bind(this);
     this.toggleSettingsModal = this.toggleSettingsModal.bind(this);
     this.teamFormSubmit = this.teamFormSubmit.bind(this);
     this.handleLeaveTeam = this.handleLeaveTeam.bind(this);
+    this.toggleLeaveTeamModal = this.toggleLeaveTeamModal.bind(this);
   }
 
   handleTeamSelect(event){
@@ -63,10 +68,42 @@ export default class SettingsMenu extends React.Component{
     });
   }
 
+  toggleLeaveTeamModal(event){
+    if (event){
+      event.preventDefault();
+      this.setState({ leaveTeamModalIsOpen: !this.state.leaveTeamModalIsOpen });
+    }
+  }
+
   handleLeaveTeam(event){
     event.preventDefault();
     const team = this.props.entities.team;
     this.props.leaveTeam({ team });
+  }
+
+  confirmLeaveTeamModal(){
+    return (
+      <Modal
+        isOpen={this.state.leaveTeamModalIsOpen}
+        onAfterOpen={this.toggleLeaveTeamModal}
+        onRequestClose={this.toggleLeaveTeamModal}
+        style={newTeamModalStyles}
+        contentLabel="Leave Team Modal">
+
+        <div className='leave-team-modal'>
+          <div id='header'>Remove Yourself from the Workspace?</div>
+          <div id='content'>
+            If you remove yourself, you won't be able to access any of the projects or task.
+          </div>
+          <div id='buttons'>
+            <button id='cancel-btn'
+              onClick={this.toggleLeaveTeamModal}>Cancel</button>
+            <button id='confirm-leave'
+              onClick={this.handleLeaveTeam}>Remove Me</button>
+          </div>
+        </div>
+      </Modal>
+    );
   }
 
   newTeamModalContent(){
@@ -76,7 +113,7 @@ export default class SettingsMenu extends React.Component{
         onAfterOpen={this.toggleNewTeamModal}
         onRequestClose={this.toggleNewTeamModal}
         style={newTeamModalStyles}
-        contentLabel="Example Modal">
+        contentLabel="New Team Modal">
 
         <div className='new-team-form'>
           <div className='new-team-header'>
@@ -103,7 +140,7 @@ export default class SettingsMenu extends React.Component{
         onAfterOpen={this.toggleSettingsModal}
         onRequestClose={this.toggleSettingsModal}
         style={newTeamModalStyles}
-        contentLabel="Example Modal">
+        contentLabel="Team Settings Modal">
 
         <div className='new-team-form'>
           <div className='new-team-header'>
@@ -135,7 +172,7 @@ export default class SettingsMenu extends React.Component{
 
     const leaveTeamButton = (
       <button className='leave-team-btn'
-        onClick={this.handleLeaveTeam}>Remove me from this Workspace</button>
+        onClick={this.toggleLeaveTeamModal}>Remove me from this Workspace</button>
     );
 
     const logoutButton = (
@@ -165,6 +202,7 @@ export default class SettingsMenu extends React.Component{
       <div className='settings-dropdown'>
         { this.newTeamModalContent() }
         { this.teamSettingsModalContent() }
+        { this.confirmLeaveTeamModal() }
         <ul>
           { teamsList }
           { newTeamButton }

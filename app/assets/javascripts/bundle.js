@@ -32398,6 +32398,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var newTeamModalStyles = {
+  overlay: {
+    backgroundColor: 'rgba(95, 95, 95, 0.75)'
+  },
   content: {
     top: '40%',
     left: '50%',
@@ -32419,13 +32422,15 @@ var SettingsMenu = function (_React$Component) {
     _this.state = {
       name: '',
       teamModalIsOpen: false,
-      settingsModalIsOpen: false };
+      settingsModalIsOpen: false,
+      leaveTeamModalIsOpen: false };
 
     _this.handleTeamSelect = _this.handleTeamSelect.bind(_this);
     _this.toggleNewTeamModal = _this.toggleNewTeamModal.bind(_this);
     _this.toggleSettingsModal = _this.toggleSettingsModal.bind(_this);
     _this.teamFormSubmit = _this.teamFormSubmit.bind(_this);
     _this.handleLeaveTeam = _this.handleLeaveTeam.bind(_this);
+    _this.toggleLeaveTeamModal = _this.toggleLeaveTeamModal.bind(_this);
     return _this;
   }
 
@@ -32476,11 +32481,62 @@ var SettingsMenu = function (_React$Component) {
       });
     }
   }, {
+    key: 'toggleLeaveTeamModal',
+    value: function toggleLeaveTeamModal(event) {
+      if (event) {
+        event.preventDefault();
+        this.setState({ leaveTeamModalIsOpen: !this.state.leaveTeamModalIsOpen });
+      }
+    }
+  }, {
     key: 'handleLeaveTeam',
     value: function handleLeaveTeam(event) {
       event.preventDefault();
       var team = this.props.entities.team;
       this.props.leaveTeam({ team: team });
+    }
+  }, {
+    key: 'confirmLeaveTeamModal',
+    value: function confirmLeaveTeamModal() {
+      return _react2.default.createElement(
+        _reactModal2.default,
+        {
+          isOpen: this.state.leaveTeamModalIsOpen,
+          onAfterOpen: this.toggleLeaveTeamModal,
+          onRequestClose: this.toggleLeaveTeamModal,
+          style: newTeamModalStyles,
+          contentLabel: 'Leave Team Modal' },
+        _react2.default.createElement(
+          'div',
+          { className: 'leave-team-modal' },
+          _react2.default.createElement(
+            'div',
+            { id: 'header' },
+            'Remove Yourself from the Workspace?'
+          ),
+          _react2.default.createElement(
+            'div',
+            { id: 'content' },
+            'If you remove yourself, you won\'t be able to access any of the projects or task.'
+          ),
+          _react2.default.createElement(
+            'div',
+            { id: 'buttons' },
+            _react2.default.createElement(
+              'button',
+              { id: 'cancel-btn',
+                onClick: this.toggleLeaveTeamModal },
+              'Cancel'
+            ),
+            _react2.default.createElement(
+              'button',
+              { id: 'confirm-leave',
+                onClick: this.handleLeaveTeam },
+              'Remove Me'
+            )
+          )
+        )
+      );
     }
   }, {
     key: 'newTeamModalContent',
@@ -32492,7 +32548,7 @@ var SettingsMenu = function (_React$Component) {
           onAfterOpen: this.toggleNewTeamModal,
           onRequestClose: this.toggleNewTeamModal,
           style: newTeamModalStyles,
-          contentLabel: 'Example Modal' },
+          contentLabel: 'New Team Modal' },
         _react2.default.createElement(
           'div',
           { className: 'new-team-form' },
@@ -32539,7 +32595,7 @@ var SettingsMenu = function (_React$Component) {
           onAfterOpen: this.toggleSettingsModal,
           onRequestClose: this.toggleSettingsModal,
           style: newTeamModalStyles,
-          contentLabel: 'Example Modal' },
+          contentLabel: 'Team Settings Modal' },
         _react2.default.createElement(
           'div',
           { className: 'new-team-form' },
@@ -32596,7 +32652,7 @@ var SettingsMenu = function (_React$Component) {
       var leaveTeamButton = _react2.default.createElement(
         'button',
         { className: 'leave-team-btn',
-          onClick: this.handleLeaveTeam },
+          onClick: this.toggleLeaveTeamModal },
         'Remove me from this Workspace'
       );
 
@@ -32635,6 +32691,7 @@ var SettingsMenu = function (_React$Component) {
         { className: 'settings-dropdown' },
         this.newTeamModalContent(),
         this.teamSettingsModalContent(),
+        this.confirmLeaveTeamModal(),
         _react2.default.createElement(
           'ul',
           null,
