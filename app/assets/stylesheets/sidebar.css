@@ -31,20 +31,18 @@
   height: 35px;
   border-radius: 35px;
   margin: 3px 2px;
-  position: relative;
   padding: 0;
   color: white;
   vertical-align: center;
 }
 
-/*[class^="member-icon-user"] > div{
+[class^="member-icon-user"] > div{
   position: relative;
-  top: 30%;
-  vertical-align: center;
+  top: 28%;
   color: white;
   font-size: 10px;
   font-weight: lighter;
-}*/
+}
 
 .member-icon-user-0{
   background-color: #F94449;

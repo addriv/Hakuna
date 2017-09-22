@@ -31242,9 +31242,13 @@ var Dashboard = function (_React$Component) {
                       teamDisplay
                     ),
                     _react2.default.createElement(
-                      'button',
+                      'div',
                       { className: 'member-icon-user-0' },
-                      this.props.userInitials
+                      _react2.default.createElement(
+                        'div',
+                        null,
+                        this.props.userInitials
+                      )
                     )
                   ),
                   settingsMenu
