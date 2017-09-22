@@ -32521,7 +32521,7 @@ var SettingsMenu = function (_React$Component) {
     key: 'handleTeamUpdate',
     value: function handleTeamUpdate(event) {
       event.preventDefault();
-      var updatedData = { id: this.state.id, name: this.state.updateName };
+      var updatedData = { id: this.state.updateId, name: this.state.updateName };
       this.props.updateTeam(updatedData);
     }
   }, {
