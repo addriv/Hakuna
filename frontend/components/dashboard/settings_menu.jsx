@@ -53,7 +53,8 @@ export default class SettingsMenu extends React.Component{
     if (event){
       event.preventDefault();
       this.setState({ settingsModalIsOpen: !this.state.settingsModalIsOpen,
-        teamModalIsOpen: false });
+        teamModalIsOpen: false,
+        updateName: this.props.entities.team.name } );
     }
   }
 

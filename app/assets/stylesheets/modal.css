@@ -26,6 +26,10 @@
  background-color: #14aaf5
 }
 
+.new-team-form > button:hover{
+  background-color: #67ccff;
+}
+
 .new-team-form > form >label{
   font-size: 15px;
   width: 140px;

@@ -32478,7 +32478,8 @@ var SettingsMenu = function (_React$Component) {
       if (event) {
         event.preventDefault();
         this.setState({ settingsModalIsOpen: !this.state.settingsModalIsOpen,
-          teamModalIsOpen: false });
+          teamModalIsOpen: false,
+          updateName: this.props.entities.team.name });
       }
     }
   }, {
@@ -35275,6 +35276,8 @@ var _merge2 = _interopRequireDefault(_merge);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 var teamsReducer = exports.teamsReducer = function teamsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   var action = arguments[1];
@@ -35283,6 +35286,10 @@ var teamsReducer = exports.teamsReducer = function teamsReducer() {
   switch (action.type) {
     case _navigation_actions.RECEIVE_TEAMS:
       return action.teams;
+    case _navigation_actions.RECEIVE_TEAM:
+      var team = action.teamData.team;
+      var data = _defineProperty({}, team.id, team);
+      return (0, _merge2.default)({}, state, data);
     case _account_actions.RECEIVE_NEW_TEAM:
       var newState = (0, _merge2.default)({}, state, action.team);
       return newState;
