@@ -68,15 +68,15 @@
   height: 250px;
 }
 
+.leave-team-modal > div > #confirm-leave:hover{
+  background-color: #de2234;
+}
+
 .leave-team-modal > div > #confirm-leave {
   background-color: #ff5263;
   color: white;
   width: 90px;
   font-size: 13px;
-}
-
-.leave-team-modal > div > #confirm-leave:hover{
-  background-color: #de2234;
 }
 
 .leave-team-modal > div > #cancel-btn {
