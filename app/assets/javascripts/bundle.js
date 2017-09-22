@@ -31178,7 +31178,7 @@ var Dashboard = function (_React$Component) {
               tasksList
             );
             var project = this.props.entities.projects[projectDisplay];
-            listDisplay = '' + project.title;
+            listDisplay = '' + project.name;
           }
 
       if (this.state.settingsMenuIsOpen) {

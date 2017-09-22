@@ -117,7 +117,7 @@ export default class Dashboard extends React.Component{
 
       tasksUl = <ul>{ tasksList }</ul>;
       const project = this.props.entities.projects[projectDisplay];
-      listDisplay = `${project.title}`;
+      listDisplay = `${project.name}`;
     }
 
     if (this.state.settingsMenuIsOpen){
