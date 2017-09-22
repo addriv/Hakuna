@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
   teams: teamsSelector(state),
   entities: state.entities,
   tasks: tasksSelector(state),
-  projectDisplay: state.ui.projectDisplay,
+  uiDisplay: state.ui,
   userInitials: currentUserInitials(state)
 });
 

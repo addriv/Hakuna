@@ -3338,10 +3338,10 @@ var receiveTeam = exports.receiveTeam = function receiveTeam(teamData) {
   };
 };
 
-var receiveUserDisplay = exports.receiveUserDisplay = function receiveUserDisplay(user) {
+var receiveUserDisplay = exports.receiveUserDisplay = function receiveUserDisplay(userId) {
   return {
     type: RECEIVE_USER_DISPLAY,
-    user: user
+    userId: userId
   };
 };
 
@@ -30693,6 +30693,19 @@ var fetchTeams = exports.fetchTeams = function fetchTeams() {
   });
 };
 
+var objectComparisonByKeys = exports.objectComparisonByKeys = function objectComparisonByKeys(obj1, obj2) {
+  var obj1Keys = Object.keys(obj1).sort();
+  var obj2Keys = Object.keys(obj2).sort();
+
+  if (obj1Keys.length !== obj2Keys.length) return false;else {
+    for (var i = 0; i < obj1Keys.length; i++) {
+      if (obj1Keys[i] !== obj2Keys[i]) return false;
+    }
+  }
+
+  return true;
+};
+
 /***/ }),
 /* 313 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -30957,7 +30970,7 @@ var mapStateToProps = function mapStateToProps(state) {
     teams: (0, _selectors.teamsSelector)(state),
     entities: state.entities,
     tasks: (0, _selectors.tasksSelector)(state),
-    projectDisplay: state.ui.projectDisplay,
+    uiDisplay: state.ui,
     userInitials: (0, _selectors.currentUserInitials)(state)
   };
 };
@@ -31009,6 +31022,8 @@ var _settings_menu_container = __webpack_require__(325);
 
 var _settings_menu_container2 = _interopRequireDefault(_settings_menu_container);
 
+var _navigation_util = __webpack_require__(312);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31037,6 +31052,13 @@ var Dashboard = function (_React$Component) {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(newProps) {
       this.setState({ settingsMenuIsOpen: false });
+      if (newProps.teams && this.props.teams) {
+        var newTeams = Object.values(newProps.teams);
+        var oldTeams = Object.values(this.props.teams);
+        if (newTeams.length < oldTeams.length) {
+          this.props.fetchTeam(parseInt(newTeams[0].id));
+        }
+      }
     }
   }, {
     key: 'componentDidMount',
@@ -31062,14 +31084,13 @@ var Dashboard = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
-
       var entitiesExist = Object.keys(this.props.entities).length > 0;
       var teams = this.props.teams;
       var tasks = this.props.tasks;
 
       //Declare variables to be rendered
       var teamDisplay = void 0,
+          listDisplay = void 0,
           tasksList = void 0,
           tasksUl = void 0,
           settingsMenu = void 0;
@@ -31080,31 +31101,19 @@ var Dashboard = function (_React$Component) {
       }
 
       //Grab tasks if they exist
-      if (tasks && this.props.projectDisplay === 0) {
-        tasksList = tasks.map(function (task, i) {
-          return _react2.default.createElement(
-            'li',
-            {
-              id: task.id,
-              key: i },
-            task.title
-          );
-        });
+      var projectDisplay = this.props.uiDisplay.projectDisplay;
+      var userDisplay = this.props.uiDisplay.userDisplay;
 
-        tasksUl = _react2.default.createElement(
-          'ul',
-          null,
-          tasksList
-        );
-      } else if (this.props.projectDisplay !== 0) {
-        var projectTasks = [];
+      //If userDisplay !== -1, grab tasks for specified user
+      if (userDisplay !== -1) {
+        var userTasks = [];
         this.props.tasks.forEach(function (task) {
-          if (task.project_id === _this3.props.projectDisplay) {
-            projectTasks.push(task);
+          if (task.assignee_id === userDisplay) {
+            userTasks.push(task);
           }
         });
 
-        tasksList = projectTasks.map(function (task, i) {
+        tasksList = userTasks.map(function (task, i) {
           return _react2.default.createElement(
             'li',
             {
@@ -31119,7 +31128,58 @@ var Dashboard = function (_React$Component) {
           null,
           tasksList
         );
+        var memberSelected = this.entities.members[userDisplay].name;
+
+        if (userDisplay === 0) {
+          listDisplay = 'My Tasks in ' + teamDisplay;
+        } else listDisplay = memberSelected + '\'s Assigned Tasks';
       }
+      //If projectDisplay === 0, get all public tasks for the Team
+      else if (tasks && projectDisplay === 0) {
+          tasksList = tasks.map(function (task, i) {
+            return _react2.default.createElement(
+              'li',
+              {
+                id: task.id,
+                key: i },
+              task.title
+            );
+          });
+
+          tasksUl = _react2.default.createElement(
+            'ul',
+            null,
+            tasksList
+          );
+          listDisplay = 'All Tasks in ' + teamDisplay;
+        }
+        //If projectDisplay !== 0 or !== -1 filter specific tasks by project selected
+        else if (projectDisplay !== 0 && projectDisplay !== -1) {
+            var projectTasks = [];
+            this.props.tasks.forEach(function (task) {
+              if (task.project_id === projectDisplay) {
+                projectTasks.push(task);
+              }
+            });
+
+            tasksList = projectTasks.map(function (task, i) {
+              return _react2.default.createElement(
+                'li',
+                {
+                  id: task.id,
+                  key: i },
+                task.title
+              );
+            });
+
+            tasksUl = _react2.default.createElement(
+              'ul',
+              null,
+              tasksList
+            );
+            var project = this.props.entities.projects[projectDisplay];
+            listDisplay = '' + project.title;
+          }
 
       if (this.state.settingsMenuIsOpen) {
         settingsMenu = _react2.default.createElement(_settings_menu_container2.default, null);
@@ -31187,9 +31247,7 @@ var Dashboard = function (_React$Component) {
                   _react2.default.createElement(
                     'h1',
                     null,
-                    'Welcome! This is ',
-                    teamDisplay,
-                    ' Dashboard'
+                    listDisplay
                   )
                 )
               )
@@ -31232,6 +31290,14 @@ var Dashboard = function (_React$Component) {
 //   </form>
 //
 // </Modal>
+
+///Conditional for deleting teams
+// if (this.props.teams && newProps.teams){
+//   console.log(objectComparisonByKeys(newProps.teams, this.props.teams));
+//   if (!objectComparisonByKeys(newProps.teams, this.props.teams)){
+//     this.props.fetchTeam(Object.keys(newProps.teams)[0].id);
+//   }
+// }
 
 
 exports.default = Dashboard;
@@ -32143,10 +32209,10 @@ var Sidebar = function (_React$Component) {
         currentTeam = this.props.entities.team.name;
       }
 
-      var memberButton = function memberButton(initials, i) {
+      var memberButton = function memberButton(initials, i, memberId) {
         return _react2.default.createElement(
           'button',
-          { className: 'member-icon-user-' + i, key: i, id: i },
+          { className: 'member-icon-user-' + i, 'data-member': memberId, key: i, id: i },
           _react2.default.createElement(
             'div',
             null,
@@ -32162,7 +32228,9 @@ var Sidebar = function (_React$Component) {
             return name[0];
           }).join('');
 
-          membersGrid.push(memberButton(memberInitials, j));
+          var memberId = this.props.teamMembers[j - 1].id;
+
+          membersGrid.push(memberButton(memberInitials, j, memberId));
         } else {
           membersGrid.push(_react2.default.createElement('li', { className: 'member-icon-blank', key: j, id: j }));
         }
@@ -34959,8 +35027,15 @@ var _ui_actions = __webpack_require__(141);
 
 var _navigation_actions = __webpack_require__(28);
 
+var _merge = __webpack_require__(334);
+
+var _merge2 = _interopRequireDefault(_merge);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var _defaultState = {
-  projectDisplay: 0
+  projectDisplay: 0,
+  userDisplay: -1
 };
 
 var uiReducer = exports.uiReducer = function uiReducer() {
@@ -34970,9 +35045,9 @@ var uiReducer = exports.uiReducer = function uiReducer() {
   Object.freeze(state);
   switch (action.type) {
     case _ui_actions.RECEIVE_PROJECT_DISPLAY:
-      return { projectDisplay: action.projectId };
-    case RECEIVE_USER_DISPLAY:
-
+      return (0, _merge2.default)({}, state, { projectDisplay: action.projectId });
+    case _ui_actions.RECEIVE_USER_DISPLAY:
+      return (0, _merge2.default)({}, state, { userDisplay: action.userDisplayId });
     case _navigation_actions.RECEIVE_TEAM:
       return _defaultState;
     default:
@@ -35123,7 +35198,8 @@ var teamsReducer = exports.teamsReducer = function teamsReducer() {
     case _navigation_actions.RECEIVE_TEAMS:
       return action.teams;
     case _account_actions.RECEIVE_NEW_TEAM:
-      return (0, _merge2.default)({}, state, { teams: action.team });
+      var newState = (0, _merge2.default)({}, state, action.team);
+      return newState;
     default:
       return state;
   }

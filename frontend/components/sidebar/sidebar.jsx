@@ -20,8 +20,8 @@ export default class Sidebar extends React.Component {
       currentTeam = this.props.entities.team.name;
     }
 
-    const memberButton= (initials, i) => (
-      <button className={`member-icon-user-${i}`} key={i} id={i} ><div>{initials}</div></button>
+    const memberButton= (initials, i, memberId) => (
+      <button className={`member-icon-user-${i}`} data-member={memberId} key={i} id={i} ><div>{initials}</div></button>
     );
 
     let membersGrid = [memberButton(this.props.currentUserInitials, 0)];
@@ -32,7 +32,9 @@ export default class Sidebar extends React.Component {
              .map(name => name[0])
              .join('');
 
-        membersGrid.push(memberButton(memberInitials, j));
+        const memberId = this.props.teamMembers[j-1].id;
+
+        membersGrid.push(memberButton(memberInitials, j, memberId));
       }
       else {
         membersGrid.push(<li className='member-icon-blank' key={j} id={j}></li>);

@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { Route, Redirect } from 'react-router-dom';
 import SidebarContainer from '../sidebar/sidebar_container';
 import SettingsMenuContainer from './settings_menu_container';
+import { objectComparisonByKeys } from '../../util/navigation_util';
 
 export default class Dashboard extends React.Component{
   constructor(props){
@@ -16,6 +17,13 @@ export default class Dashboard extends React.Component{
 
   componentWillReceiveProps(newProps){
     this.setState({ settingsMenuIsOpen: false });
+    if (newProps.teams && this.props.teams){
+      const newTeams = Object.values(newProps.teams);
+      const oldTeams = Object.values(this.props.teams);
+      if (newTeams.length < oldTeams.length){
+        this.props.fetchTeam(parseInt(newTeams[0].id));
+      }
+    }
   }
 
   componentDidMount(){
@@ -41,7 +49,7 @@ export default class Dashboard extends React.Component{
     const tasks = this.props.tasks;
 
     //Declare variables to be rendered
-    let teamDisplay, tasksList, tasksUl, settingsMenu;
+    let teamDisplay, listDisplay, tasksList, tasksUl, settingsMenu;
 
     //Grab team being displayed
     if (entitiesExist){
@@ -49,7 +57,36 @@ export default class Dashboard extends React.Component{
     }
 
     //Grab tasks if they exist
-    if (tasks && this.props.projectDisplay === 0){
+    const projectDisplay = this.props.uiDisplay.projectDisplay;
+    const userDisplay = this.props.uiDisplay.userDisplay;
+
+    //If userDisplay !== -1, grab tasks for specified user
+    if (userDisplay !== -1){
+      const userTasks = [];
+      this.props.tasks.forEach(task => {
+        if (task.assignee_id === userDisplay){
+          userTasks.push(task);
+        }
+      });
+
+      tasksList = userTasks.map((task, i) => {
+        return (
+          <li
+            id={ task.id }
+            key={i}>{ task.title }</li>
+        );
+      });
+
+      tasksUl = <ul>{ tasksList }</ul>;
+      const memberSelected = this.entities.members[userDisplay].name;
+
+      if (userDisplay === 0){
+        listDisplay = `My Tasks in ${teamDisplay}`;
+      }
+      else listDisplay = `${memberSelected}'s Assigned Tasks`;
+    }
+    //If projectDisplay === 0, get all public tasks for the Team
+    else if (tasks && projectDisplay === 0){
       tasksList = tasks.map((task, i) => {
         return (
           <li
@@ -59,11 +96,13 @@ export default class Dashboard extends React.Component{
       });
 
       tasksUl = <ul>{ tasksList }</ul>;
+      listDisplay = `All Tasks in ${teamDisplay}`;
     }
-    else if (this.props.projectDisplay !== 0){
+    //If projectDisplay !== 0 or !== -1 filter specific tasks by project selected
+    else if (projectDisplay !== 0 && projectDisplay !== -1){
       const projectTasks = [];
       this.props.tasks.forEach(task => {
-        if (task.project_id === this.props.projectDisplay) {
+        if (task.project_id === projectDisplay) {
           projectTasks.push(task);
         }
       });
@@ -77,6 +116,8 @@ export default class Dashboard extends React.Component{
       });
 
       tasksUl = <ul>{ tasksList }</ul>;
+      const project = this.props.entities.projects[projectDisplay];
+      listDisplay = `${project.title}`;
     }
 
     if (this.state.settingsMenuIsOpen){
@@ -120,7 +161,7 @@ export default class Dashboard extends React.Component{
 
               <nav className='bottom-bar'>
                 <div>
-                  <h1>Welcome! This is {teamDisplay} Dashboard</h1>
+                  <h1>{listDisplay}</h1>
                 </div>
               </nav>
 
@@ -163,3 +204,11 @@ export default class Dashboard extends React.Component{
 //   </form>
 //
 // </Modal>
+
+///Conditional for deleting teams
+// if (this.props.teams && newProps.teams){
+//   console.log(objectComparisonByKeys(newProps.teams, this.props.teams));
+//   if (!objectComparisonByKeys(newProps.teams, this.props.teams)){
+//     this.props.fetchTeam(Object.keys(newProps.teams)[0].id);
+//   }
+// }

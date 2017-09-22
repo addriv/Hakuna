@@ -14,9 +14,9 @@ export const receiveTeam = teamData => ({
   teamData
 });
 
-export const receiveUserDisplay = user => ({
+export const receiveUserDisplay = userId => ({
   type: RECEIVE_USER_DISPLAY,
-  user
+  userId
 });
 
 export const fetchTeam = team => dispatch => (

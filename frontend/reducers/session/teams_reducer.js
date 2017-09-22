@@ -8,7 +8,8 @@ import merge from 'lodash/merge';
      case RECEIVE_TEAMS:
        return action.teams;
      case RECEIVE_NEW_TEAM:
-       return merge({}, state, { teams: action.team });
+       const newState = merge({}, state, action.team );
+       return newState;
      default:
        return state;
    }
