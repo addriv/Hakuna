@@ -1,5 +1,6 @@
 import React from 'react';
 import NewProjectContainer from '../projects/new_project_container';
+import EditProjectContainer from '../projects/edit_project_container';
 
 export default class Sidebar extends React.Component {
   constructor(props){
@@ -45,10 +46,13 @@ export default class Sidebar extends React.Component {
     if (this.props.projects){
       projects = this.props.projects.map((project, i) => {
         return (
-          <button
-            onClick={this.handleProject}
-            key={i}
-            id={project.id}>{project.name}</button>
+          <li key={i}>
+            <button
+              onClick={this.handleProject}
+              id={project.id}>{project.name}</button>
+
+            <EditProjectContainer projectId={project.id}/>
+          </li>
         );
       });
 

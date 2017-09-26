@@ -90,7 +90,20 @@ div.member{
   height: 50px;
 }
 
-.sidebar-projects > ul > button {
+.sidebar-projects > ul > li{
+  display: flex;
+  flex-direction: row;
+}
+
+.sidebar-projects > ul > li:hover{
+  background-color: gray;
+}
+
+.sidebar-projects > ul > li:hover > div > button {
+  color: white;
+}
+
+.sidebar-projects > ul > li > button {
   width: 100%;
   background-color: transparent;
   font-size: 13px;
@@ -98,6 +111,16 @@ div.member{
   color: white;
   text-align: left;
   margin-left: 10px;
+}
+
+.sidebar-projects > ul > li > div{
+  padding: 8px;
+}
+
+.sidebar-projects > ul > li > div > button{
+  background-color: transparent;
+  color: transparent;
+  font-size: 16px;
 }
 
 .sidebar-team-members > #team{

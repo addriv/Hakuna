@@ -32232,6 +32232,10 @@ var _new_project_container = __webpack_require__(408);
 
 var _new_project_container2 = _interopRequireDefault(_new_project_container);
 
+var _edit_project_container = __webpack_require__(411);
+
+var _edit_project_container2 = _interopRequireDefault(_edit_project_container);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -32305,12 +32309,16 @@ var Sidebar = function (_React$Component) {
       if (this.props.projects) {
         projects = this.props.projects.map(function (project, i) {
           return _react2.default.createElement(
-            'button',
-            {
-              onClick: _this2.handleProject,
-              key: i,
-              id: project.id },
-            project.name
+            'li',
+            { key: i },
+            _react2.default.createElement(
+              'button',
+              {
+                onClick: _this2.handleProject,
+                id: project.id },
+              project.name
+            ),
+            _react2.default.createElement(_edit_project_container2.default, { projectId: project.id })
           );
         });
 
@@ -32865,10 +32873,10 @@ var SettingsMenu = function (_React$Component) {
           contentLabel: 'Team Settings Modal' },
         _react2.default.createElement(
           'div',
-          { className: 'new-team-form' },
+          { className: 'edit-team-form' },
           _react2.default.createElement(
             'div',
-            { className: 'new-team-header' },
+            { className: 'edit-team-header' },
             _react2.default.createElement(
               'h2',
               null,
@@ -35591,6 +35599,210 @@ var createProject = exports.createProject = function createProject(project) {
     data: { project: project }
   });
 };
+
+/***/ }),
+/* 411 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(21);
+
+var _edit_project_modal = __webpack_require__(412);
+
+var _edit_project_modal2 = _interopRequireDefault(_edit_project_modal);
+
+var _project_actions = __webpack_require__(409);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    entities: state.entities
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    updateProject: function updateProject(project) {
+      return dispatch((0, _project_actions.updateProject)(project));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_edit_project_modal2.default);
+
+/***/ }),
+/* 412 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactModal = __webpack_require__(82);
+
+var _reactModal2 = _interopRequireDefault(_reactModal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var modalStyles = {
+  overlay: {
+    backgroundColor: 'rgba(95, 95, 95, 0.75)'
+  },
+  content: {
+    top: '40%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)'
+  }
+};
+
+var EditProjectModal = function (_React$Component) {
+  _inherits(EditProjectModal, _React$Component);
+
+  function EditProjectModal(props) {
+    _classCallCheck(this, EditProjectModal);
+
+    var _this = _possibleConstructorReturn(this, (EditProjectModal.__proto__ || Object.getPrototypeOf(EditProjectModal)).call(this, props));
+
+    _this.state = {
+      editProjectIsOpen: false,
+      name: '',
+      description: '',
+      public: true,
+      team_id: null,
+      lead_id: null
+    };
+
+    _this.toggleEditProjectModal = _this.toggleEditProjectModal.bind(_this);
+    return _this;
+  }
+
+  _createClass(EditProjectModal, [{
+    key: 'handleEditFormInput',
+    value: function handleEditFormInput(inputType) {
+      var _this2 = this;
+
+      return function (event) {
+        return _this2.setState(_defineProperty({}, inputType, event.target.value));
+      };
+    }
+  }, {
+    key: 'editProjectModal',
+    value: function editProjectModal() {
+      var project = this.props.entities.projects[this.props.projectId];
+
+      return _react2.default.createElement(
+        _reactModal2.default,
+        {
+          isOpen: this.state.editProjectIsOpen,
+          onAfterOpen: this.toggleEditProjectModal,
+          onRequestClose: this.toggleEditProjectModal,
+          style: modalStyles,
+          contentLabel: 'Edit Project Modal' },
+        _react2.default.createElement(
+          'div',
+          { className: 'edit-project-form' },
+          _react2.default.createElement(
+            'div',
+            { className: 'edit-project-header' },
+            _react2.default.createElement(
+              'h2',
+              null,
+              'Edit Project'
+            ),
+            _react2.default.createElement(
+              'button',
+              { onClick: this.toggleEditProjectModal },
+              'X'
+            )
+          ),
+          _react2.default.createElement(
+            'form',
+            null,
+            _react2.default.createElement(
+              'label',
+              null,
+              'PROJECT NAME'
+            ),
+            _react2.default.createElement('input', {
+              onChange: this.handleEditFormInput('name'),
+              value: project.name }),
+            _react2.default.createElement(
+              'label',
+              null,
+              'DESCRIPTION  '
+            ),
+            _react2.default.createElement('input', {
+              onChange: this.handleEditFormInput('description'),
+              value: project.description })
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.newProjectSubmit },
+            'Create Project'
+          )
+        )
+      );
+    }
+  }, {
+    key: 'toggleEditProjectModal',
+    value: function toggleEditProjectModal(event) {
+      if (event) {
+        event.preventDefault();
+        this.setState({ editProjectIsOpen: !this.state.editProjectIsOpen });
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var editProjectModal = void 0;
+      if (this.state.editProjectIsOpen) {
+        editProjectModal = this.editProjectModal();
+      }
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        editProjectModal,
+        _react2.default.createElement(
+          'button',
+          { onClick: this.toggleEditProjectModal },
+          '...'
+        )
+      );
+    }
+  }]);
+
+  return EditProjectModal;
+}(_react2.default.Component);
+
+exports.default = EditProjectModal;
 
 /***/ })
 /******/ ]);

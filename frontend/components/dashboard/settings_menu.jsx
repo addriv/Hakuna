@@ -152,8 +152,8 @@ export default class SettingsMenu extends React.Component{
         style={newTeamModalStyles}
         contentLabel="Team Settings Modal">
 
-        <div className='new-team-form'>
-          <div className='new-team-header'>
+        <div className='edit-team-form'>
+          <div className='edit-team-header'>
             <h2>Workspace Settings</h2>
             <button onClick={this.toggleSettingsModal}>X</button>
           </div>
