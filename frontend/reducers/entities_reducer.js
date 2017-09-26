@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { RECEIVE_TEAM } from '../actions/navigation_actions';
-import { RECEIVE_NEW_PROJECT } from '../actions/project_actions';
+import { RECEIVE_PROJECT } from '../actions/project_actions';
 import merge from 'lodash/merge';
 
 export const entitiesReducer = (state = {}, action) => {
@@ -8,7 +8,7 @@ export const entitiesReducer = (state = {}, action) => {
   switch(action.type){
     case RECEIVE_TEAM:
       return action.teamData;
-    case RECEIVE_NEW_PROJECT:
+    case RECEIVE_PROJECT:
       const newState = merge({}, state, action.project);
       return newState;
     default:

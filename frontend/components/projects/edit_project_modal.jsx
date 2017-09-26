@@ -19,16 +19,19 @@ export default class EditProjectModal extends React.Component {
   constructor(props){
     super(props);
 
+    const project = this.props.entities.projects[this.props.projectId];
+
     this.state = {
       editProjectIsOpen: false,
-      name: '',
-      description: '',
-      public: true,
-      team_id: null,
-      lead_id: null
+      id: parseInt(project.id),
+      name: project.name,
+      description: project.description,
+      team_id: parseInt(project.team_id),
+      lead_id: parseInt(project.lead_id)
     };
 
     this.toggleEditProjectModal = this.toggleEditProjectModal.bind(this);
+    this.editProjectSubmit = this.editProjectSubmit.bind(this);
   }
 
   handleEditFormInput(inputType){
@@ -36,8 +39,6 @@ export default class EditProjectModal extends React.Component {
   }
 
   editProjectModal(){
-    let project = this.props.entities.projects[this.props.projectId];
-
     return (
       <Modal
         isOpen={this.state.editProjectIsOpen}
@@ -56,15 +57,15 @@ export default class EditProjectModal extends React.Component {
             <label>PROJECT NAME</label>
             <input
               onChange={this.handleEditFormInput('name')}
-              value={project.name}/>
+              value={this.state.name}/>
 
             <label>DESCRIPTION  </label>
             <input
               onChange={this.handleEditFormInput('description')}
-              value={project.description}/>
+              value={this.state.description}/>
           </form>
 
-          <button onClick={this.newProjectSubmit}>Create Project</button>
+          <button onClick={this.editProjectSubmit}>Update Project</button>
         </div>
       </Modal>
     );
@@ -73,8 +74,34 @@ export default class EditProjectModal extends React.Component {
   toggleEditProjectModal(event){
     if (event){
       event.preventDefault();
-      this.setState({ editProjectIsOpen: !this.state.editProjectIsOpen });
+
+      const project = this.props.entities.projects[this.props.projectId];
+      const _defaultState = {
+        editProjectIsOpen: !this.state.editProjectIsOpen,
+        id: parseInt(project.id),
+        name: project.name,
+        description: project.description,
+        team_id: parseInt(project.team_id),
+        lead_id: parseInt(project.lead_id)
+      };
+
+      this.setState(_defaultState);
     }
+  }
+
+  editProjectSubmit(event){
+    event.preventDefault();
+
+    const updatedProject = {
+      id: this.state.id,
+      name: this.state.name,
+      description: this.state.description,
+      team_id: this.state.team_id,
+      lead_id: this.state.lead_id
+    };
+
+    this.props.updateProject(updatedProject)
+      .then(() => this.setState({ editProjectIsOpen: false }));
   }
 
   render(){

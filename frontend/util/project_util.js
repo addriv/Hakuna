@@ -5,3 +5,11 @@ export const createProject = project => (
     data: { project }
   })
 );
+
+export const updateProject = project => (
+  $.ajax({
+    method: 'PATCH',
+    url: `api/teams/${project.team_id}/projects/${project.id}`,
+    data: { project }
+  })
+);

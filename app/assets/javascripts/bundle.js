@@ -35454,7 +35454,7 @@ var entitiesReducer = exports.entitiesReducer = function entitiesReducer() {
   switch (action.type) {
     case _navigation_actions.RECEIVE_TEAM:
       return action.teamData;
-    case _project_actions.RECEIVE_NEW_PROJECT:
+    case _project_actions.RECEIVE_PROJECT:
       var newState = (0, _merge2.default)({}, state, action.project);
       return newState;
     default:
@@ -35553,7 +35553,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createProject = exports.receiveNewProject = exports.RECEIVE_NEW_PROJECT = undefined;
+exports.updateProject = exports.createProject = exports.receiveProject = exports.RECEIVE_PROJECT = undefined;
 
 var _project_util = __webpack_require__(410);
 
@@ -35561,11 +35561,11 @@ var projectUtil = _interopRequireWildcard(_project_util);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var RECEIVE_NEW_PROJECT = exports.RECEIVE_NEW_PROJECT = 'RECEIVE_NEW_PROJECT';
+var RECEIVE_PROJECT = exports.RECEIVE_PROJECT = 'RECEIVE_NEW_PROJECT';
 
-var receiveNewProject = exports.receiveNewProject = function receiveNewProject(project) {
+var receiveProject = exports.receiveProject = function receiveProject(project) {
   return {
-    type: RECEIVE_NEW_PROJECT,
+    type: RECEIVE_PROJECT,
     project: project
   };
 };
@@ -35575,7 +35575,19 @@ var createProject = exports.createProject = function createProject(project) {
     var ajax = projectUtil.createProject(project);
 
     ajax.then(function (response) {
-      return dispatch(receiveNewProject(response));
+      return dispatch(receiveProject(response));
+    });
+
+    return ajax;
+  };
+};
+
+var updateProject = exports.updateProject = function updateProject(project) {
+  return function (dispatch) {
+    var ajax = projectUtil.updateProject(project);
+
+    ajax.then(function (response) {
+      return dispatch(receiveProject(response));
     });
 
     return ajax;
@@ -35596,6 +35608,14 @@ var createProject = exports.createProject = function createProject(project) {
   return $.ajax({
     method: 'POST',
     url: 'api/teams/' + project.team_id + '/projects',
+    data: { project: project }
+  });
+};
+
+var updateProject = exports.updateProject = function updateProject(project) {
+  return $.ajax({
+    method: 'PATCH',
+    url: 'api/teams/' + project.team_id + '/projects/' + project.id,
     data: { project: project }
   });
 };
@@ -35690,16 +35710,19 @@ var EditProjectModal = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (EditProjectModal.__proto__ || Object.getPrototypeOf(EditProjectModal)).call(this, props));
 
+    var project = _this.props.entities.projects[_this.props.projectId];
+
     _this.state = {
       editProjectIsOpen: false,
-      name: '',
-      description: '',
-      public: true,
-      team_id: null,
-      lead_id: null
+      id: parseInt(project.id),
+      name: project.name,
+      description: project.description,
+      team_id: parseInt(project.team_id),
+      lead_id: parseInt(project.lead_id)
     };
 
     _this.toggleEditProjectModal = _this.toggleEditProjectModal.bind(_this);
+    _this.editProjectSubmit = _this.editProjectSubmit.bind(_this);
     return _this;
   }
 
@@ -35715,8 +35738,6 @@ var EditProjectModal = function (_React$Component) {
   }, {
     key: 'editProjectModal',
     value: function editProjectModal() {
-      var project = this.props.entities.projects[this.props.projectId];
-
       return _react2.default.createElement(
         _reactModal2.default,
         {
@@ -35752,7 +35773,7 @@ var EditProjectModal = function (_React$Component) {
             ),
             _react2.default.createElement('input', {
               onChange: this.handleEditFormInput('name'),
-              value: project.name }),
+              value: this.state.name }),
             _react2.default.createElement(
               'label',
               null,
@@ -35760,12 +35781,12 @@ var EditProjectModal = function (_React$Component) {
             ),
             _react2.default.createElement('input', {
               onChange: this.handleEditFormInput('description'),
-              value: project.description })
+              value: this.state.description })
           ),
           _react2.default.createElement(
             'button',
-            { onClick: this.newProjectSubmit },
-            'Create Project'
+            { onClick: this.editProjectSubmit },
+            'Update Project'
           )
         )
       );
@@ -35775,8 +35796,38 @@ var EditProjectModal = function (_React$Component) {
     value: function toggleEditProjectModal(event) {
       if (event) {
         event.preventDefault();
-        this.setState({ editProjectIsOpen: !this.state.editProjectIsOpen });
+
+        var project = this.props.entities.projects[this.props.projectId];
+        var _defaultState = {
+          editProjectIsOpen: !this.state.editProjectIsOpen,
+          id: parseInt(project.id),
+          name: project.name,
+          description: project.description,
+          team_id: parseInt(project.team_id),
+          lead_id: parseInt(project.lead_id)
+        };
+
+        this.setState(_defaultState);
       }
+    }
+  }, {
+    key: 'editProjectSubmit',
+    value: function editProjectSubmit(event) {
+      var _this3 = this;
+
+      event.preventDefault();
+
+      var updatedProject = {
+        id: this.state.id,
+        name: this.state.name,
+        description: this.state.description,
+        team_id: this.state.team_id,
+        lead_id: this.state.lead_id
+      };
+
+      this.props.updateProject(updatedProject).then(function () {
+        return _this3.setState({ editProjectIsOpen: false });
+      });
     }
   }, {
     key: 'render',

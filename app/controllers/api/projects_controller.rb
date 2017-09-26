@@ -12,6 +12,18 @@ class Api::ProjectsController < ApplicationController
     end
   end
 
+  def update
+    @project = current_user.projects.find_by_id(params[:id])
+
+    if @project && @project.update_attributes(project_params)
+      render :show
+    elsif !@project
+      render json: [ 'No project found' ], status: 404
+    else
+      render json: @project.errors.full_messages, status: 422
+    end
+  end
+
   private
 
   def project_params
