@@ -1,9 +1,9 @@
 import React from 'react';
+import NewProjectModal from '../projects/new_project_modal';
 
 export default class Sidebar extends React.Component {
   constructor(props){
     super(props);
-
     this.handleProject = this.handleProject.bind(this);
   }
 
@@ -70,7 +70,10 @@ export default class Sidebar extends React.Component {
         </div>
 
         <div className='sidebar-projects'>
-          <div id='projects-header'>Projects</div>
+          <div id='projects-header'>
+            Projects
+            <NewProjectModal />
+          </div>
           { projectsList }
         </div>
       </div>
