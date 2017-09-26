@@ -32437,11 +32437,13 @@ var NewProjectModal = function (_React$Component) {
       name: '',
       description: '',
       public: true,
-      team_id: null
+      team_id: null,
+      lead_id: null
     };
 
     _this.toggleNewProject = _this.toggleNewProject.bind(_this);
     _this.handleProjectFormInput = _this.handleProjectFormInput.bind(_this);
+    _this.newProjectSubmit = _this.newProjectSubmit.bind(_this);
     return _this;
   }
 
@@ -32467,6 +32469,20 @@ var NewProjectModal = function (_React$Component) {
     key: 'newProjectSubmit',
     value: function newProjectSubmit(event) {
       event.preventDefault();
+      var newProject = {
+        name: this.state.name,
+        description: this.state.description,
+        public: this.state.public,
+        team_id: this.props.entities.team.id
+      };
+      this.props.createProject(newProject).then(this.setState({
+        newProjectIsOpen: false,
+        name: '',
+        description: '',
+        public: true,
+        team_id: null,
+        lead_id: null
+      }));
     }
   }, {
     key: 'newProjectModal',
@@ -32505,7 +32521,7 @@ var NewProjectModal = function (_React$Component) {
               'PROJECT NAME'
             ),
             _react2.default.createElement('input', {
-              onChange: this.handleProjectFormInput,
+              onChange: this.handleProjectFormInput('name'),
               value: this.state.name, placeholder: 'Required' }),
             _react2.default.createElement(
               'label',
@@ -32513,8 +32529,8 @@ var NewProjectModal = function (_React$Component) {
               'DESCRIPTION  '
             ),
             _react2.default.createElement('input', {
-              onChange: this.handleProjectFormInput,
-              value: this.state.name, placeholder: 'Optional' })
+              onChange: this.handleProjectFormInput('description'),
+              value: this.state.description, placeholder: 'Optional' })
           ),
           _react2.default.createElement(
             'button',
@@ -35414,6 +35430,14 @@ var _redux = __webpack_require__(27);
 
 var _navigation_actions = __webpack_require__(18);
 
+var _project_actions = __webpack_require__(409);
+
+var _merge = __webpack_require__(85);
+
+var _merge2 = _interopRequireDefault(_merge);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var entitiesReducer = exports.entitiesReducer = function entitiesReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
@@ -35422,6 +35446,9 @@ var entitiesReducer = exports.entitiesReducer = function entitiesReducer() {
   switch (action.type) {
     case _navigation_actions.RECEIVE_TEAM:
       return action.teamData;
+    case _project_actions.RECEIVE_NEW_PROJECT:
+      var newState = (0, _merge2.default)({}, state, action.project);
+      return newState;
     default:
       return state;
   }
@@ -35537,9 +35564,13 @@ var receiveNewProject = exports.receiveNewProject = function receiveNewProject(p
 
 var createProject = exports.createProject = function createProject(project) {
   return function (dispatch) {
-    projectUtil.createProject(project).then(function (response) {
+    var ajax = projectUtil.createProject(project);
+
+    ajax.then(function (response) {
       return dispatch(receiveNewProject(response));
     });
+
+    return ajax;
   };
 };
 

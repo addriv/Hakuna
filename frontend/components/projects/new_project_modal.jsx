@@ -24,11 +24,13 @@ export default class NewProjectModal extends React.Component {
       name: '',
       description: '',
       public: true,
-      team_id: null
+      team_id: null,
+      lead_id: null
     };
 
     this.toggleNewProject = this.toggleNewProject.bind(this);
     this.handleProjectFormInput = this.handleProjectFormInput.bind(this);
+    this.newProjectSubmit = this.newProjectSubmit.bind(this);
   }
 
   toggleNewProject(event){
@@ -45,7 +47,23 @@ export default class NewProjectModal extends React.Component {
 
   newProjectSubmit(event){
     event.preventDefault();
-    
+    const newProject = {
+      name: this.state.name,
+      description: this.state.description,
+      public: this.state.public,
+      team_id: this.props.entities.team.id,
+    };
+    this.props.createProject(newProject)
+      .then(
+        this.setState({
+          newProjectIsOpen: false,
+          name: '',
+          description: '',
+          public: true,
+          team_id: null,
+          lead_id: null
+        })
+      );
   }
 
   newProjectModal(){
@@ -66,13 +84,13 @@ export default class NewProjectModal extends React.Component {
           <form>
             <label>PROJECT NAME</label>
             <input
-              onChange={this.handleProjectFormInput}
+              onChange={this.handleProjectFormInput('name')}
               value={this.state.name} placeholder='Required'/>
 
             <label>DESCRIPTION  </label>
             <input
-              onChange={this.handleProjectFormInput}
-              value={this.state.name} placeholder='Optional'/>
+              onChange={this.handleProjectFormInput('description')}
+              value={this.state.description} placeholder='Optional'/>
           </form>
 
           <button onClick={this.newProjectSubmit}>Create Project</button>

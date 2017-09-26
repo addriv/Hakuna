@@ -8,8 +8,11 @@ export const receiveNewProject = project => ({
 });
 
 export const createProject = project => dispatch => {
-  projectUtil.createProject(project)
-    .then(
-      response => dispatch(receiveNewProject(response))
-    );
+  let ajax = projectUtil.createProject(project);
+
+  ajax.then(
+    response => dispatch(receiveNewProject(response))
+  );
+
+  return ajax;
 };

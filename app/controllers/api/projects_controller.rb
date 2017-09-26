@@ -4,6 +4,8 @@ class Api::ProjectsController < ApplicationController
     @project.lead_id = current_user.id
 
     if @project.save
+      UserProject.create(member_id: current_user.id, project_id: @project.id)
+
       render :show
     else
       render json: @project.errors.full_messages, status: 422
