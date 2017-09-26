@@ -17,7 +17,7 @@ projects = current_user.projects.where("team_id = #{@team.id}")
 json.projects do
   projects.each do |project|
     json.set! project.id do
-      json.extract! project, :id, :name, :description, :lead_id
+      json.extract! project, :id, :name, :description, :public, :lead_id, :team_id
     end
   end
 end

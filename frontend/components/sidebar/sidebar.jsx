@@ -1,5 +1,5 @@
 import React from 'react';
-import NewProjectModal from '../projects/new_project_modal';
+import NewProjectContainer from '../projects/new_project_container';
 
 export default class Sidebar extends React.Component {
   constructor(props){
@@ -72,7 +72,7 @@ export default class Sidebar extends React.Component {
         <div className='sidebar-projects'>
           <div id='projects-header'>
             <div id='header'>Projects</div>
-            <NewProjectModal entities={this.props.entities}/>
+            <NewProjectContainer />
           </div>
           { projectsList }
         </div>

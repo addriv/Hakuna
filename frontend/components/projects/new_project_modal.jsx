@@ -45,7 +45,7 @@ export default class NewProjectModal extends React.Component {
 
   newProjectSubmit(event){
     event.preventDefault();
-
+    
   }
 
   newProjectModal(){

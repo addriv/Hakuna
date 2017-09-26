@@ -32228,9 +32228,9 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _new_project_modal = __webpack_require__(326);
+var _new_project_container = __webpack_require__(408);
 
-var _new_project_modal2 = _interopRequireDefault(_new_project_modal);
+var _new_project_container2 = _interopRequireDefault(_new_project_container);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32347,7 +32347,7 @@ var Sidebar = function (_React$Component) {
               { id: 'header' },
               'Projects'
             ),
-            _react2.default.createElement(_new_project_modal2.default, { entities: this.props.entities })
+            _react2.default.createElement(_new_project_container2.default, null)
           ),
           projectsList
         )
@@ -35469,6 +35469,96 @@ var uiReducer = exports.uiReducer = function uiReducer() {
     default:
       return state;
   }
+};
+
+/***/ }),
+/* 408 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(21);
+
+var _new_project_modal = __webpack_require__(326);
+
+var _new_project_modal2 = _interopRequireDefault(_new_project_modal);
+
+var _project_actions = __webpack_require__(409);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    entities: state.entities
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    createProject: function createProject(project) {
+      return dispatch((0, _project_actions.createProject)(project));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_new_project_modal2.default);
+
+/***/ }),
+/* 409 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.createProject = exports.receiveNewProject = exports.RECEIVE_NEW_PROJECT = undefined;
+
+var _project_util = __webpack_require__(410);
+
+var projectUtil = _interopRequireWildcard(_project_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var RECEIVE_NEW_PROJECT = exports.RECEIVE_NEW_PROJECT = 'RECEIVE_NEW_PROJECT';
+
+var receiveNewProject = exports.receiveNewProject = function receiveNewProject(project) {
+  return {
+    type: RECEIVE_NEW_PROJECT,
+    project: project
+  };
+};
+
+var createProject = exports.createProject = function createProject(project) {
+  return function (dispatch) {
+    projectUtil.createProject(project).then(function (response) {
+      return dispatch(receiveNewProject(response));
+    });
+  };
+};
+
+/***/ }),
+/* 410 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var createProject = exports.createProject = function createProject(project) {
+  return $.ajax({
+    method: 'POST',
+    url: 'api/teams/' + project.team_id + '/projects',
+    data: { project: project }
+  });
 };
 
 /***/ })
