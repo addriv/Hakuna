@@ -96,3 +96,63 @@
   background-color: #14aaf5;
   color: white;
 }
+
+
+///
+
+.new-project-form{
+  display: flex;
+  flex-direction: column;
+  height: 250px;
+  width: 580px;
+}
+
+.new-project-header{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.new-project-header > h2{
+  width: 564px;
+  text-align: left;
+  border-bottom: solid black 1px;
+}
+
+.new-project-header > button{
+ width: 30px;
+ height: 30px;
+ position: relative;
+ margin-top: 17px;
+ color: white;
+ background-color: #14aaf5
+}
+
+.new-project-form > button:hover{
+  background-color: #67ccff;
+}
+
+.new-project-form > form {
+  display: flex;
+  flex-direction: column;
+}
+
+.new-project-form > form >label{
+  font-size: 15px;
+  width: 140px;
+}
+
+.new-project-form > form > input{
+  margin-left: 20px;
+  height: 25px;
+  width: 525px;
+}
+
+.new-project-form > button{
+  margin-top: 40px;
+  position: relative;
+  left: 410px;
+  width: 144px;
+  color: white;
+  background-color: #14aaf5
+}

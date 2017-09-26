@@ -21,9 +21,14 @@ export default class NewProjectModal extends React.Component {
 
     this.state = {
       newProjectIsOpen: false,
-      name: ''
+      name: '',
+      description: '',
+      public: true,
+      team_id: null
     };
+
     this.toggleNewProject = this.toggleNewProject.bind(this);
+    this.handleProjectFormInput = this.handleProjectFormInput.bind(this);
   }
 
   toggleNewProject(event){
@@ -34,6 +39,15 @@ export default class NewProjectModal extends React.Component {
     }
   }
 
+  handleProjectFormInput(inputType){
+    return (event) => this.setState({ [inputType]: event.target.value });
+  }
+
+  newProjectSubmit(event){
+    event.preventDefault();
+
+  }
+
   newProjectModal(){
     return (
       <Modal
@@ -41,10 +55,10 @@ export default class NewProjectModal extends React.Component {
         onAfterOpen={this.toggleNewProject}
         onRequestClose={this.toggleNewProject}
         style={modalStyles}
-        contentLabel="New Team Modal">
+        contentLabel="New Project Modal">
 
-        <div className='new-team-form'>
-          <div className='new-team-header'>
+        <div className='new-project-form'>
+          <div className='new-project-header'>
             <h2>Create a New Project!</h2>
             <button onClick={this.toggleNewProject}>X</button>
           </div>
@@ -52,10 +66,16 @@ export default class NewProjectModal extends React.Component {
           <form>
             <label>PROJECT NAME</label>
             <input
-              value={this.state.name} placeholder='Team Name'/>
+              onChange={this.handleProjectFormInput}
+              value={this.state.name} placeholder='Required'/>
+
+            <label>DESCRIPTION  </label>
+            <input
+              onChange={this.handleProjectFormInput}
+              value={this.state.name} placeholder='Optional'/>
           </form>
 
-          <button onClick={this.teamFormSubmit}>Create Workspace</button>
+          <button onClick={this.newProjectSubmit}>Create Project</button>
         </div>
       </Modal>
     );
@@ -68,7 +88,7 @@ export default class NewProjectModal extends React.Component {
     }
 
     return (
-      <div>
+      <div id='new-project-btn'>
         <button onClick={this.toggleNewProject}>+</button>
         { newProjectModal }
       </div>

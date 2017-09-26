@@ -32342,8 +32342,12 @@ var Sidebar = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { id: 'projects-header' },
-            'Projects',
-            _react2.default.createElement(_new_project_modal2.default, null)
+            _react2.default.createElement(
+              'div',
+              { id: 'header' },
+              'Projects'
+            ),
+            _react2.default.createElement(_new_project_modal2.default, { entities: this.props.entities })
           ),
           projectsList
         )
@@ -32398,6 +32402,8 @@ var _reactModal2 = _interopRequireDefault(_reactModal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -32428,9 +32434,14 @@ var NewProjectModal = function (_React$Component) {
 
     _this.state = {
       newProjectIsOpen: false,
-      name: ''
+      name: '',
+      description: '',
+      public: true,
+      team_id: null
     };
+
     _this.toggleNewProject = _this.toggleNewProject.bind(_this);
+    _this.handleProjectFormInput = _this.handleProjectFormInput.bind(_this);
     return _this;
   }
 
@@ -32444,6 +32455,20 @@ var NewProjectModal = function (_React$Component) {
       }
     }
   }, {
+    key: 'handleProjectFormInput',
+    value: function handleProjectFormInput(inputType) {
+      var _this2 = this;
+
+      return function (event) {
+        return _this2.setState(_defineProperty({}, inputType, event.target.value));
+      };
+    }
+  }, {
+    key: 'newProjectSubmit',
+    value: function newProjectSubmit(event) {
+      event.preventDefault();
+    }
+  }, {
     key: 'newProjectModal',
     value: function newProjectModal() {
       return _react2.default.createElement(
@@ -32453,13 +32478,13 @@ var NewProjectModal = function (_React$Component) {
           onAfterOpen: this.toggleNewProject,
           onRequestClose: this.toggleNewProject,
           style: modalStyles,
-          contentLabel: 'New Team Modal' },
+          contentLabel: 'New Project Modal' },
         _react2.default.createElement(
           'div',
-          { className: 'new-team-form' },
+          { className: 'new-project-form' },
           _react2.default.createElement(
             'div',
-            { className: 'new-team-header' },
+            { className: 'new-project-header' },
             _react2.default.createElement(
               'h2',
               null,
@@ -32480,12 +32505,21 @@ var NewProjectModal = function (_React$Component) {
               'PROJECT NAME'
             ),
             _react2.default.createElement('input', {
-              value: this.state.name, placeholder: 'Team Name' })
+              onChange: this.handleProjectFormInput,
+              value: this.state.name, placeholder: 'Required' }),
+            _react2.default.createElement(
+              'label',
+              null,
+              'DESCRIPTION  '
+            ),
+            _react2.default.createElement('input', {
+              onChange: this.handleProjectFormInput,
+              value: this.state.name, placeholder: 'Optional' })
           ),
           _react2.default.createElement(
             'button',
-            { onClick: this.teamFormSubmit },
-            'Create Workspace'
+            { onClick: this.newProjectSubmit },
+            'Create Project'
           )
         )
       );
@@ -32500,7 +32534,7 @@ var NewProjectModal = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        null,
+        { id: 'new-project-btn' },
         _react2.default.createElement(
           'button',
           { onClick: this.toggleNewProject },

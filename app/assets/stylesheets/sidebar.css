@@ -112,4 +112,12 @@ div.member{
   color: gray;
   padding: 5px;
   font-weight: lighter;
+  display: flex;
+  flex-direction: row;
+}
+
+#new-project-btn{
+  justify-content: flex-end;
+  display: flex;
+  width: 100%;
 }

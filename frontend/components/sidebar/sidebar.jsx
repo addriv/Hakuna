@@ -71,8 +71,8 @@ export default class Sidebar extends React.Component {
 
         <div className='sidebar-projects'>
           <div id='projects-header'>
-            Projects
-            <NewProjectModal />
+            <div id='header'>Projects</div>
+            <NewProjectModal entities={this.props.entities}/>
           </div>
           { projectsList }
         </div>
