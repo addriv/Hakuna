@@ -25,6 +25,7 @@ class User < ApplicationRecord
   has_many :user_teams, foreign_key: :member_id, class_name: :UserTeam
   has_many :teams, through: :user_teams, source: :team
   has_many :user_projects, foreign_key: :member_id, class_name: :UserProject
+  has_many :projects_led, foreign_key: :lead_id, class_name: :Project
   has_many :projects, through: :user_projects, source: :project
   has_many :created_tasks, foreign_key: :creator_id, class_name: :Task
   has_many :assigned_tasks, foreign_key: :assignee_id, class_name: :Task

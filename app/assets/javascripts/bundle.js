@@ -32810,12 +32810,12 @@ var EditProjectModal = function (_React$Component) {
 
     _this.state = {
       editProjectIsOpen: false,
+      confirmDeleteIsOpen: false,
       id: parseInt(project.id),
       name: project.name,
       description: project.description,
       team_id: parseInt(project.team_id),
-      lead_id: parseInt(project.lead_id),
-      confirmDeleteIsOpen: false
+      lead_id: parseInt(project.lead_id)
     };
 
     _this.toggleEditProjectModal = _this.toggleEditProjectModal.bind(_this);
@@ -32887,15 +32887,18 @@ var EditProjectModal = function (_React$Component) {
             { id: 'buttons' },
             _react2.default.createElement(
               'button',
-              { onClick: this.toggleConfirmDelete },
+              { id: 'delete-btn',
+                onClick: this.toggleConfirmDelete(true) },
               'Delete Project'
             ),
             _react2.default.createElement(
               'button',
-              { onClick: this.editProjectSubmit },
+              { id: 'update-btn',
+                onClick: this.editProjectSubmit },
               'Update Project'
             )
-          )
+          ),
+          this.state.confirmDeleteIsOpen ? this.confirmDeleteContent() : null
         )
       );
     }
@@ -32908,6 +32911,7 @@ var EditProjectModal = function (_React$Component) {
         var project = this.props.entities.projects[this.props.projectId];
         var _defaultState = {
           editProjectIsOpen: !this.state.editProjectIsOpen,
+          confirmDeleteIsOpen: false,
           id: parseInt(project.id),
           name: project.name,
           description: project.description,
@@ -32952,14 +32956,20 @@ var EditProjectModal = function (_React$Component) {
           'All tasks in this project will also be deleted. Are you sure you want to delete this project?'
         ),
         _react2.default.createElement(
-          'button',
-          { onClick: this.toggleConfirmDelete(true) },
-          'Cancel'
-        ),
-        _react2.default.createElement(
-          'button',
-          { onClick: this.deleteProject },
-          'Delete Project'
+          'div',
+          { id: 'buttons' },
+          _react2.default.createElement(
+            'button',
+            { id: 'cancel',
+              onClick: this.toggleConfirmDelete(false) },
+            'Cancel'
+          ),
+          _react2.default.createElement(
+            'button',
+            { id: 'delete-project',
+              onClick: this.deleteProject },
+            'Delete'
+          )
         )
       );
     }

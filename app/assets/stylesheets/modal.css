@@ -217,7 +217,6 @@
 .edit-project-form{
   display: flex;
   flex-direction: column;
-  height: 300px;
   width: 580px;
 }
 
@@ -276,6 +275,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  padding: 10px;
 }
 
 .edit-project-form > div#buttons > button{
@@ -283,4 +283,38 @@
   width: 144px;
   color: white;
   background-color: #14aaf5;
+}
+
+/*Project Delete*/
+.project-delete{
+  border-top: solid black 1px;
+}
+
+.project-delete > p {
+  text-align: center;
+}
+
+.project-delete > #buttons{
+  text-align: center;
+  height: 40px;
+  padding: 10px;
+}
+
+.project-delete > #buttons > #cancel{
+  background-color: white;
+  color: #14aaf5;
+  border: solid #14aaf5 1px;
+  height: 100%;
+  width: 90px;
+  font-size: 13px;
+  margin: 5px;
+}
+
+.project-delete > #buttons > #delete-project{
+  background-color: #ff5263;
+  color: white;
+  height: 100%;
+  font-size: 13px;
+  width: 90px;
+  margin: 5px;
 }

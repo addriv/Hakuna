@@ -23,12 +23,12 @@ export default class EditProjectModal extends React.Component {
 
     this.state = {
       editProjectIsOpen: false,
+      confirmDeleteIsOpen: false,
       id: parseInt(project.id),
       name: project.name,
       description: project.description,
       team_id: parseInt(project.team_id),
-      lead_id: parseInt(project.lead_id),
-      confirmDeleteIsOpen: false
+      lead_id: parseInt(project.lead_id)
     };
 
     this.toggleEditProjectModal = this.toggleEditProjectModal.bind(this);
@@ -69,10 +69,14 @@ export default class EditProjectModal extends React.Component {
           </form>
 
           <div id='buttons'>
-            <button onClick={this.toggleConfirmDelete}>Delete Project</button>
-            <button onClick={this.editProjectSubmit}>Update Project</button>
+            <button id='delete-btn'
+              onClick={this.toggleConfirmDelete(true)}>Delete Project</button>
+            <button id='update-btn'
+              onClick={this.editProjectSubmit}>Update Project</button>
           </div>
 
+          { this.state.confirmDeleteIsOpen ?
+            this.confirmDeleteContent() : null }
 
         </div>
       </Modal>
@@ -86,6 +90,7 @@ export default class EditProjectModal extends React.Component {
       const project = this.props.entities.projects[this.props.projectId];
       const _defaultState = {
         editProjectIsOpen: !this.state.editProjectIsOpen,
+        confirmDeleteIsOpen: false,
         id: parseInt(project.id),
         name: project.name,
         description: project.description,
@@ -120,9 +125,16 @@ export default class EditProjectModal extends React.Component {
   confirmDeleteContent(){
     return (
       <div className='project-delete'>
-        <p>All tasks in this project will also be deleted. Are you sure you want to delete this project?</p>
-        <button onClick={this.toggleConfirmDelete(true)}>Cancel</button>
-        <button onClick={this.deleteProject}>Delete Project</button>
+        <p>All tasks in this project will also be deleted.
+          Are you sure you want to delete this project?</p>
+
+        <div id='buttons'>
+          <button id='cancel'
+            onClick={this.toggleConfirmDelete(false)}>Cancel</button>
+
+          <button id='delete-project'
+            onClick={this.deleteProject}>Delete</button>
+        </div>
       </div>
     );
   }
