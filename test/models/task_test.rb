@@ -3,14 +3,14 @@
 # Table name: tasks
 #
 #  id             :integer          not null, primary key
-#  title          :string           not null
+#  title          :string
 #  description    :string
 #  public         :boolean          default(TRUE)
 #  completed      :boolean          default(FALSE)
 #  due_date       :datetime
 #  creator_id     :integer          not null
 #  assignee_id    :integer
-#  project_id     :integer          not null
+#  project_id     :integer
 #  parent_task_id :integer
 #  team_id        :integer          not null
 #  created_at     :datetime         not null

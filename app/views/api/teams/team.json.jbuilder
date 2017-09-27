@@ -27,6 +27,7 @@ json.tasks do
     project.tasks.each do |task|
       json.set! task.id do
         json.extract! task,
+                      :id,
                       :title,
                       :description,
                       :assignee_id,
@@ -34,7 +35,7 @@ json.tasks do
                       :parent_task_id,
                       :project_id,
                       :completed,
-                      :parent_task_id
+                      :team_id
       end
     end
   end

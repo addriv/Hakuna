@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import TasksIndex from './tasks_index';
 import { tasksSelector } from '../../reducers/selectors';
-// import { createProject } from '../../actions/project_actions';
+import { createTask } from '../../actions/task_actions';
 
 const mapStateToProps = state => ({
   state,
@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-
+  createTask: task => dispatch(createTask(task))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TasksIndex);

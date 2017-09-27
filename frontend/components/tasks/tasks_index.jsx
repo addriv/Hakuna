@@ -12,7 +12,17 @@ export default class TasksIndex extends React.Component{
 
   newTask(event){
     event.preventDefault();
-    this.setState({ taskDetailIsOpen: true });
+
+    const team = this.props.state.entities.team;
+    const projectDisplayId = this.props.state.ui.projectDisplay;
+    const projectId = projectDisplayId ? projectDisplayId : null;
+
+    const task = {
+      team_id: team.id,
+      project_id: projectId
+    };
+
+    this.props.createTask(task).then(this.setState({ taskDetailIsOpen: true }));
   }
 
   closeDetail(event){
@@ -66,7 +76,7 @@ export default class TasksIndex extends React.Component{
               <input value={ task.title }></input>
             </li>
           );
-        }      
+        }
       });
 
       return <ul>{ tasksList }</ul>;

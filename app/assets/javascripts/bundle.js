@@ -35915,6 +35915,8 @@ var _navigation_actions = __webpack_require__(19);
 
 var _project_actions = __webpack_require__(84);
 
+var _task_actions = __webpack_require__(417);
+
 var _merge = __webpack_require__(51);
 
 var _merge2 = _interopRequireDefault(_merge);
@@ -35932,6 +35934,8 @@ var entitiesReducer = exports.entitiesReducer = function entitiesReducer() {
     case _project_actions.RECEIVE_PROJECT:
       var newState = (0, _merge2.default)({}, state, action.project);
       return newState;
+    case _task_actions.RECEIVE_TASK:
+      return (0, _merge2.default)({}, state, action.task);
     default:
       return state;
   }
@@ -35955,6 +35959,8 @@ var _navigation_actions = __webpack_require__(19);
 
 var _project_actions = __webpack_require__(84);
 
+var _task_actions = __webpack_require__(417);
+
 var _merge = __webpack_require__(51);
 
 var _merge2 = _interopRequireDefault(_merge);
@@ -35963,7 +35969,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var _defaultState = {
   projectDisplay: 0,
-  userDisplay: -1
+  userDisplay: -1,
+  taskDisplay: 0
 };
 
 var uiReducer = exports.uiReducer = function uiReducer() {
@@ -35971,6 +35978,7 @@ var uiReducer = exports.uiReducer = function uiReducer() {
   var action = arguments[1];
 
   Object.freeze(state);
+  debugger;
   switch (action.type) {
     case _project_actions.RECEIVE_PROJECT:
       var projectId = parseInt(Object.keys(action.project.projects)[0]);
@@ -35979,6 +35987,9 @@ var uiReducer = exports.uiReducer = function uiReducer() {
       return (0, _merge2.default)({}, state, { projectDisplay: action.projectId });
     case _ui_actions.RECEIVE_USER_DISPLAY:
       return (0, _merge2.default)({}, state, { userDisplay: action.userDisplayId });
+    case _task_actions.RECEIVE_TASK:
+      var taskId = parseInt(Object.keys(action.task.tasks)[0]);
+      return (0, _merge2.default)({}, state, { taskDisplay: taskId });
     case _navigation_actions.RECEIVE_TEAM:
       return _defaultState;
     default:
@@ -36005,9 +36016,9 @@ var _tasks_index2 = _interopRequireDefault(_tasks_index);
 
 var _selectors = __webpack_require__(85);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _task_actions = __webpack_require__(417);
 
-// import { createProject } from '../../actions/project_actions';
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -36017,7 +36028,11 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    createTask: function createTask(task) {
+      return dispatch((0, _task_actions.createTask)(task));
+    }
+  };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_tasks_index2.default);
@@ -36069,7 +36084,17 @@ var TasksIndex = function (_React$Component) {
     key: 'newTask',
     value: function newTask(event) {
       event.preventDefault();
-      this.setState({ taskDetailIsOpen: true });
+
+      var team = this.props.state.entities.team;
+      var projectDisplayId = this.props.state.ui.projectDisplay;
+      var projectId = projectDisplayId ? projectDisplayId : null;
+
+      var task = {
+        team_id: team.id,
+        project_id: projectId
+      };
+
+      this.props.createTask(task).then(this.setState({ taskDetailIsOpen: true }));
     }
   }, {
     key: 'closeDetail',
@@ -36309,6 +36334,61 @@ var TasksDetail = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = TasksDetail;
+
+/***/ }),
+/* 417 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.createTask = exports.receiveTask = exports.RECEIVE_TASK = undefined;
+
+var _task_util = __webpack_require__(418);
+
+var taskUtil = _interopRequireWildcard(_task_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var RECEIVE_TASK = exports.RECEIVE_TASK = 'RECEIVE_TASK';
+
+var receiveTask = exports.receiveTask = function receiveTask(task) {
+  return function (dispatch) {
+    return {
+      type: RECEIVE_TASK,
+      task: task
+    };
+  };
+};
+
+var createTask = exports.createTask = function createTask(task) {
+  return function (dispatch) {
+    return taskUtil.createTask(task).then(function (response) {
+      return dispatch(receiveTask(task));
+    });
+  };
+};
+
+/***/ }),
+/* 418 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var createTask = exports.createTask = function createTask(task) {
+  return $.ajax({
+    method: 'POST',
+    url: 'api/tasks',
+    data: { task: task }
+  });
+};
 
 /***/ })
 /******/ ]);
