@@ -21,6 +21,7 @@ export default class TasksDetail extends React.Component{
     this.state = task;
     this.tryToggle = this.tryToggle.bind(this);
     this.handleTitle = this.handleTitle.bind(this);
+    this.handleOnBlur = this.handleOnBlur.bind(this);
   }
 
   tryToggle(event){
@@ -53,11 +54,27 @@ export default class TasksDetail extends React.Component{
     return event => this.setState({ [inputType]: event.target.value });
   }
 
+  handleOnBlur(){
+    debugger;
+    const updatedTask = {
+      id: this.state.id,
+      title: this.state.title,
+      description: this.state.description,
+      due_date: this.state.due_date,
+      assignee_id: this.state.assignee_id,
+      completed: this.state.completed
+    };
+
+    this.props.updateTask(updatedTask);
+  }
+
   render(){
     const projectId = this.state.project_id;
     const project = this.props.state.entities.projects[projectId];
-    const createdDate = shortDate(new Date(this.state.created_at));
-    const updatedDate = shortDate(new Date(this.state.updated_at));
+    const taskId = this.props.state.ui.taskDisplay;
+    const task = this.props.state.entities.tasks[taskId];
+    const createdDate = shortDate(new Date(task.created_at));
+    const updatedDate = shortDate(new Date(task.updated_at));
 
     return (
       <div className='tasks-detail'>
@@ -73,12 +90,14 @@ export default class TasksDetail extends React.Component{
           className='title'
           id={ this.state.id }
           value={ this.state.title ? this.state.title : '' }
-          onChange={ this.handleTitle }></input>
+          onChange={ this.handleTitle }
+          onBlur={ this.handleOnBlur }></input>
 
         <textarea
           id='description'
           value={ this.state.description ? this.state.description : ''}
-          onChange={ this.handleInput('description') }></textarea>
+          onChange={ this.handleInput('description') }
+          onBlur={ this.handleOnBlur }></textarea>
 
         <div id='timestamps'>
           <div id='created'>{ `Created task. ${createdDate}` }</div>

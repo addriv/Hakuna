@@ -8488,7 +8488,7 @@ module.exports = isArrayLike;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createTask = exports.receiveTask = exports.RECEIVE_TASK = undefined;
+exports.updateTask = exports.createTask = exports.receiveTask = exports.RECEIVE_TASK = undefined;
 
 var _task_util = __webpack_require__(406);
 
@@ -8508,6 +8508,14 @@ var receiveTask = exports.receiveTask = function receiveTask(task) {
 var createTask = exports.createTask = function createTask(task) {
   return function (dispatch) {
     return taskUtil.createTask(task).then(function (response) {
+      return dispatch(receiveTask(response));
+    });
+  };
+};
+
+var updateTask = exports.updateTask = function updateTask(task) {
+  return function (dispatch) {
+    return taskUtil.updateTask(task).then(function (response) {
       return dispatch(receiveTask(response));
     });
   };
@@ -33763,10 +33771,9 @@ var _tasks_detail = __webpack_require__(339);
 
 var _tasks_detail2 = _interopRequireDefault(_tasks_detail);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _task_actions = __webpack_require__(91);
 
-// import { tasksSelector } from '../../reducers/selectors';
-// import { createProject } from '../../actions/project_actions';
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
@@ -33775,7 +33782,11 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    updateTask: function updateTask(task) {
+      return dispatch((0, _task_actions.updateTask)(task));
+    }
+  };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_tasks_detail2.default);
@@ -33832,6 +33843,7 @@ var TasksDetail = function (_React$Component) {
     _this.state = task;
     _this.tryToggle = _this.tryToggle.bind(_this);
     _this.handleTitle = _this.handleTitle.bind(_this);
+    _this.handleOnBlur = _this.handleOnBlur.bind(_this);
     return _this;
   }
 
@@ -33873,12 +33885,29 @@ var TasksDetail = function (_React$Component) {
       };
     }
   }, {
+    key: 'handleOnBlur',
+    value: function handleOnBlur() {
+      debugger;
+      var updatedTask = {
+        id: this.state.id,
+        title: this.state.title,
+        description: this.state.description,
+        due_date: this.state.due_date,
+        assignee_id: this.state.assignee_id,
+        completed: this.state.completed
+      };
+
+      this.props.updateTask(updatedTask);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var projectId = this.state.project_id;
       var project = this.props.state.entities.projects[projectId];
-      var createdDate = shortDate(new Date(this.state.created_at));
-      var updatedDate = shortDate(new Date(this.state.updated_at));
+      var taskId = this.props.state.ui.taskDisplay;
+      var task = this.props.state.entities.tasks[taskId];
+      var createdDate = shortDate(new Date(task.created_at));
+      var updatedDate = shortDate(new Date(task.updated_at));
 
       return _react2.default.createElement(
         'div',
@@ -33901,11 +33930,13 @@ var TasksDetail = function (_React$Component) {
           className: 'title',
           id: this.state.id,
           value: this.state.title ? this.state.title : '',
-          onChange: this.handleTitle }),
+          onChange: this.handleTitle,
+          onBlur: this.handleOnBlur }),
         _react2.default.createElement('textarea', {
           id: 'description',
           value: this.state.description ? this.state.description : '',
-          onChange: this.handleInput('description') }),
+          onChange: this.handleInput('description'),
+          onBlur: this.handleOnBlur }),
         _react2.default.createElement(
           'div',
           { id: 'timestamps' },

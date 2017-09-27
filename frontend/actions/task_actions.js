@@ -12,3 +12,9 @@ export const createTask = task => dispatch => (
     response => dispatch(receiveTask(response))
   )
 );
+
+export const updateTask = task => dispatch => (
+  taskUtil.updateTask(task).then(
+    response => dispatch(receiveTask(response))
+  )
+);
