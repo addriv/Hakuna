@@ -89,7 +89,7 @@ export default class TasksIndex extends React.Component{
               <input
                 id={ task.id }
                 onClick={ this.handleTaskClick }
-                value={ task.title }></input>
+                value={ this.state[task.id] }></input>
             </li>
           );
         }
@@ -122,7 +122,7 @@ export default class TasksIndex extends React.Component{
               <input
                 id={ task.id }
                 onClick={ this.handleTaskClick }
-                value={ task.title }></input>
+                value={ task.title ? task.title : '' }></input>
             </li>
           );
         }

@@ -36181,7 +36181,7 @@ var TasksIndex = function (_React$Component) {
                 _react2.default.createElement('input', {
                   id: task.id,
                   onClick: _this3.handleTaskClick,
-                  value: task.title })
+                  value: _this3.state[task.id] })
               );
             }
           });
@@ -36219,7 +36219,7 @@ var TasksIndex = function (_React$Component) {
                   _react2.default.createElement('input', {
                     id: task.id,
                     onClick: _this3.handleTaskClick,
-                    value: task.title })
+                    value: task.title ? task.title : '' })
                 );
               }
             });
@@ -36396,15 +36396,15 @@ var TasksDetail = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { id: 'project-info' },
-          project.name
+          project ? project.name : ''
         ),
         _react2.default.createElement('input', {
           id: 'title',
-          value: this.state.title,
+          value: this.state.title ? this.state.title : '',
           onChange: this.handleInput('title') }),
-        _react2.default.createElement('input', {
+        _react2.default.createElement('textarea', {
           id: 'description',
-          value: this.state.description,
+          value: this.state.description ? this.state.description : '',
           onChange: this.handleInput('description') }),
         _react2.default.createElement(
           'div',

@@ -51,18 +51,18 @@ export default class TasksDetail extends React.Component{
         </div>
 
         <div id='project-info'>
-          { project.name }
+          { project ? project.name : '' }
         </div>
 
         <input
           id='title'
-          value={ this.state.title }
+          value={ this.state.title ? this.state.title : '' }
           onChange={ this.handleInput('title') }></input>
 
-        <input
+        <textarea
           id='description'
-          value={ this.state.description }
-          onChange={ this.handleInput('description') }></input>
+          value={ this.state.description ? this.state.description : ''}
+          onChange={ this.handleInput('description') }></textarea>
 
         <div id='timestamps'>
           <div id='created'>{ `Created task. ${createdDate}` }</div>

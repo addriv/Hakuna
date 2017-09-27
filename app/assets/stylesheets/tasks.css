@@ -69,3 +69,18 @@
   border-color: #b2ebe1;
   color: white;
 }
+
+.tasks-detail > #project-info {
+  padding: 10px;
+}
+
+.tasks-detail > #title{
+  padding: 10px;
+  font-size: 20px;
+}
+
+.tasks-detail > #description{
+  padding: 10px;
+  font-size: 14px;
+  resize: none;
+}
