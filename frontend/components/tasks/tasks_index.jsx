@@ -8,6 +8,7 @@ export default class TasksIndex extends React.Component{
     this.state = { taskDetailIsOpen: false };
     this.newTask = this.newTask.bind(this);
     this.closeDetail = this.closeDetail.bind(this);
+    this.handleTaskClick = this.handleTaskClick.bind(this);
   }
 
   newTask(event){
@@ -22,7 +23,9 @@ export default class TasksIndex extends React.Component{
       project_id: projectId
     };
 
-    this.props.createTask(task).then(this.setState({ taskDetailIsOpen: true }));
+    this.props.createTask(task).then(
+      () => this.setState({ taskDetailIsOpen: true })
+    );
   }
 
   closeDetail(event){
@@ -30,6 +33,16 @@ export default class TasksIndex extends React.Component{
       event.preventDefault();
     }
     this.setState({ taskDetailIsOpen: false });
+  }
+
+  handleTaskClick(event){
+    event.preventDefault();
+
+    const taskId = parseInt(event.target.id);
+    const task = this.props.state.entities.tasks[taskId];
+
+    this.props.receiveTask({ tasks: { [task.id]: { task } }});
+    this.setState({ taskDetailIsOpen: true });
   }
 
   tasksIndexContent(){
@@ -73,7 +86,10 @@ export default class TasksIndex extends React.Component{
 
               <div className={ task.completed ?
                   'checkmark-done' : 'checkmark-not-done'}>L</div>
-              <input value={ task.title }></input>
+              <input
+                id={ task.id }
+                onClick={ this.handleTaskClick }
+                value={ task.title }></input>
             </li>
           );
         }
@@ -103,7 +119,10 @@ export default class TasksIndex extends React.Component{
 
               <div className={ task.completed ?
                   'checkmark-done' : 'checkmark-not-done'}>L</div>
-              <input value={ task.title }></input>
+              <input
+                id={ task.id }
+                onClick={ this.handleTaskClick }
+                value={ task.title }></input>
             </li>
           );
         }

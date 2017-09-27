@@ -47,6 +47,8 @@
   width: 80%;
   margin-right: 15px;
   border: solid 1px	#DCDCDC;
+  display: flex;
+  flex-direction: column;
 }
 
 [class^='checkmark']{

@@ -35978,7 +35978,6 @@ var uiReducer = exports.uiReducer = function uiReducer() {
   var action = arguments[1];
 
   Object.freeze(state);
-  debugger;
   switch (action.type) {
     case _project_actions.RECEIVE_PROJECT:
       var projectId = parseInt(Object.keys(action.project.projects)[0]);
@@ -36031,6 +36030,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     createTask: function createTask(task) {
       return dispatch((0, _task_actions.createTask)(task));
+    },
+    receiveTask: function receiveTask(task) {
+      return dispatch((0, _task_actions.receiveTask)(task));
     }
   };
 };
@@ -36060,6 +36062,8 @@ var _tasks_detail_container2 = _interopRequireDefault(_tasks_detail_container);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -36077,12 +36081,15 @@ var TasksIndex = function (_React$Component) {
     _this.state = { taskDetailIsOpen: false };
     _this.newTask = _this.newTask.bind(_this);
     _this.closeDetail = _this.closeDetail.bind(_this);
+    _this.handleTaskClick = _this.handleTaskClick.bind(_this);
     return _this;
   }
 
   _createClass(TasksIndex, [{
     key: 'newTask',
     value: function newTask(event) {
+      var _this2 = this;
+
       event.preventDefault();
 
       var team = this.props.state.entities.team;
@@ -36094,7 +36101,9 @@ var TasksIndex = function (_React$Component) {
         project_id: projectId
       };
 
-      this.props.createTask(task).then(this.setState({ taskDetailIsOpen: true }));
+      this.props.createTask(task).then(function () {
+        return _this2.setState({ taskDetailIsOpen: true });
+      });
     }
   }, {
     key: 'closeDetail',
@@ -36105,8 +36114,21 @@ var TasksIndex = function (_React$Component) {
       this.setState({ taskDetailIsOpen: false });
     }
   }, {
+    key: 'handleTaskClick',
+    value: function handleTaskClick(event) {
+      event.preventDefault();
+
+      var taskId = parseInt(event.target.id);
+      var task = this.props.state.entities.tasks[taskId];
+
+      this.props.receiveTask({ tasks: _defineProperty({}, task.id, { task: task }) });
+      this.setState({ taskDetailIsOpen: true });
+    }
+  }, {
     key: 'tasksIndexContent',
     value: function tasksIndexContent() {
+      var _this3 = this;
+
       var tasksList = void 0,
           tasksUl = void 0;
       var tasks = this.props.tasks;
@@ -36156,7 +36178,10 @@ var TasksIndex = function (_React$Component) {
                   { className: task.completed ? 'checkmark-done' : 'checkmark-not-done' },
                   'L'
                 ),
-                _react2.default.createElement('input', { value: task.title })
+                _react2.default.createElement('input', {
+                  id: task.id,
+                  onClick: _this3.handleTaskClick,
+                  value: task.title })
               );
             }
           });
@@ -36191,7 +36216,10 @@ var TasksIndex = function (_React$Component) {
                     { className: task.completed ? 'checkmark-done' : 'checkmark-not-done' },
                     'L'
                   ),
-                  _react2.default.createElement('input', { value: task.title })
+                  _react2.default.createElement('input', {
+                    id: task.id,
+                    onClick: _this3.handleTaskClick,
+                    value: task.title })
                 );
               }
             });
@@ -36287,11 +36315,25 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var shortDate = function shortDate(date) {
+  var month = date.getMonth();
+  var day = date.getDate();
+  var year = date.getFullYear();
+
+  month = month.length === 1 ? '0' + month : month;
+  day = day.length === 1 ? '0' + day : day;
+  year = year.toString().slice(2);
+
+  return month + '/' + day + '/' + year;
+};
 
 var TasksDetail = function (_React$Component) {
   _inherits(TasksDetail, _React$Component);
@@ -36300,6 +36342,10 @@ var TasksDetail = function (_React$Component) {
     _classCallCheck(this, TasksDetail);
 
     var _this = _possibleConstructorReturn(this, (TasksDetail.__proto__ || Object.getPrototypeOf(TasksDetail)).call(this, props));
+
+    var taskId = _this.props.state.ui.taskDisplay;
+    var task = _this.props.state.entities.tasks[taskId];
+    _this.state = task;
 
     _this.tryToggle = _this.tryToggle.bind(_this);
     return _this;
@@ -36312,8 +36358,29 @@ var TasksDetail = function (_React$Component) {
       this.props.toggle();
     }
   }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(newProps) {
+      var taskId = newProps.state.ui.taskDisplay;
+      var task = newProps.state.entities.tasks[taskId];
+      this.setState(task);
+    }
+  }, {
+    key: 'handleInput',
+    value: function handleInput(inputType) {
+      var _this2 = this;
+
+      return function (event) {
+        return _this2.setState(_defineProperty({}, inputType, event.target.value));
+      };
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var projectId = this.state.project_id;
+      var project = this.props.state.entities.projects[projectId];
+      var createdDate = shortDate(new Date(this.state.created_at));
+      var updatedDate = shortDate(new Date(this.state.updated_at));
+
       return _react2.default.createElement(
         'div',
         { className: 'tasks-detail' },
@@ -36325,7 +36392,35 @@ var TasksDetail = function (_React$Component) {
             { onClick: this.tryToggle },
             'X'
           )
-        )
+        ),
+        _react2.default.createElement(
+          'div',
+          { id: 'project-info' },
+          project.name
+        ),
+        _react2.default.createElement('input', {
+          id: 'title',
+          value: this.state.title,
+          onChange: this.handleInput('title') }),
+        _react2.default.createElement('input', {
+          id: 'description',
+          value: this.state.description,
+          onChange: this.handleInput('description') }),
+        _react2.default.createElement(
+          'div',
+          { id: 'timestamps' },
+          _react2.default.createElement(
+            'div',
+            { id: 'created' },
+            'Created task. ' + createdDate
+          ),
+          _react2.default.createElement(
+            'div',
+            { id: 'updated' },
+            'Updated task. ' + updatedDate
+          )
+        ),
+        _react2.default.createElement('div', { id: 'subtasks' })
       );
     }
   }]);
@@ -36356,18 +36451,16 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var RECEIVE_TASK = exports.RECEIVE_TASK = 'RECEIVE_TASK';
 
 var receiveTask = exports.receiveTask = function receiveTask(task) {
-  return function (dispatch) {
-    return {
-      type: RECEIVE_TASK,
-      task: task
-    };
+  return {
+    type: RECEIVE_TASK,
+    task: task
   };
 };
 
 var createTask = exports.createTask = function createTask(task) {
   return function (dispatch) {
     return taskUtil.createTask(task).then(function (response) {
-      return dispatch(receiveTask(task));
+      return dispatch(receiveTask(response));
     });
   };
 };

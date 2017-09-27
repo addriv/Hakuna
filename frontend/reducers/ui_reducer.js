@@ -13,7 +13,6 @@ const _defaultState = {
 
 export const uiReducer = (state = _defaultState, action) => {
   Object.freeze(state);
-  debugger;
   switch(action.type){
     case RECEIVE_PROJECT:
       const projectId = parseInt(Object.keys(action.project.projects)[0]);
