@@ -1,8 +1,17 @@
 import React from 'react';
+import TasksDetailContainer from './tasks_detail_container';
 
 export default class TasksIndex extends React.Component{
   constructor(props){
     super(props);
+
+    this.state = { taskDetailIsOpen: false };
+    this.newTask = this.newTask.bind(this);
+  }
+
+  newTask(event){
+    event.preventDefault();
+    this.setState({ taskDetailIsOpen: true });
   }
 
   tasksIndexContent(){
@@ -71,10 +80,14 @@ export default class TasksIndex extends React.Component{
     return (
       <div className='tasks-ui'>
         <div className='tasks-index'>
+          <div id='header'>
+            <button onClick={this.newTask}>Add Task</button>
+          </div>
+
           { this.tasksIndexContent() }
         </div>
 
-
+        { this.state.taskDetailIsOpen ? <TasksDetailContainer /> : null }
       </div>
     );
   }

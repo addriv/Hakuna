@@ -36039,6 +36039,10 @@ var _react = __webpack_require__(4);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _tasks_detail_container = __webpack_require__(415);
+
+var _tasks_detail_container2 = _interopRequireDefault(_tasks_detail_container);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -36053,10 +36057,20 @@ var TasksIndex = function (_React$Component) {
   function TasksIndex(props) {
     _classCallCheck(this, TasksIndex);
 
-    return _possibleConstructorReturn(this, (TasksIndex.__proto__ || Object.getPrototypeOf(TasksIndex)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (TasksIndex.__proto__ || Object.getPrototypeOf(TasksIndex)).call(this, props));
+
+    _this.state = { taskDetailIsOpen: false };
+    _this.newTask = _this.newTask.bind(_this);
+    return _this;
   }
 
   _createClass(TasksIndex, [{
+    key: 'newTask',
+    value: function newTask(event) {
+      event.preventDefault();
+      this.setState({ taskDetailIsOpen: true });
+    }
+  }, {
     key: 'tasksIndexContent',
     value: function tasksIndexContent() {
       var tasksList = void 0,
@@ -36147,8 +36161,18 @@ var TasksIndex = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { className: 'tasks-index' },
+          _react2.default.createElement(
+            'div',
+            { id: 'header' },
+            _react2.default.createElement(
+              'button',
+              { onClick: this.newTask },
+              'Add Task'
+            )
+          ),
           this.tasksIndexContent()
-        )
+        ),
+        this.state.taskDetailIsOpen ? _react2.default.createElement(_tasks_detail_container2.default, null) : null
       );
     }
   }]);
@@ -36157,6 +36181,90 @@ var TasksIndex = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = TasksIndex;
+
+/***/ }),
+/* 415 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(17);
+
+var _tasks_detail = __webpack_require__(416);
+
+var _tasks_detail2 = _interopRequireDefault(_tasks_detail);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import { tasksSelector } from '../../reducers/selectors';
+// import { createProject } from '../../actions/project_actions';
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    state: state
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {};
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_tasks_detail2.default);
+
+/***/ }),
+/* 416 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(4);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TasksDetail = function (_React$Component) {
+  _inherits(TasksDetail, _React$Component);
+
+  function TasksDetail(props) {
+    _classCallCheck(this, TasksDetail);
+
+    return _possibleConstructorReturn(this, (TasksDetail.__proto__ || Object.getPrototypeOf(TasksDetail)).call(this, props));
+  }
+
+  _createClass(TasksDetail, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'tasks-detail' },
+        'Tasks Detail'
+      );
+    }
+  }]);
+
+  return TasksDetail;
+}(_react2.default.Component);
+
+exports.default = TasksDetail;
 
 /***/ })
 /******/ ]);
