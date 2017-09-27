@@ -37,7 +37,6 @@ export default class NewProjectModal extends React.Component {
     if (event){
       event.preventDefault();
       this.setState({ newProjectIsOpen: !this.state.newProjectIsOpen});
-      console.log(this.state.newProjectIsOpen);
     }
   }
 

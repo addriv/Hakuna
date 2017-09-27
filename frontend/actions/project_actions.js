@@ -1,6 +1,7 @@
 import * as projectUtil from '../util/project_util';
+import { receiveProjectDisplay } from './ui_actions';
 
-export const RECEIVE_PROJECT = 'RECEIVE_NEW_PROJECT';
+export const RECEIVE_PROJECT = 'RECEIVE_PROJECT';
 
 export const receiveProject = project => ({
   type: RECEIVE_PROJECT,
@@ -11,7 +12,7 @@ export const createProject = project => dispatch => {
   let ajax = projectUtil.createProject(project);
 
   ajax.then(
-    response => dispatch(receiveProject(response))
+    firstResponse => dispatch(receiveProject(firstResponse))
   );
 
   return ajax;

@@ -8202,9 +8202,11 @@ var _project_util = __webpack_require__(329);
 
 var projectUtil = _interopRequireWildcard(_project_util);
 
+var _ui_actions = __webpack_require__(145);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var RECEIVE_PROJECT = exports.RECEIVE_PROJECT = 'RECEIVE_NEW_PROJECT';
+var RECEIVE_PROJECT = exports.RECEIVE_PROJECT = 'RECEIVE_PROJECT';
 
 var receiveProject = exports.receiveProject = function receiveProject(project) {
   return {
@@ -8217,8 +8219,8 @@ var createProject = exports.createProject = function createProject(project) {
   return function (dispatch) {
     var ajax = projectUtil.createProject(project);
 
-    ajax.then(function (response) {
-      return dispatch(receiveProject(response));
+    ajax.then(function (firstResponse) {
+      return dispatch(receiveProject(firstResponse));
     });
 
     return ajax;
@@ -32577,7 +32579,6 @@ var NewProjectModal = function (_React$Component) {
       if (event) {
         event.preventDefault();
         this.setState({ newProjectIsOpen: !this.state.newProjectIsOpen });
-        console.log(this.state.newProjectIsOpen);
       }
     }
   }, {
@@ -35931,6 +35932,8 @@ var _ui_actions = __webpack_require__(145);
 
 var _navigation_actions = __webpack_require__(19);
 
+var _project_actions = __webpack_require__(84);
+
 var _merge = __webpack_require__(51);
 
 var _merge2 = _interopRequireDefault(_merge);
@@ -35948,6 +35951,9 @@ var uiReducer = exports.uiReducer = function uiReducer() {
 
   Object.freeze(state);
   switch (action.type) {
+    case _project_actions.RECEIVE_PROJECT:
+      var projectId = parseInt(Object.keys(action.project.projects)[0]);
+      return (0, _merge2.default)({}, state, { projectDisplay: projectId });
     case _ui_actions.RECEIVE_PROJECT_DISPLAY:
       return (0, _merge2.default)({}, state, { projectDisplay: action.projectId });
     case _ui_actions.RECEIVE_USER_DISPLAY:
