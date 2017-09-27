@@ -49,7 +49,7 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  position: fixed;
+  position: absolute;
   right: 15px;
   z-index: 1;
 }
