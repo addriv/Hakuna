@@ -46,10 +46,11 @@
 .new-team-form > button{
   margin-top: 40px;
   position: relative;
-  left: 410px;
-  width: 144px;
+  left: 440px;
+  width: 120px;
   color: white;
-  background-color: #14aaf5
+  background-color: #14aaf5;
+  padding: 10px;
 }
 
 .leave-team-modal > #header {
@@ -149,10 +150,11 @@
 .edit-team-form > button{
   margin-top: 40px;
   position: relative;
-  left: 410px;
-  width: 144px;
+  left: 440px;
+  width: 120px;
   color: white;
-  background-color: #14aaf5
+  background-color: #14aaf5;
+  padding: 10px;
 }
 
 /*New Project Form*/
@@ -182,7 +184,7 @@
  position: relative;
  margin-top: 17px;
  color: white;
- background-color: #14aaf5
+ background-color: #14aaf5;
 }
 
 .new-project-form > button:hover{
@@ -203,15 +205,17 @@
   height: 25px;
   width: calc(100% - 4px);
   font-size: 13px;
+  padding-left: 7px;
 }
 
 .new-project-form > button{
   margin-top: 40px;
   position: relative;
-  left: 410px;
-  width: 144px;
+  left: 440px;
+  width: 120px;
   color: white;
-  background-color: #14aaf5
+  background-color: #14aaf5;
+  padding: 10px;
 }
 
 /*Edit Project Form*/
@@ -262,6 +266,7 @@
   height: 25px;
   width: calc(100% - 4px);
   font-size: 13px;
+  padding-left: 7px;
 }
 
 .edit-project-form > button{
@@ -281,11 +286,12 @@
 }
 
 .edit-project-form > div#buttons > button{
-  width: 144px;
+  width: 120px;
   color: white;
   background-color: #14aaf5;
   margin: 0 10px;
   margin-top: 30px;
+  padding: 10px;
 }
 
 /*Project Delete*/
