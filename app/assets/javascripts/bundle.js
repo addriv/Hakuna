@@ -31180,7 +31180,9 @@ var Dashboard = function (_React$Component) {
   }, {
     key: 'handleClickOutside',
     value: function handleClickOutside(event) {
-      if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+      var modalElement = document.getElementsByClassName('ReactModal__Overlay');
+
+      if (this.wrapperRef && !this.wrapperRef.contains(event.target) && modalElement.length === 0) {
         this.setState({ settingsMenuIsOpen: false });
       }
     }
@@ -31221,14 +31223,9 @@ var Dashboard = function (_React$Component) {
   }, {
     key: 'toggleSettingsMenu',
     value: function toggleSettingsMenu(event) {
-      var _this3 = this;
-
       if (event) {
         event.preventDefault();
-        this.setState({ settingsMenuIsOpen: !this.state.settingsMenuIsOpen }, function () {
-          return console.log(_this3.state);
-        });
-        console.log('toggled');
+        this.setState({ settingsMenuIsOpen: !this.state.settingsMenuIsOpen });
       }
     }
   }, {
@@ -33424,7 +33421,11 @@ var SettingsMenu = function (_React$Component) {
                 onClick: _this4.handleTeamSelect,
                 id: team.id,
                 key: i },
-              team.name
+              _react2.default.createElement(
+                'div',
+                null,
+                team.name
+              )
             );
           }
         });

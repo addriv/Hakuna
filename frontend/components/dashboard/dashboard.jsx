@@ -18,12 +18,17 @@ export default class Dashboard extends React.Component{
   }
 
   componentWillUnmount() {
-      document.removeEventListener('mousedown', this.handleClickOutside);
+    document.removeEventListener('mousedown', this.handleClickOutside);
   }
 
   handleClickOutside(event){
-    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
-      this.setState({settingsMenuIsOpen: false});
+    const modalElement = document.getElementsByClassName('ReactModal__Overlay');
+
+    if (
+      this.wrapperRef
+      && !this.wrapperRef.contains(event.target)
+      && modalElement.length === 0) {
+        this.setState({ settingsMenuIsOpen: false });
     }
   }
 
@@ -59,8 +64,7 @@ export default class Dashboard extends React.Component{
   toggleSettingsMenu(event){
     if (event){
       event.preventDefault();
-      this.setState({ settingsMenuIsOpen: !this.state.settingsMenuIsOpen }, () => console.log(this.state));
-      console.log('toggled');
+      this.setState({ settingsMenuIsOpen: !this.state.settingsMenuIsOpen });
     }
   }
 

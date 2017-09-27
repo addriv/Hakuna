@@ -40,6 +40,7 @@
   margin-left: 20px;
   height: 25px;
   width: calc(100% - 170px);
+  font-size: 13px;
 }
 
 .new-team-form > button{
@@ -73,9 +74,6 @@
   height: 250px;
 }
 
-.leave-team-modal > div > #confirm-leave:hover{
-  background-color: #de2234;
-}
 
 .leave-team-modal > div > #confirm-leave {
   background-color: #ff5263;
@@ -91,6 +89,10 @@
   margin: 0 30px;
   width: 90px;
   font-size: 13px;
+}
+
+.leave-team-modal > div > #confirm-leave:hover{
+  background-color: #de2234;
 }
 
 .leave-team-modal > div > #cancel-btn:hover{
@@ -141,6 +143,7 @@
   margin-left: 20px;
   height: 25px;
   width: calc(100% - 170px);
+  font-size: 13px;
 }
 
 .edit-team-form > button{
@@ -198,9 +201,9 @@
 }
 
 .new-project-form > form > input{
-  margin-left: 20px;
   height: 25px;
-  width: 525px;
+  width: calc(100% - 4px);
+  font-size: 13px;
 }
 
 .new-project-form > button{
@@ -257,9 +260,9 @@
 }
 
 .edit-project-form > form > input{
-  margin-left: 20px;
   height: 25px;
-  width: 525px;
+  width: calc(100% - 4px);
+  font-size: 13px;
 }
 
 .edit-project-form > button{
@@ -279,10 +282,11 @@
 }
 
 .edit-project-form > div#buttons > button{
-  margin-top: 40px;
   width: 144px;
   color: white;
   background-color: #14aaf5;
+  margin: 0 10px;
+  margin-top: 30px;
 }
 
 /*Project Delete*/
@@ -317,4 +321,13 @@
   font-size: 13px;
   width: 90px;
   margin: 5px;
+}
+
+.project-delete > #buttons > #delete-project:hover{
+  background-color: #de2234;
+}
+
+.project-delete > #buttons > #cancel:hover{
+  background-color: #14aaf5;
+  color: white;
 }

@@ -203,7 +203,10 @@ export default class SettingsMenu extends React.Component{
             className='team-btn'
             onClick={this.handleTeamSelect}
             id={team.id}
-            key={i}>{team.name}</button>;
+            key={i}>
+
+            <div>{team.name}</div>
+          </button>;
         }
       });
     }
