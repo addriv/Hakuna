@@ -45,7 +45,6 @@ export default class EditProjectModal extends React.Component {
     return (
       <Modal
         isOpen={this.state.editProjectIsOpen}
-        onAfterOpen={this.toggleEditProjectModal}
         onRequestClose={this.toggleEditProjectModal}
         style={modalStyles}
         contentLabel="Edit Project Modal">
@@ -84,22 +83,22 @@ export default class EditProjectModal extends React.Component {
   }
 
   toggleEditProjectModal(event){
-    if (event){
+    if (event && event.currentTarget){
       event.preventDefault();
-
-      const project = this.props.entities.projects[this.props.projectId];
-      const _defaultState = {
-        editProjectIsOpen: !this.state.editProjectIsOpen,
-        confirmDeleteIsOpen: false,
-        id: parseInt(project.id),
-        name: project.name,
-        description: project.description,
-        team_id: parseInt(project.team_id),
-        lead_id: parseInt(project.lead_id)
-      };
-
-      this.setState(_defaultState);
     }
+
+    const project = this.props.entities.projects[this.props.projectId];
+    const _defaultState = {
+      editProjectIsOpen: !this.state.editProjectIsOpen,
+      confirmDeleteIsOpen: false,
+      id: parseInt(project.id),
+      name: project.name,
+      description: project.description,
+      team_id: parseInt(project.team_id),
+      lead_id: parseInt(project.lead_id)
+    };
+
+    this.setState(_defaultState);
   }
 
   toggleConfirmDelete(isOpen){
@@ -120,6 +119,14 @@ export default class EditProjectModal extends React.Component {
 
   deleteProject(event){
     event.preventDefault();
+
+    const project = {
+      id: this.state.id,
+      team_id: this.state.team_id
+    };
+
+    this.props.deleteProject(project)
+      .then(this.toggleEditProjectModal);
   }
 
   confirmDeleteContent(){

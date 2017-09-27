@@ -13,3 +13,10 @@ export const updateProject = project => (
     data: { project }
   })
 );
+
+export const deleteProject = project => (
+  $.ajax({
+    method: 'DELETE',
+    url: `api/teams/${project.team_id}/projects/${project.id}`
+  })
+);

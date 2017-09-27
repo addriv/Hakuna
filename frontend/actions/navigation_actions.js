@@ -19,8 +19,8 @@ export const receiveUserDisplay = userId => ({
   userId
 });
 
-export const fetchTeam = team => dispatch => (
-  navUtil.fetchTeam(team).then(
+export const fetchTeam = teamId => dispatch => (
+  navUtil.fetchTeam(teamId).then(
     (response) => dispatch(receiveTeam(response))
   )
 );

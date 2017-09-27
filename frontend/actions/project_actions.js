@@ -1,5 +1,5 @@
 import * as projectUtil from '../util/project_util';
-import { receiveProjectDisplay } from './ui_actions';
+import { fetchTeam } from './navigation_actions';
 
 export const RECEIVE_PROJECT = 'RECEIVE_PROJECT';
 
@@ -26,4 +26,11 @@ export const updateProject = project => dispatch => {
   );
 
   return ajax;
+};
+
+export const deleteProject = project => dispatch => {
+  return projectUtil.deleteProject(project)
+    .then(
+      response => dispatch(fetchTeam(project.team_id))
+    );
 };

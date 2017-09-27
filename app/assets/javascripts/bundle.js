@@ -2242,9 +2242,9 @@ var receiveUserDisplay = exports.receiveUserDisplay = function receiveUserDispla
   };
 };
 
-var fetchTeam = exports.fetchTeam = function fetchTeam(team) {
+var fetchTeam = exports.fetchTeam = function fetchTeam(teamId) {
   return function (dispatch) {
-    return navUtil.fetchTeam(team).then(function (response) {
+    return navUtil.fetchTeam(teamId).then(function (response) {
       return dispatch(receiveTeam(response));
     });
   };
@@ -8196,13 +8196,13 @@ var createTransitionManager = function createTransitionManager() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateProject = exports.createProject = exports.receiveProject = exports.RECEIVE_PROJECT = undefined;
+exports.deleteProject = exports.updateProject = exports.createProject = exports.receiveProject = exports.RECEIVE_PROJECT = undefined;
 
 var _project_util = __webpack_require__(329);
 
 var projectUtil = _interopRequireWildcard(_project_util);
 
-var _ui_actions = __webpack_require__(145);
+var _navigation_actions = __webpack_require__(19);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -8236,6 +8236,14 @@ var updateProject = exports.updateProject = function updateProject(project) {
     });
 
     return ajax;
+  };
+};
+
+var deleteProject = exports.deleteProject = function deleteProject(project) {
+  return function (dispatch) {
+    return projectUtil.deleteProject(project).then(function (response) {
+      return dispatch((0, _navigation_actions.fetchTeam)(project.team_id));
+    });
   };
 };
 
@@ -32717,6 +32725,13 @@ var updateProject = exports.updateProject = function updateProject(project) {
   });
 };
 
+var deleteProject = exports.deleteProject = function deleteProject(project) {
+  return $.ajax({
+    method: 'DELETE',
+    url: 'api/teams/' + project.team_id + '/projects/' + project.id
+  });
+};
+
 /***/ }),
 /* 330 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -32748,6 +32763,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     updateProject: function updateProject(project) {
       return dispatch((0, _project_actions.updateProject)(project));
+    },
+    deleteProject: function deleteProject(project) {
+      return dispatch((0, _project_actions.deleteProject)(project));
     }
   };
 };
@@ -32842,7 +32860,6 @@ var EditProjectModal = function (_React$Component) {
         _reactModal2.default,
         {
           isOpen: this.state.editProjectIsOpen,
-          onAfterOpen: this.toggleEditProjectModal,
           onRequestClose: this.toggleEditProjectModal,
           style: modalStyles,
           contentLabel: 'Edit Project Modal' },
@@ -32906,22 +32923,22 @@ var EditProjectModal = function (_React$Component) {
   }, {
     key: 'toggleEditProjectModal',
     value: function toggleEditProjectModal(event) {
-      if (event) {
+      if (event && event.currentTarget) {
         event.preventDefault();
-
-        var project = this.props.entities.projects[this.props.projectId];
-        var _defaultState = {
-          editProjectIsOpen: !this.state.editProjectIsOpen,
-          confirmDeleteIsOpen: false,
-          id: parseInt(project.id),
-          name: project.name,
-          description: project.description,
-          team_id: parseInt(project.team_id),
-          lead_id: parseInt(project.lead_id)
-        };
-
-        this.setState(_defaultState);
       }
+
+      var project = this.props.entities.projects[this.props.projectId];
+      var _defaultState = {
+        editProjectIsOpen: !this.state.editProjectIsOpen,
+        confirmDeleteIsOpen: false,
+        id: parseInt(project.id),
+        name: project.name,
+        description: project.description,
+        team_id: parseInt(project.team_id),
+        lead_id: parseInt(project.lead_id)
+      };
+
+      this.setState(_defaultState);
     }
   }, {
     key: 'toggleConfirmDelete',
@@ -32944,6 +32961,13 @@ var EditProjectModal = function (_React$Component) {
     key: 'deleteProject',
     value: function deleteProject(event) {
       event.preventDefault();
+
+      var project = {
+        id: this.state.id,
+        team_id: this.state.team_id
+      };
+
+      this.props.deleteProject(project).then(this.toggleEditProjectModal);
     }
   }, {
     key: 'confirmDeleteContent',
