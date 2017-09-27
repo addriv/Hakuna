@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { Route, Redirect } from 'react-router-dom';
 import SidebarContainer from '../sidebar/sidebar_container';
 import SettingsMenuContainer from './settings_menu_container';
+import TasksIndexContainer from '../tasks/tasks_index_container';
 import { objectComparisonByKeys } from '../../util/navigation_util';
 
 export default class Dashboard extends React.Component{
@@ -81,72 +82,16 @@ export default class Dashboard extends React.Component{
       teamDisplay = this.props.entities.team.name;
     }
 
-    //Grab tasks if they exist
+    //Get list display name
     const projectDisplay = this.props.uiDisplay.projectDisplay;
     const userDisplay = this.props.uiDisplay.userDisplay;
 
-    //If userDisplay !== -1, grab tasks for specified user
-    if (userDisplay !== -1){
-      const userTasks = [];
-      this.props.tasks.forEach(task => {
-        if (task.assignee_id === userDisplay){
-          userTasks.push(task);
-        }
-      });
-
-      tasksList = userTasks.map((task, i) => {
-        return (
-          <li
-            id={ task.id }
-            key={i}>{ task.title }</li>
-        );
-      });
-
-      tasksUl = <ul>{ tasksList }</ul>;
-      const memberSelected = this.entities.members[userDisplay].name;
-
-      if (userDisplay === 0){
-        listDisplay = `My Tasks in ${teamDisplay}`;
-      }
-      else listDisplay = `${memberSelected}'s Assigned Tasks`;
-    }
-    //If projectDisplay === 0, get all public tasks for the Team
-    else if (tasks && projectDisplay === 0){
-      tasksList = tasks.map((task, i) => {
-        return (
-          <li
-            id={ task.id }
-            key={i}>{ task.title }</li>
-        );
-      });
-
-      tasksUl = <ul>{ tasksList }</ul>;
+    if (projectDisplay === 0) {
       listDisplay = `All Tasks in ${teamDisplay}`;
     }
-    //If projectDisplay !== 0 or !== -1 filter specific tasks by project selected
-    else if (projectDisplay !== 0 && projectDisplay !== -1){
-      const projectTasks = [];
-      this.props.tasks.forEach(task => {
-        if (task.project_id === projectDisplay) {
-          projectTasks.push(task);
-        }
-      });
-
-      tasksList = projectTasks.map((task, i) => {
-        return (
-          <li
-            id={ task.id }
-            key={i}>{ task.title }</li>
-        );
-      });
-
-      tasksUl = <ul>{ tasksList }</ul>;
+    else if (projectDisplay !== 0 && projectDisplay !== -1 ) {
       const project = this.props.entities.projects[projectDisplay];
       listDisplay = `${project.name}`;
-    }
-
-    if (this.state.settingsMenuIsOpen){
-      settingsMenu = <SettingsMenuContainer />;
     }
 
     return (
@@ -178,7 +123,8 @@ export default class Dashboard extends React.Component{
                     </div>
                   </button>
 
-                  { settingsMenu }
+                  { this.state.settingsMenuIsOpen ?
+                    <SettingsMenuContainer /> : null }
 
                 </div>
 
@@ -192,13 +138,7 @@ export default class Dashboard extends React.Component{
 
             </nav>
 
-            <div className='tasks-ui'>
-
-              <div className='tasks-list'>
-                { tasksUl }
-              </div>
-
-            </div>
+            <TasksIndexContainer />
 
           </div>
 
@@ -236,4 +176,78 @@ export default class Dashboard extends React.Component{
 //   if (!objectComparisonByKeys(newProps.teams, this.props.teams)){
 //     this.props.fetchTeam(Object.keys(newProps.teams)[0].id);
 //   }
+// }
+
+//Tasks render
+// <div className='tasks-ui'>
+//
+//   <div className='tasks-list'>
+//     { tasksUl }
+//   </div>
+//
+// </div>
+//
+//Render tasks continued
+//Grab tasks if they exist
+// const projectDisplay = this.props.uiDisplay.projectDisplay;
+// const userDisplay = this.props.uiDisplay.userDisplay;
+//
+// //If userDisplay !== -1, grab tasks for specified user
+// if (userDisplay !== -1){
+//   const userTasks = [];
+//   this.props.tasks.forEach(task => {
+//     if (task.assignee_id === userDisplay){
+//       userTasks.push(task);
+//     }
+//   });
+//
+//   tasksList = userTasks.map((task, i) => {
+//     return (
+//       <li
+//         id={ task.id }
+//         key={i}>{ task.title }</li>
+//     );
+//   });
+//
+//   tasksUl = <ul>{ tasksList }</ul>;
+//   const memberSelected = this.entities.members[userDisplay].name;
+//
+//   if (userDisplay === 0){
+//     listDisplay = `My Tasks in ${teamDisplay}`;
+//   }
+//   else listDisplay = `${memberSelected}'s Assigned Tasks`;
+// }
+// //If projectDisplay === 0, get all public tasks for the Team
+// else if (tasks && projectDisplay === 0){
+//   tasksList = tasks.map((task, i) => {
+//     return (
+//       <li
+//         id={ task.id }
+//         key={i}>{ task.title }</li>
+//     );
+//   });
+//
+//   tasksUl = <ul>{ tasksList }</ul>;
+//   listDisplay = `All Tasks in ${teamDisplay}`;
+// }
+// //If projectDisplay !== 0 or !== -1 filter specific tasks by project selected
+// else if (projectDisplay !== 0 && projectDisplay !== -1){
+//   const projectTasks = [];
+//   this.props.tasks.forEach(task => {
+//     if (task.project_id === projectDisplay) {
+//       projectTasks.push(task);
+//     }
+//   });
+//
+//   tasksList = projectTasks.map((task, i) => {
+//     return (
+//       <li
+//         id={ task.id }
+//         key={i}>{ task.title }</li>
+//     );
+//   });
+//
+//   tasksUl = <ul>{ tasksList }</ul>;
+//   const project = this.props.entities.projects[projectDisplay];
+//   listDisplay = `${project.name}`;
 // }

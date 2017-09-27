@@ -1,0 +1,81 @@
+import React from 'react';
+
+export default class TasksIndex extends React.Component{
+  constructor(props){
+    super(props);
+  }
+
+  tasksIndexContent(){
+    let tasksList, tasksUl;
+    const tasks = this.props.tasks;
+
+    //Grab tasks if they exist
+    const projectDisplay = this.props.state.ui.projectDisplay;
+    const userDisplay = this.props.state.ui.userDisplay;
+
+    //If userDisplay !== -1, grab tasks for specified user
+    if (userDisplay !== -1){
+      const userTasks = [];
+      this.props.tasks.forEach(task => {
+        if (task.assignee_id === userDisplay){
+          userTasks.push(task);
+        }
+      });
+
+      tasksList = userTasks.map((task, i) => {
+        return (
+          <li
+            id={ task.id }
+            key={i}>{ task.title }</li>
+        );
+      });
+
+      return <ul>{ tasksList }</ul>;
+    }
+    //If projectDisplay === 0, get all public tasks for the Team
+    else if (tasks && projectDisplay === 0){
+      tasksList = tasks.map((task, i) => {
+        return (
+          <li
+            id={ task.id }
+            key={i}>{ task.title }</li>
+        );
+      });
+
+      return <ul>{ tasksList }</ul>;
+    }
+    //If projectDisplay !== 0 or !== -1 filter specific tasks by
+    //project selected
+    else if (projectDisplay !== 0 && projectDisplay !== -1){
+      const projectTasks = [];
+      this.props.tasks.forEach(task => {
+        if (task.project_id === projectDisplay) {
+          projectTasks.push(task);
+        }
+      });
+
+      tasksList = projectTasks.map((task, i) => {
+        return (
+          <li
+            id={ task.id }
+            key={i}>{ task.title }</li>
+        );
+      });
+
+      return <ul>{ tasksList }</ul>;
+    }
+  }
+
+  render(){
+
+    return (
+      <div className='tasks-ui'>
+        <div className='tasks-index'>
+          { this.tasksIndexContent() }
+        </div>
+
+
+      </div>
+    );
+  }
+}

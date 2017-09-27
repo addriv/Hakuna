@@ -76,7 +76,7 @@ export default class NewProjectModal extends React.Component {
 
         <div className='new-project-form'>
           <div className='new-project-header'>
-            <h2>Create a New Project!</h2>
+            <h2>Create Your Project</h2>
             <button onClick={this.toggleNewProject}>X</button>
           </div>
 

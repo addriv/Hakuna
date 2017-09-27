@@ -37,7 +37,7 @@ export default class SettingsMenu extends React.Component{
 
   handleTeamSelect(event){
     event.preventDefault();
-    const teamId = parseInt(event.target.id);
+    const teamId = parseInt(event.currentTarget.id);
     this.props.fetchTeam(teamId);
   }
 
