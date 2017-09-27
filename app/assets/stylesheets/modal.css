@@ -160,7 +160,6 @@
 .new-project-form{
   display: flex;
   flex-direction: column;
-  height: 250px;
   width: 580px;
 }
 
