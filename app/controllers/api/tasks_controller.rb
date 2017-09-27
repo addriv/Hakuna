@@ -10,6 +10,24 @@ class Api::TasksController < ApplicationController
     end
   end
 
+  def update
+    @task = Task.find_by_id(params[:id])
+    @team = current_user.teams.find_by_id(@task.team_id)
+    @project = current_user.projects.find_by_id(@task.project_id)
+
+    # If task is public and the user is on the team
+    # Or if the task isn't public but the user is on the project
+    if (@task.public && @team) || (!@task.public && @project)
+      if @task.update_attributes(task_params)
+        render :show
+      else
+        render json: @task.errors.full_messages, status: 422
+      end
+    else
+      render json: [ 'Task not found' ], status: 404
+    end
+  end
+
   private
 
   def task_params

@@ -47,9 +47,7 @@ export default class TasksDetail extends React.Component{
   handleTitle(event){
     this.props.titleChange(event, 'title');
     const newTitle = { title: event.target.value };
-    this.setState(newTitle,
-      () => console.log(this.state)
-    );
+    this.setState(newTitle);
   }
 
   handleInput(inputType){

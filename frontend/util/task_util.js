@@ -5,3 +5,11 @@ export const createTask = task => (
     data: { task }
   })
 );
+
+export const updateTask = task => (
+  $.ajax({
+    method: 'PATCH',
+    url: `api/tasks/${task.id}`,
+    data: { task }
+  })
+);

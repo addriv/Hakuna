@@ -33860,21 +33860,17 @@ var TasksDetail = function (_React$Component) {
   }, {
     key: 'handleTitle',
     value: function handleTitle(event) {
-      var _this2 = this;
-
       this.props.titleChange(event, 'title');
       var newTitle = { title: event.target.value };
-      this.setState(newTitle, function () {
-        return console.log(_this2.state);
-      });
+      this.setState(newTitle);
     }
   }, {
     key: 'handleInput',
     value: function handleInput(inputType) {
-      var _this3 = this;
+      var _this2 = this;
 
       return function (event) {
-        return _this3.setState(_defineProperty({}, inputType, event.target.value));
+        return _this2.setState(_defineProperty({}, inputType, event.target.value));
       };
     }
   }, {
@@ -36058,6 +36054,14 @@ var createTask = exports.createTask = function createTask(task) {
   return $.ajax({
     method: 'POST',
     url: 'api/tasks',
+    data: { task: task }
+  });
+};
+
+var updateTask = exports.updateTask = function updateTask(task) {
+  return $.ajax({
+    method: 'PATCH',
+    url: 'api/tasks/' + task.id,
     data: { task: task }
   });
 };
