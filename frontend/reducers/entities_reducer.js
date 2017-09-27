@@ -10,8 +10,7 @@ export const entitiesReducer = (state = {}, action) => {
     case RECEIVE_TEAM:
       return action.teamData;
     case RECEIVE_PROJECT:
-      const newState = merge({}, state, action.project);
-      return newState;
+      return merge({}, state, action.project);
     case RECEIVE_TASK:
       return merge({}, state, action.task);
     default:

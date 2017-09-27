@@ -33658,7 +33658,7 @@ var TasksIndex = function (_React$Component) {
       var taskId = parseInt(event.target.id);
       var task = this.props.state.entities.tasks[taskId];
 
-      this.props.receiveTask({ tasks: _defineProperty({}, task.id, { task: task }) });
+      this.props.receiveTask({ tasks: _defineProperty({}, task.id, task) });
       this.setState({ taskDetailIsOpen: true });
     }
   }, {
@@ -33830,7 +33830,6 @@ var TasksDetail = function (_React$Component) {
     var taskId = _this.props.state.ui.taskDisplay;
     var task = _this.props.state.entities.tasks[taskId];
     _this.state = task;
-
     _this.tryToggle = _this.tryToggle.bind(_this);
     _this.handleTitle = _this.handleTitle.bind(_this);
     return _this;
@@ -36404,8 +36403,7 @@ var entitiesReducer = exports.entitiesReducer = function entitiesReducer() {
     case _navigation_actions.RECEIVE_TEAM:
       return action.teamData;
     case _project_actions.RECEIVE_PROJECT:
-      var newState = (0, _merge2.default)({}, state, action.project);
-      return newState;
+      return (0, _merge2.default)({}, state, action.project);
     case _task_actions.RECEIVE_TASK:
       return (0, _merge2.default)({}, state, action.task);
     default:

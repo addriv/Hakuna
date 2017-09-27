@@ -50,7 +50,7 @@ export default class TasksIndex extends React.Component{
     const taskId = parseInt(event.target.id);
     const task = this.props.state.entities.tasks[taskId];
 
-    this.props.receiveTask({ tasks: { [task.id]: { task } }});
+    this.props.receiveTask({ tasks: { [task.id]: task }});
     this.setState({ taskDetailIsOpen: true });
   }
 

@@ -19,7 +19,6 @@ export default class TasksDetail extends React.Component{
     const taskId = this.props.state.ui.taskDisplay;
     const task = this.props.state.entities.tasks[taskId];
     this.state = task;
-
     this.tryToggle = this.tryToggle.bind(this);
     this.handleTitle = this.handleTitle.bind(this);
   }
