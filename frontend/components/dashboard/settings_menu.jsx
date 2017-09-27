@@ -225,3 +225,11 @@ export default class SettingsMenu extends React.Component{
     );
   }
 }
+
+// toggleSettingsMenu passed from parent
+//
+// toggleSettingsMenu(){
+//   console.log('testing');
+//   this.props.toggleMenu();
+//   debugger;
+// }

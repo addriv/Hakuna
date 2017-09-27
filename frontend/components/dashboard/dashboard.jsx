@@ -13,6 +13,22 @@ export default class Dashboard extends React.Component{
      };
 
     this.toggleSettingsMenu = this.toggleSettingsMenu.bind(this);
+    this.setWrapperRef = this.setWrapperRef.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+  }
+
+  componentWillUnmount() {
+      document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  handleClickOutside(event){
+    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+      this.setState({settingsMenuIsOpen: false});
+    }
+  }
+
+  setWrapperRef(node) {
+      this.wrapperRef = node;
   }
 
   componentWillReceiveProps(newProps){
@@ -36,11 +52,16 @@ export default class Dashboard extends React.Component{
     this.props.fetchTeams().then(
       (response) => this.props.fetchTeam(getFirstTeam(response))
     );
+
+    document.addEventListener('mousedown', this.handleClickOutside);
   }
 
   toggleSettingsMenu(event){
-    event.preventDefault();
-    this.setState({ settingsMenuIsOpen: !this.state.settingsMenuIsOpen });
+    if (event){
+      event.preventDefault();
+      this.setState({ settingsMenuIsOpen: !this.state.settingsMenuIsOpen }, () => console.log(this.state));
+      console.log('toggled');
+    }
   }
 
   render(){
@@ -140,7 +161,7 @@ export default class Dashboard extends React.Component{
                   className='view-user-tasks'
                   >My Tasks</button>
 
-                <div className='settings-menu'>
+                <div className='settings-menu' ref={this.setWrapperRef}>
 
                   <button
                     className='settings-menu-btn'

@@ -27,11 +27,14 @@ export default class EditProjectModal extends React.Component {
       name: project.name,
       description: project.description,
       team_id: parseInt(project.team_id),
-      lead_id: parseInt(project.lead_id)
+      lead_id: parseInt(project.lead_id),
+      confirmDeleteIsOpen: false
     };
 
     this.toggleEditProjectModal = this.toggleEditProjectModal.bind(this);
     this.editProjectSubmit = this.editProjectSubmit.bind(this);
+    this.deleteProject = this.deleteProject.bind(this);
+    this.toggleConfirmDelete = this.toggleConfirmDelete.bind(this);
   }
 
   handleEditFormInput(inputType){
@@ -65,7 +68,12 @@ export default class EditProjectModal extends React.Component {
               value={this.state.description}/>
           </form>
 
-          <button onClick={this.editProjectSubmit}>Update Project</button>
+          <div id='buttons'>
+            <button onClick={this.toggleConfirmDelete}>Delete Project</button>
+            <button onClick={this.editProjectSubmit}>Update Project</button>
+          </div>
+
+
         </div>
       </Modal>
     );
@@ -87,6 +95,36 @@ export default class EditProjectModal extends React.Component {
 
       this.setState(_defaultState);
     }
+  }
+
+  toggleConfirmDelete(isOpen){
+    if (isOpen){
+      return event => {
+        event.preventDefault();
+        this.setState({ confirmDeleteIsOpen: true });
+      };
+    }
+    else {
+      return event => {
+        event.preventDefault();
+        this.setState({ confirmDeleteIsOpen: !this.state.confirmDeleteIsOpen });
+      };
+    }
+
+  }
+
+  deleteProject(event){
+    event.preventDefault();
+  }
+
+  confirmDeleteContent(){
+    return (
+      <div className='project-delete'>
+        <p>All tasks in this project will also be deleted. Are you sure you want to delete this project?</p>
+        <button onClick={this.toggleConfirmDelete(true)}>Cancel</button>
+        <button onClick={this.deleteProject}>Delete Project</button>
+      </div>
+    );
   }
 
   editProjectSubmit(event){

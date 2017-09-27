@@ -217,7 +217,7 @@
 .edit-project-form{
   display: flex;
   flex-direction: column;
-  height: 250px;
+  height: 300px;
   width: 580px;
 }
 
@@ -270,4 +270,17 @@
   width: 144px;
   color: white;
   background-color: #14aaf5
+}
+
+.edit-project-form > div#buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.edit-project-form > div#buttons > button{
+  margin-top: 40px;
+  width: 144px;
+  color: white;
+  background-color: #14aaf5;
 }
