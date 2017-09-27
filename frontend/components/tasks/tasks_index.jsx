@@ -7,11 +7,19 @@ export default class TasksIndex extends React.Component{
 
     this.state = { taskDetailIsOpen: false };
     this.newTask = this.newTask.bind(this);
+    this.closeDetail = this.closeDetail.bind(this);
   }
 
   newTask(event){
     event.preventDefault();
     this.setState({ taskDetailIsOpen: true });
+  }
+
+  closeDetail(event){
+    if (event){
+      event.preventDefault();
+    }
+    this.setState({ taskDetailIsOpen: false });
   }
 
   tasksIndexContent(){
@@ -44,11 +52,21 @@ export default class TasksIndex extends React.Component{
     //If projectDisplay === 0, get all public tasks for the Team
     else if (tasks && projectDisplay === 0){
       tasksList = tasks.map((task, i) => {
-        return (
-          <li
-            id={ task.id }
-            key={i}>{ task.title }</li>
-        );
+        if (task.parent_task_id) {
+          return;
+        }
+        else{
+          return (
+            <li
+              id={ task.id }
+              key={i}>
+
+              <div className={ task.completed ?
+                  'checkmark-done' : 'checkmark-not-done'}>L</div>
+              <input value={ task.title }></input>
+            </li>
+          );
+        }      
       });
 
       return <ul>{ tasksList }</ul>;
@@ -64,11 +82,22 @@ export default class TasksIndex extends React.Component{
       });
 
       tasksList = projectTasks.map((task, i) => {
-        return (
-          <li
-            id={ task.id }
-            key={i}>{ task.title }</li>
-        );
+        if (task.parent_task_id) {
+          return;
+        }
+        else {
+          return (
+            <li
+              id={ task.id }
+              key={i}>
+
+              <div className={ task.completed ?
+                  'checkmark-done' : 'checkmark-not-done'}>L</div>
+              <input value={ task.title }></input>
+            </li>
+          );
+        }
+
       });
 
       return <ul>{ tasksList }</ul>;
@@ -87,7 +116,7 @@ export default class TasksIndex extends React.Component{
           { this.tasksIndexContent() }
         </div>
 
-        { this.state.taskDetailIsOpen ? <TasksDetailContainer /> : null }
+        { this.state.taskDetailIsOpen ? <TasksDetailContainer toggle={this.closeDetail} /> : null }
       </div>
     );
   }

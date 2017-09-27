@@ -32,7 +32,9 @@ json.tasks do
                       :assignee_id,
                       :due_date,
                       :parent_task_id,
-                      :project_id
+                      :project_id,
+                      :completed,
+                      :parent_task_id
       end
     end
   end

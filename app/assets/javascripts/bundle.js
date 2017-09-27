@@ -36061,6 +36061,7 @@ var TasksIndex = function (_React$Component) {
 
     _this.state = { taskDetailIsOpen: false };
     _this.newTask = _this.newTask.bind(_this);
+    _this.closeDetail = _this.closeDetail.bind(_this);
     return _this;
   }
 
@@ -36069,6 +36070,14 @@ var TasksIndex = function (_React$Component) {
     value: function newTask(event) {
       event.preventDefault();
       this.setState({ taskDetailIsOpen: true });
+    }
+  }, {
+    key: 'closeDetail',
+    value: function closeDetail(event) {
+      if (event) {
+        event.preventDefault();
+      }
+      this.setState({ taskDetailIsOpen: false });
     }
   }, {
     key: 'tasksIndexContent',
@@ -36109,13 +36118,22 @@ var TasksIndex = function (_React$Component) {
       //If projectDisplay === 0, get all public tasks for the Team
       else if (tasks && projectDisplay === 0) {
           tasksList = tasks.map(function (task, i) {
-            return _react2.default.createElement(
-              'li',
-              {
-                id: task.id,
-                key: i },
-              task.title
-            );
+            if (task.parent_task_id) {
+              return;
+            } else {
+              return _react2.default.createElement(
+                'li',
+                {
+                  id: task.id,
+                  key: i },
+                _react2.default.createElement(
+                  'div',
+                  { className: task.completed ? 'checkmark-done' : 'checkmark-not-done' },
+                  'L'
+                ),
+                _react2.default.createElement('input', { value: task.title })
+              );
+            }
           });
 
           return _react2.default.createElement(
@@ -36135,13 +36153,22 @@ var TasksIndex = function (_React$Component) {
             });
 
             tasksList = projectTasks.map(function (task, i) {
-              return _react2.default.createElement(
-                'li',
-                {
-                  id: task.id,
-                  key: i },
-                task.title
-              );
+              if (task.parent_task_id) {
+                return;
+              } else {
+                return _react2.default.createElement(
+                  'li',
+                  {
+                    id: task.id,
+                    key: i },
+                  _react2.default.createElement(
+                    'div',
+                    { className: task.completed ? 'checkmark-done' : 'checkmark-not-done' },
+                    'L'
+                  ),
+                  _react2.default.createElement('input', { value: task.title })
+                );
+              }
             });
 
             return _react2.default.createElement(
@@ -36172,7 +36199,7 @@ var TasksIndex = function (_React$Component) {
           ),
           this.tasksIndexContent()
         ),
-        this.state.taskDetailIsOpen ? _react2.default.createElement(_tasks_detail_container2.default, null) : null
+        this.state.taskDetailIsOpen ? _react2.default.createElement(_tasks_detail_container2.default, { toggle: this.closeDetail }) : null
       );
     }
   }]);
@@ -36247,16 +36274,33 @@ var TasksDetail = function (_React$Component) {
   function TasksDetail(props) {
     _classCallCheck(this, TasksDetail);
 
-    return _possibleConstructorReturn(this, (TasksDetail.__proto__ || Object.getPrototypeOf(TasksDetail)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (TasksDetail.__proto__ || Object.getPrototypeOf(TasksDetail)).call(this, props));
+
+    _this.tryToggle = _this.tryToggle.bind(_this);
+    return _this;
   }
 
   _createClass(TasksDetail, [{
+    key: 'tryToggle',
+    value: function tryToggle(event) {
+      event.preventDefault();
+      this.props.toggle();
+    }
+  }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
         { className: 'tasks-detail' },
-        'Tasks Detail'
+        _react2.default.createElement(
+          'div',
+          { id: 'header' },
+          _react2.default.createElement(
+            'button',
+            { onClick: this.tryToggle },
+            'X'
+          )
+        )
       );
     }
   }]);
