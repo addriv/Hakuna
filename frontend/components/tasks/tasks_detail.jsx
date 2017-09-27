@@ -21,6 +21,7 @@ export default class TasksDetail extends React.Component{
     this.state = task;
 
     this.tryToggle = this.tryToggle.bind(this);
+    this.handleTitle = this.handleTitle.bind(this);
   }
 
   tryToggle(event){
@@ -29,9 +30,26 @@ export default class TasksDetail extends React.Component{
   }
 
   componentWillReceiveProps(newProps){
-    const taskId = newProps.state.ui.taskDisplay;
-    const task = newProps.state.entities.tasks[taskId];
-    this.setState(task);
+    const oldTaskId = this.props.state.ui.taskDisplay;
+    const newTaskId = newProps.state.ui.taskDisplay;
+
+    let newTask;
+    if (oldTaskId !== newTaskId){
+      newTask = newProps.state.entities.tasks[newTaskId];
+    }
+    else {
+      newTask = newProps.indexState[newTaskId];
+    }
+
+    this.setState(newTask);
+  }
+
+  handleTitle(event){
+    this.props.titleChange(event, 'title');
+    const newTitle = { title: event.target.value };
+    this.setState(newTitle,
+      () => console.log(this.state)
+    );
   }
 
   handleInput(inputType){
@@ -55,9 +73,10 @@ export default class TasksDetail extends React.Component{
         </div>
 
         <input
-          id='title'
+          className='title'
+          id={ this.state.id }
           value={ this.state.title ? this.state.title : '' }
-          onChange={ this.handleInput('title') }></input>
+          onChange={ this.handleTitle }></input>
 
         <textarea
           id='description'
