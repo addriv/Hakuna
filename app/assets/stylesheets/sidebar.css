@@ -139,8 +139,28 @@ div.member{
   flex-direction: row;
 }
 
+#projects-header > #header{
+  padding-top: 3px;
+  margin: 0 10px;
+}
+
 #new-project-btn{
   justify-content: flex-end;
   display: flex;
   width: 100%;
+}
+
+#new-project-btn > button {
+  width: 20px;
+  height: 20px;
+  border-radius: 19px;
+  border: solid white 1px;
+  background-color: transparent;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  padding-bottom: 1px;
+  padding: 0;
+  padding-bottom: 4px;
+  margin: 0 10px;
 }
