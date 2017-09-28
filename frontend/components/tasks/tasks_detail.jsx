@@ -22,6 +22,7 @@ export default class TasksDetail extends React.Component{
     this.tryToggle = this.tryToggle.bind(this);
     this.handleTitle = this.handleTitle.bind(this);
     this.handleOnBlur = this.handleOnBlur.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   tryToggle(event){
@@ -67,6 +68,12 @@ export default class TasksDetail extends React.Component{
     this.props.updateTask(updatedTask);
   }
 
+  handleKeyPress(event){
+    if (event.key === 'Enter'){
+      event.target.blur();
+    }
+  }
+
   render(){
     let project;
     const projectId = this.state.project_id;
@@ -92,6 +99,7 @@ export default class TasksDetail extends React.Component{
           value={ this.state.title ? this.state.title : '' }
           onChange={ this.handleTitle }
           onBlur={ this.handleOnBlur }
+          onKeyPress={ this.handleKeyPress }
           placeholder='New Task Title'></input>
 
         <textarea
@@ -99,6 +107,7 @@ export default class TasksDetail extends React.Component{
           value={ this.state.description ? this.state.description : ''}
           onChange={ this.handleInput('description') }
           onBlur={ this.handleOnBlur }
+          onKeyPress={ this.handleKeyPress }
           placeholder='Description'></textarea>
 
         <div id='timestamps'>
