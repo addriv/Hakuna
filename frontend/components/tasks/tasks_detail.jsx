@@ -36,7 +36,6 @@ export default class TasksDetail extends React.Component{
     let newTask;
     if (oldTaskId !== newTaskId){
       newTask = newProps.state.entities.tasks[newTaskId];
-      debugger;
     }
     else {
       newTask = newProps.indexState[newTaskId];
@@ -91,13 +90,15 @@ export default class TasksDetail extends React.Component{
           id={ this.state.id }
           value={ this.state.title ? this.state.title : '' }
           onChange={ this.handleTitle }
-          onBlur={ this.handleOnBlur }></input>
+          onBlur={ this.handleOnBlur }
+          placeholder='New Task Title'></input>
 
         <textarea
           id='description'
           value={ this.state.description ? this.state.description : ''}
           onChange={ this.handleInput('description') }
-          onBlur={ this.handleOnBlur }></textarea>
+          onBlur={ this.handleOnBlur }
+          placeholder='Description'></textarea>
 
         <div id='timestamps'>
           <div id='created'>{ `Created task. ${createdDate}` }</div>

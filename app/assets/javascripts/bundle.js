@@ -8488,7 +8488,7 @@ module.exports = isArrayLike;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateTask = exports.createTask = exports.receiveTask = exports.RECEIVE_TASK = undefined;
+exports.updateTask = exports.createTask = exports.receiveTaskDisplay = exports.receiveTask = exports.RECEIVE_TASK_DISPLAY = exports.RECEIVE_TASK = undefined;
 
 var _task_util = __webpack_require__(406);
 
@@ -8497,6 +8497,7 @@ var taskUtil = _interopRequireWildcard(_task_util);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var RECEIVE_TASK = exports.RECEIVE_TASK = 'RECEIVE_TASK';
+var RECEIVE_TASK_DISPLAY = exports.RECEIVE_TASK_DISPLAY = 'RECEIVE_TASK_DISPLAY';
 
 var receiveTask = exports.receiveTask = function receiveTask(task) {
   return {
@@ -8505,10 +8506,19 @@ var receiveTask = exports.receiveTask = function receiveTask(task) {
   };
 };
 
+var receiveTaskDisplay = exports.receiveTaskDisplay = function receiveTaskDisplay(task) {
+  return {
+    type: RECEIVE_TASK_DISPLAY,
+    task: task
+  };
+};
+
 var createTask = exports.createTask = function createTask(task) {
   return function (dispatch) {
     return taskUtil.createTask(task).then(function (response) {
       return dispatch(receiveTask(response));
+    }).then(function (response) {
+      return dispatch(receiveTaskDisplay(response));
     });
   };
 };
@@ -33563,8 +33573,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     createTask: function createTask(task) {
       return dispatch((0, _task_actions.createTask)(task));
     },
-    receiveTask: function receiveTask(task) {
-      return dispatch((0, _task_actions.receiveTask)(task));
+    receiveTaskDisplay: function receiveTaskDisplay(task) {
+      return dispatch((0, _task_actions.receiveTaskDisplay)(task));
     },
     updateTask: function updateTask(task) {
       return dispatch((0, _task_actions.updateTask)(task));
@@ -33670,7 +33680,7 @@ var TasksIndex = function (_React$Component) {
       var taskId = parseInt(event.target.id);
       var task = this.props.state.entities.tasks[taskId];
 
-      this.props.receiveTask({ tasks: _defineProperty({}, task.id, task) });
+      this.props.receiveTaskDisplay({ tasks: _defineProperty({}, task.id, task) });
       this.setState({ taskDetailIsOpen: true });
     }
   }, {
@@ -33877,7 +33887,6 @@ var TasksDetail = function (_React$Component) {
       var newTask = void 0;
       if (oldTaskId !== newTaskId) {
         newTask = newProps.state.entities.tasks[newTaskId];
-        debugger;
       } else {
         newTask = newProps.indexState[newTaskId];
       }
@@ -33946,12 +33955,14 @@ var TasksDetail = function (_React$Component) {
           id: this.state.id,
           value: this.state.title ? this.state.title : '',
           onChange: this.handleTitle,
-          onBlur: this.handleOnBlur }),
+          onBlur: this.handleOnBlur,
+          placeholder: 'New Task Title' }),
         _react2.default.createElement('textarea', {
           id: 'description',
           value: this.state.description ? this.state.description : '',
           onChange: this.handleInput('description'),
-          onBlur: this.handleOnBlur }),
+          onBlur: this.handleOnBlur,
+          placeholder: 'Description' }),
         _react2.default.createElement(
           'div',
           { id: 'timestamps' },
@@ -36502,7 +36513,7 @@ var uiReducer = exports.uiReducer = function uiReducer() {
       return (0, _merge2.default)({}, state, { projectDisplay: action.projectId });
     case _ui_actions.RECEIVE_USER_DISPLAY:
       return (0, _merge2.default)({}, state, { userDisplay: action.userDisplayId });
-    case _task_actions.RECEIVE_TASK:
+    case _task_actions.RECEIVE_TASK_DISPLAY:
       var taskId = parseInt(Object.keys(action.task.tasks)[0]);
       return (0, _merge2.default)({}, state, { taskDisplay: taskId });
     case _navigation_actions.RECEIVE_TEAM:

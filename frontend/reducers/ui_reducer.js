@@ -2,7 +2,7 @@ import { RECEIVE_PROJECT_DISPLAY,
   RECEIVE_USER_DISPLAY } from '../actions/ui_actions';
 import { RECEIVE_TEAM } from '../actions/navigation_actions';
 import { RECEIVE_PROJECT } from '../actions/project_actions';
-import { RECEIVE_TASK } from '../actions/task_actions';
+import { RECEIVE_TASK, RECEIVE_TASK_DISPLAY } from '../actions/task_actions';
 import merge from 'lodash/merge';
 
 const _defaultState = {
@@ -21,7 +21,7 @@ export const uiReducer = (state = _defaultState, action) => {
       return merge({}, state, { projectDisplay: action.projectId } );
     case RECEIVE_USER_DISPLAY:
       return merge({}, state, { userDisplay: action.userDisplayId });
-    case RECEIVE_TASK:
+    case RECEIVE_TASK_DISPLAY:
       const taskId = parseInt(Object.keys(action.task.tasks)[0]);
       return merge({}, state, { taskDisplay: taskId });
     case RECEIVE_TEAM:
