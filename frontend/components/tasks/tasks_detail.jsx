@@ -36,6 +36,7 @@ export default class TasksDetail extends React.Component{
     let newTask;
     if (oldTaskId !== newTaskId){
       newTask = newProps.state.entities.tasks[newTaskId];
+      debugger;
     }
     else {
       newTask = newProps.indexState[newTaskId];

@@ -33877,6 +33877,7 @@ var TasksDetail = function (_React$Component) {
       var newTask = void 0;
       if (oldTaskId !== newTaskId) {
         newTask = newProps.state.entities.tasks[newTaskId];
+        debugger;
       } else {
         newTask = newProps.indexState[newTaskId];
       }
