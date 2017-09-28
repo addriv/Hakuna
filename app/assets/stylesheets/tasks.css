@@ -116,6 +116,69 @@ li.unfocused {
   color: #14aaf5;
 }
 
+.tasks-detail > #timestamps{
+  padding: 0 10px;
+}
+
+.tasks-detail > #timestamps * {
+  padding: 3px 0;
+  font-size: 12px;
+  margin: 0 20px;
+  color: gray;
+}
+
+.tasks-detail > #project-info {
+  margin: 0 20px;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.tasks-detail > #project-info > #project-name {
+  border-radius: 15px;
+  background-color: #edf1f2;
+  padding: 3px 20px;
+}
+
+.tasks-detail > #project-info > #project-spacer {
+  width: 100%;
+  height: 100%;
+}
+
+.tasks-detail > .title{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 0 10px;
+}
+
+.tasks-detail > .title > input{
+  border: 0;
+  font-size: 20px;
+  width: calc(100% - 75px);
+  display: flex;
+}
+
+.tasks-detail > #description{
+  padding: 10px;
+  font-size: 14px;
+  resize: none;
+  border: 0;
+  margin: 0 20px;
+  border-radius: 7px;
+  border: solid transparent 1px;
+}
+
+.tasks-detail > #description:hover{
+  border: 1px solid gray;
+}
+
+.tasks-detail > #divider {
+  border-bottom: solid 1px gray;
+  margin: 20px;
+}
+/*Checkmarks*/
+
 [class^='checkmark']{
   display:inline-block;
   transform: rotate(225deg) scale(1, -1);
@@ -134,18 +197,6 @@ li.unfocused {
   height: 28px;
   border-radius: 30px;
   font-size: 24px;
-}
-
-.tasks-detail > #description {
-  border: 0;
-}
-
-.tasks-detail > #timestamps{
-  padding: 10px;
-}
-
-.tasks-detail > #timestamps * {
-  padding: 5px;
 }
 
 .checkmark-done{
@@ -170,25 +221,3 @@ li.unfocused {
   border-color: gray;
   color: gray;
 }*/
-
-.tasks-detail > #project-info {
-  padding: 10px;
-}
-
-.tasks-detail > .title{
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-}
-
-.tasks-detail > .title > input{
-  border: 0;
-  font-size: 20px;
-  width: 100%;
-}
-
-.tasks-detail > #description{
-  padding: 10px;
-  font-size: 14px;
-  resize: none;
-}

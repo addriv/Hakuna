@@ -34043,7 +34043,12 @@ var TasksDetail = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { id: 'project-info' },
-          project ? project.name : ''
+          _react2.default.createElement(
+            'div',
+            { id: 'project-name' },
+            project ? project.name : ''
+          ),
+          _react2.default.createElement('div', { id: 'project-spacer' })
         ),
         _react2.default.createElement(
           'div',
@@ -34070,6 +34075,7 @@ var TasksDetail = function (_React$Component) {
           onChange: this.handleInput('description'),
           onKeyPress: this.handleKeyPress,
           placeholder: 'Description' }),
+        _react2.default.createElement('div', { id: 'divider' }),
         _react2.default.createElement(
           'div',
           { id: 'timestamps' },

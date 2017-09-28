@@ -102,7 +102,8 @@ export default class TasksDetail extends React.Component{
         </div>
 
         <div id='project-info'>
-          { project ? project.name : '' }
+          <div id='project-name'>{ project ? project.name : '' }</div>
+          <div id='project-spacer'></div>
         </div>
 
         <div className='title'>
@@ -125,6 +126,8 @@ export default class TasksDetail extends React.Component{
           onChange={ this.handleInput('description') }
           onKeyPress={ this.handleKeyPress }
           placeholder='Description'></textarea>
+
+        <div id='divider'></div>
 
         <div id='timestamps'>
           <div id='created'>{ `Created task. ${createdDate}` }</div>
