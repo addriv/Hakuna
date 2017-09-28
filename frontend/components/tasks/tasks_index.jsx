@@ -26,9 +26,10 @@ export default class TasksIndex extends React.Component{
     const oldProject = this.props.state.ui.projectDisplay;
     const newProject = newProps.state.ui.projectDisplay;
 
-    if (tasks && (!this.props.state.entities.tasks
-      || (oldTeam && newTeam && oldTeam.id !== newTeam.id))){
-      this.setState(tasks, () => console.log(this.state));
+    console.log(`old: ${oldProject}, new: ${newProject}`);
+
+    if (tasks){
+      this.setState(tasks);
     }
     else if (!tasks && oldTeam && newTeam && oldTeam.id !== newTeam.id){
       this.setState(initialState);
@@ -73,6 +74,8 @@ export default class TasksIndex extends React.Component{
   }
 
   handleInput(event, inputType){
+    event.target.onblur = this.handleOnBlur;
+
     const taskId = event.target.id;
     const newState = merge(
       {}, this.state, { [taskId]: { [inputType]: event.target.value }}
@@ -89,6 +92,8 @@ export default class TasksIndex extends React.Component{
     );
 
     this.props.updateTask(update).then(() => this.setState(newState));
+
+    event.target.onblur = null;
   }
 
   handleKeyPress(event){
@@ -111,13 +116,11 @@ export default class TasksIndex extends React.Component{
     const taskId = parseInt(event.currentTarget.id);
     const currentStatus = this.state[taskId].completed;
     const update = { id: taskId, completed: !currentStatus };
-
     const newState = merge(
       {}, this.state, { [taskId]: { completed: !currentStatus }}
     );
 
-    this.props.updateTask(update).then(() => this.setState(newState,
-    ()=>console.log(this.state)));
+    this.props.updateTask(update);
   }
 
   tasksIndexContent(){
@@ -146,7 +149,6 @@ export default class TasksIndex extends React.Component{
 
               <input
                 id={ task.id }
-                onBlur={ this.handleOnBlur }
                 onFocus={ this.handleFocus }
                 onKeyPress={ this.handleKeyPress }
                 onKeyDown={ this.handleKeyDown }

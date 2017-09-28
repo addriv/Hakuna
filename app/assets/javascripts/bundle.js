@@ -33652,18 +33652,16 @@ var TasksIndex = function (_React$Component) {
   _createClass(TasksIndex, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(newProps) {
-      var _this2 = this;
-
       var tasks = newProps.state.entities.tasks;
       var oldTeam = this.props.state.entities.team;
       var newTeam = newProps.state.entities.team;
       var oldProject = this.props.state.ui.projectDisplay;
       var newProject = newProps.state.ui.projectDisplay;
 
-      if (tasks && (!this.props.state.entities.tasks || oldTeam && newTeam && oldTeam.id !== newTeam.id)) {
-        this.setState(tasks, function () {
-          return console.log(_this2.state);
-        });
+      console.log('old: ' + oldProject + ', new: ' + newProject);
+
+      if (tasks) {
+        this.setState(tasks);
       } else if (!tasks && oldTeam && newTeam && oldTeam.id !== newTeam.id) {
         this.setState(initialState);
       }
@@ -33675,7 +33673,7 @@ var TasksIndex = function (_React$Component) {
   }, {
     key: 'newTask',
     value: function newTask(event) {
-      var _this3 = this;
+      var _this2 = this;
 
       event.preventDefault();
 
@@ -33689,7 +33687,7 @@ var TasksIndex = function (_React$Component) {
       };
 
       this.props.createTask(task).then(function () {
-        return _this3.setState({ taskDetailIsOpen: true });
+        return _this2.setState({ taskDetailIsOpen: true });
       });
     }
   }, {
@@ -33712,6 +33710,8 @@ var TasksIndex = function (_React$Component) {
   }, {
     key: 'handleInput',
     value: function handleInput(event, inputType) {
+      event.target.onblur = this.handleOnBlur;
+
       var taskId = event.target.id;
       var newState = (0, _merge5.default)({}, this.state, _defineProperty({}, taskId, _defineProperty({}, inputType, event.target.value)));
       this.setState(newState);
@@ -33719,7 +33719,7 @@ var TasksIndex = function (_React$Component) {
   }, {
     key: 'handleOnBlur',
     value: function handleOnBlur(event) {
-      var _this4 = this;
+      var _this3 = this;
 
       var taskId = parseInt(event.target.id);
       var update = { id: taskId, title: event.target.value };
@@ -33727,8 +33727,10 @@ var TasksIndex = function (_React$Component) {
       var newState = (0, _merge5.default)({}, this.state, _defineProperty({}, taskId, { title: event.target.value }));
 
       this.props.updateTask(update).then(function () {
-        return _this4.setState(newState);
+        return _this3.setState(newState);
       });
+
+      event.target.onblur = null;
     }
   }, {
     key: 'handleKeyPress',
@@ -33750,25 +33752,18 @@ var TasksIndex = function (_React$Component) {
   }, {
     key: 'toggleComplete',
     value: function toggleComplete(event) {
-      var _this5 = this;
-
       event.preventDefault();
       var taskId = parseInt(event.currentTarget.id);
       var currentStatus = this.state[taskId].completed;
       var update = { id: taskId, completed: !currentStatus };
-
       var newState = (0, _merge5.default)({}, this.state, _defineProperty({}, taskId, { completed: !currentStatus }));
 
-      this.props.updateTask(update).then(function () {
-        return _this5.setState(newState, function () {
-          return console.log(_this5.state);
-        });
-      });
+      this.props.updateTask(update);
     }
   }, {
     key: 'tasksIndexContent',
     value: function tasksIndexContent() {
-      var _this6 = this;
+      var _this4 = this;
 
       var tasks = this.props.tasks;
       var projectDisplay = this.props.state.ui.projectDisplay;
@@ -33780,7 +33775,7 @@ var TasksIndex = function (_React$Component) {
           } else if (projectDisplay > 0 && task.project_id !== projectDisplay) {
             return;
           } else {
-            var title = _this6.state[task.id].title;
+            var title = _this4.state[task.id].title;
             return _react2.default.createElement(
               'li',
               {
@@ -33788,7 +33783,7 @@ var TasksIndex = function (_React$Component) {
                 key: i },
               _react2.default.createElement(
                 'button',
-                { id: task.id, onClick: _this6.toggleComplete },
+                { id: task.id, onClick: _this4.toggleComplete },
                 _react2.default.createElement(
                   'div',
                   { className: task.completed ? 'checkmark-done' : 'checkmark-not-done' },
@@ -33797,12 +33792,11 @@ var TasksIndex = function (_React$Component) {
               ),
               _react2.default.createElement('input', {
                 id: task.id,
-                onBlur: _this6.handleOnBlur,
-                onFocus: _this6.handleFocus,
-                onKeyPress: _this6.handleKeyPress,
-                onKeyDown: _this6.handleKeyDown,
+                onFocus: _this4.handleFocus,
+                onKeyPress: _this4.handleKeyPress,
+                onKeyDown: _this4.handleKeyDown,
                 onChange: function onChange(event) {
-                  return _this6.handleInput(event, 'title');
+                  return _this4.handleInput(event, 'title');
                 },
                 value: title ? title : '' })
             );

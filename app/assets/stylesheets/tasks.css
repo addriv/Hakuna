@@ -83,7 +83,7 @@
   color: gray;
 }
 
-.checkmark-not-done:hover{
+/*.checkmark-not-done:hover{
   background-color: #b2ebe1;
   border-color: #b2ebe1;
   color: white;
@@ -93,7 +93,7 @@
   background-color: white;
   border-color: gray;
   color: gray;
-}
+}*/
 
 .tasks-detail > #project-info {
   padding: 10px;
