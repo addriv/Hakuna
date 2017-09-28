@@ -11,6 +11,7 @@ export default class TasksIndex extends React.Component{
     this.closeDetail = this.closeDetail.bind(this);
     this.handleTaskClick = this.handleTaskClick.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handleOnBlur = this.handleOnBlur.bind(this);
   }
 
   componentWillReceiveProps(newProps){
@@ -61,6 +62,15 @@ export default class TasksIndex extends React.Component{
     this.setState(newState);
   }
 
+  handleOnBlur(event){
+    const updatedTask = {
+      id: parseInt(event.target.id),
+      title: event.target.value
+    };
+
+    this.props.updateTask(updatedTask);
+  }
+
   tasksIndexContent(){
     const tasks = this.props.tasks;
     const projectDisplay = this.props.state.ui.projectDisplay;
@@ -85,6 +95,7 @@ export default class TasksIndex extends React.Component{
               <input
                 id={ task.id }
                 onClick={ this.handleTaskClick }
+                onBlur={ this.handleOnBlur }
                 onChange= { event => this.handleInput(event, 'title') }
                 value={ title ? title : '' }></input>
             </li>

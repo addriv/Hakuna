@@ -33565,6 +33565,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     receiveTask: function receiveTask(task) {
       return dispatch((0, _task_actions.receiveTask)(task));
+    },
+    updateTask: function updateTask(task) {
+      return dispatch((0, _task_actions.updateTask)(task));
     }
   };
 };
@@ -33619,6 +33622,7 @@ var TasksIndex = function (_React$Component) {
     _this.closeDetail = _this.closeDetail.bind(_this);
     _this.handleTaskClick = _this.handleTaskClick.bind(_this);
     _this.handleInput = _this.handleInput.bind(_this);
+    _this.handleOnBlur = _this.handleOnBlur.bind(_this);
     return _this;
   }
 
@@ -33678,6 +33682,16 @@ var TasksIndex = function (_React$Component) {
       this.setState(newState);
     }
   }, {
+    key: 'handleOnBlur',
+    value: function handleOnBlur(event) {
+      var updatedTask = {
+        id: parseInt(event.target.id),
+        title: event.target.value
+      };
+
+      this.props.updateTask(updatedTask);
+    }
+  }, {
     key: 'tasksIndexContent',
     value: function tasksIndexContent() {
       var _this3 = this;
@@ -33706,6 +33720,7 @@ var TasksIndex = function (_React$Component) {
               _react2.default.createElement('input', {
                 id: task.id,
                 onClick: _this3.handleTaskClick,
+                onBlur: _this3.handleOnBlur,
                 onChange: function onChange(event) {
                   return _this3.handleInput(event, 'title');
                 },
@@ -33887,7 +33902,6 @@ var TasksDetail = function (_React$Component) {
   }, {
     key: 'handleOnBlur',
     value: function handleOnBlur() {
-      debugger;
       var updatedTask = {
         id: this.state.id,
         title: this.state.title,

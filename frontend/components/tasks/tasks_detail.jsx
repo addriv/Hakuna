@@ -55,7 +55,6 @@ export default class TasksDetail extends React.Component{
   }
 
   handleOnBlur(){
-    debugger;
     const updatedTask = {
       id: this.state.id,
       title: this.state.title,
