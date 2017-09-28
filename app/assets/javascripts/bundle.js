@@ -34036,6 +34036,12 @@ var TasksDetail = function (_React$Component) {
           { id: 'header' },
           _react2.default.createElement(
             'button',
+            { id: 'delete',
+              onClick: this.startDelete },
+            'Delete'
+          ),
+          _react2.default.createElement(
+            'button',
             { id: 'close', onClick: this.tryToggle },
             'x'
           )

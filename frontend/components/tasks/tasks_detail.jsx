@@ -98,7 +98,10 @@ export default class TasksDetail extends React.Component{
     return (
       <div className='tasks-detail'>
         <div id='header'>
-          <button id='close' onClick={this.tryToggle}>x</button>
+          <button id='delete'
+            onClick={ this.startDelete }>Delete</button>
+          
+          <button id='close' onClick={ this.tryToggle }>x</button>
         </div>
 
         <div id='project-info'>

@@ -137,7 +137,11 @@ li.unfocused {
 .tasks-detail > #project-info > #project-name {
   border-radius: 15px;
   background-color: #edf1f2;
-  padding: 3px 20px;
+  padding: 5px 20px;
+  margin-bottom: 5px;
+  font-size: 12px;
+  text-align: center;
+  white-space: nowrap;
 }
 
 .tasks-detail > #project-info > #project-spacer {
@@ -155,8 +159,19 @@ li.unfocused {
 .tasks-detail > .title > input{
   border: 0;
   font-size: 20px;
-  width: calc(100% - 75px);
+  width: calc(100% - 85px);
   display: flex;
+  border: solid 1px transparent;
+  border-radius: 7px;
+  padding-left: 10px;
+}
+
+.tasks-detail > .title > input:hover{
+  border: 1px solid gray;
+}
+
+.tasks-detail > .title >input:focus{
+border: 1px solid #14aaf5;
 }
 
 .tasks-detail > #description{
@@ -171,6 +186,10 @@ li.unfocused {
 
 .tasks-detail > #description:hover{
   border: 1px solid gray;
+}
+
+.tasks-detail > #description:focus{
+  border: 1px solid #14aaf5;
 }
 
 .tasks-detail > #divider {
