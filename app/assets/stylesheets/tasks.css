@@ -46,6 +46,12 @@
   background-color: transparent;
 }
 
+.tasks-detail > .title > button {
+  padding: 10px;
+  text-align: center;
+  background-color: transparent;
+}
+
 .tasks-detail{
   width: 50%;
   background-color: white;
@@ -70,6 +76,13 @@
   vertical-align: center;
   text-align: center;
   margin-right: 5px;
+}
+
+.tasks-detail > .title > button > [class^='checkmark'] {
+  width: 28px;
+  height: 28px;
+  border-radius: 30px;
+  font-size: 23px;
 }
 
 .checkmark-done{
