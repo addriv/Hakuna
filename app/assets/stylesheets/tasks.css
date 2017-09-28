@@ -100,20 +100,30 @@ li.unfocused {
 
 .tasks-detail > #header{
   position: relative;
+  justify-content: flex-end;
+  display: flex;
+  flex-direction: row;
 }
 
 /*Close detail button*/
 .tasks-detail > #header > #close{
-  position: absolute;
-  right: 10px;
-  top: 5px;
   background-color: transparent;
   font-size: 25px;
   color: gray;
+  margin: 0 5px;
+  margin-bottom: 3px;
 }
 
 .tasks-detail > #header > #close:hover{
   color: #14aaf5;
+}
+
+/*Delete task button*/
+.tasks-detail > #header > #delete{
+  background-color: #ff8e99;
+  color: white;
+  height: 20px;
+  margin: 14px 3px;
 }
 
 .tasks-detail > #timestamps{

@@ -5648,59 +5648,9 @@ var currentUserInitials = exports.currentUserInitials = function currentUserInit
 
 /***/ }),
 /* 54 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.updateTask = exports.createTask = exports.receiveTaskDisplay = exports.receiveTask = exports.RECEIVE_TASK_DISPLAY = exports.RECEIVE_TASK = undefined;
-
-var _task_util = __webpack_require__(340);
-
-var taskUtil = _interopRequireWildcard(_task_util);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var RECEIVE_TASK = exports.RECEIVE_TASK = 'RECEIVE_TASK';
-var RECEIVE_TASK_DISPLAY = exports.RECEIVE_TASK_DISPLAY = 'RECEIVE_TASK_DISPLAY';
-
-var receiveTask = exports.receiveTask = function receiveTask(task) {
-  return {
-    type: RECEIVE_TASK,
-    task: task
-  };
-};
-
-var receiveTaskDisplay = exports.receiveTaskDisplay = function receiveTaskDisplay(task) {
-  return {
-    type: RECEIVE_TASK_DISPLAY,
-    task: task
-  };
-};
-
-var createTask = exports.createTask = function createTask(task) {
-  return function (dispatch) {
-    var ajax = taskUtil.createTask(task);
-    ajax.then(function (response) {
-      dispatch(receiveTask(response));
-    }).then(function (response) {
-      dispatch(receiveTaskDisplay(ajax.responseJSON));
-    });
-
-    return ajax;
-  };
-};
-
-var updateTask = exports.updateTask = function updateTask(task) {
-  return function (dispatch) {
-    return taskUtil.updateTask(task).then(function (response) {
-      return dispatch(receiveTask(response));
-    });
-  };
-};
+throw new Error("Module build failed: SyntaxError: Unexpected token (39:0)\n\n\u001b[0m \u001b[90m 37 | \u001b[39m\u001b[36mexport\u001b[39m \u001b[36mconst\u001b[39m deleteTask \u001b[33m=\u001b[39m task \u001b[33m=>\u001b[39m dispatch \u001b[33m=>\u001b[39m (\n \u001b[90m 38 | \u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 39 | \u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 40 | \u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 55 */
@@ -33946,6 +33896,7 @@ var TasksDetail = function (_React$Component) {
     _this.handleOnBlur = _this.handleOnBlur.bind(_this);
     _this.handleKeyPress = _this.handleKeyPress.bind(_this);
     _this.toggleComplete = _this.toggleComplete.bind(_this);
+    _this.startDelete = _this.startDelete.bind(_this);
     return _this;
   }
 
@@ -34016,6 +33967,11 @@ var TasksDetail = function (_React$Component) {
     value: function toggleComplete(event) {
       event.preventDefault();
       this.props.toggleComplete(event);
+    }
+  }, {
+    key: 'startDelete',
+    value: function startDelete(event) {
+      event.preventDefault();
     }
   }, {
     key: 'render',
@@ -34107,32 +34063,7 @@ var TasksDetail = function (_React$Component) {
 exports.default = TasksDetail;
 
 /***/ }),
-/* 340 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var createTask = exports.createTask = function createTask(task) {
-  return $.ajax({
-    method: 'POST',
-    url: 'api/tasks',
-    data: { task: task }
-  });
-};
-
-var updateTask = exports.updateTask = function updateTask(task) {
-  return $.ajax({
-    method: 'PATCH',
-    url: 'api/tasks/' + task.id,
-    data: { task: task }
-  });
-};
-
-/***/ }),
+/* 340 */,
 /* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 

@@ -24,6 +24,7 @@ export default class TasksDetail extends React.Component{
     this.handleOnBlur = this.handleOnBlur.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.toggleComplete = this.toggleComplete.bind(this);
+    this.startDelete = this.startDelete.bind(this);
   }
 
   tryToggle(event){
@@ -86,6 +87,11 @@ export default class TasksDetail extends React.Component{
     this.props.toggleComplete(event);
   }
 
+  startDelete(event){
+    event.preventDefault();
+    
+  }
+
   render(){
     let project;
     const projectId = this.state.project_id;
@@ -100,7 +106,7 @@ export default class TasksDetail extends React.Component{
         <div id='header'>
           <button id='delete'
             onClick={ this.startDelete }>Delete</button>
-          
+
           <button id='close' onClick={ this.tryToggle }>x</button>
         </div>
 

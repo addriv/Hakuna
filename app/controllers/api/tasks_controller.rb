@@ -28,6 +28,22 @@ class Api::TasksController < ApplicationController
     end
   end
 
+  def destroy
+    # Allow user to destroy only if the task is either created by them,
+    # or they are in that team and task is public
+    # or task is not public but they are on that project
+    @task = Task.find_by_id(params[:id])
+    @team = current_user.teams.find_by_id(@task.id)
+    @project = current_user.projects.find_by_id(@task.project_id)
+
+    if @task.creator == current_user || (@task.public && @team) || @project
+      @task.destroy
+      render :show
+    else
+      render json: [ 'Task not found' ], status: 404
+    end
+  end
+
   private
 
   def task_params

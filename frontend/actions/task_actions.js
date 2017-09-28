@@ -33,3 +33,7 @@ export const updateTask = task => dispatch => (
     response => dispatch(receiveTask(response))
   )
 );
+
+export const deleteTask = task => dispatch => (
+
+);
