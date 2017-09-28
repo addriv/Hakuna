@@ -28,7 +28,9 @@ export default class TasksDetail extends React.Component{
   }
 
   tryToggle(event){
-    event.preventDefault();
+    if (event){
+      event.preventDefault();
+    }
     this.props.toggle();
   }
 
@@ -89,7 +91,7 @@ export default class TasksDetail extends React.Component{
 
   startDelete(event){
     event.preventDefault();
-    
+    this.props.deleteTask(this.state).then(this.tryToggle);
   }
 
   render(){

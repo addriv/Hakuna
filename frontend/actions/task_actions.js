@@ -1,4 +1,5 @@
 import * as taskUtil from '../util/task_util';
+import { fetchTeam } from './navigation_actions';
 
 export const RECEIVE_TASK = 'RECEIVE_TASK';
 export const RECEIVE_TASK_DISPLAY = 'RECEIVE_TASK_DISPLAY';
@@ -35,5 +36,11 @@ export const updateTask = task => dispatch => (
 );
 
 export const deleteTask = task => dispatch => (
-
+  taskUtil.deleteTask(task).then(
+    response => {
+      const taskId = parseInt(Object.keys(response.tasks)[0]);
+      const teamId = response.tasks[taskId].team_id;
+      dispatch(fetchTeam(teamId));
+    }
+  )
 );
