@@ -146,6 +146,7 @@ export default class TasksIndex extends React.Component{
           const title = this.state[task.id].title;
           return (
             <li
+              className='unfocused'
               id={ task.id }
               key={i}>
 

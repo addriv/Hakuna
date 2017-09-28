@@ -33787,6 +33787,7 @@ var TasksIndex = function (_React$Component) {
             return _react2.default.createElement(
               'li',
               {
+                className: 'unfocused',
                 id: task.id,
                 key: i },
               _react2.default.createElement(
@@ -34035,8 +34036,8 @@ var TasksDetail = function (_React$Component) {
           { id: 'header' },
           _react2.default.createElement(
             'button',
-            { onClick: this.tryToggle },
-            'X'
+            { id: 'close', onClick: this.tryToggle },
+            'x'
           )
         ),
         _react2.default.createElement(
