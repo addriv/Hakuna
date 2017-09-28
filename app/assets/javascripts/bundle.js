@@ -34068,15 +34068,19 @@ var TasksDetail = function (_React$Component) {
           'Deleting this tasks will also delete all subtasks. Are you sure you want to delete?'
         ),
         _react2.default.createElement(
-          'button',
-          { id: 'cancel', onClick: this.cancelDelete },
-          'Cancel'
-        ),
-        _react2.default.createElement(
-          'button',
-          { id: 'confirm-delete',
-            onClick: this.confirmDelete },
-          'Delete'
+          'div',
+          { id: 'buttons' },
+          _react2.default.createElement(
+            'button',
+            { id: 'cancel', onClick: this.cancelDelete },
+            'Cancel'
+          ),
+          _react2.default.createElement(
+            'button',
+            { id: 'confirm-delete',
+              onClick: this.confirmDelete },
+            'Delete'
+          )
         )
       );
     }

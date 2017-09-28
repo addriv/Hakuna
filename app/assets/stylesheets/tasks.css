@@ -142,38 +142,52 @@ li.unfocused {
   display: flex;
   flex-direction: row;
   background-color: #ffedef;
+  position: relative;
+  justify-content: flex-end;
 }
 
 .tasks-detail > #delete-message > p{
   font-size: 12px;
-  padding: 0 10px;
+  padding: 5px 10px;
   text-align: center;
   color: #ff5263;
+  width: 100%;
 }
 
-.tasks-detail > #delete-message > #cancel{
+.tasks-detail > #delete-message > #buttons{
+  display: flex;
+  flex-direction: row;
+  padding: 0 10px;
+}
+
+.tasks-detail > #delete-message > #buttons > #cancel{
   height: 30px;
-  margin: 10px 5px;
+  margin: 10px 15px;
   background-color: white;
   color: #14aaf5;
   border: solid 1px #14aaf5;
+  padding: 0 10px;
+  border-radius: 5px;
 }
 
-.tasks-detail > #delete-message > #cancel:hover{
+.tasks-detail > #delete-message > #buttons > #cancel:hover{
   border: solid 3px;
   padding: 0 6px;
   font-weight: 500;
 }
 
-.tasks-detail > #delete-message > #confirm-delete{
+.tasks-detail > #delete-message > #buttons > #confirm-delete{
   height: 30px;
   margin: 10px 5px;
   background-color: #ff5263;
   color: white;
   border: solid 1px #ff5263;
+  padding: 0 10px;
+  margin-right: 10px;
+  border-radius: 5px;
 }
 
-.tasks-detail > #delete-message > #confirm-delete:hover{
+.tasks-detail > #delete-message > #buttons > #confirm-delete:hover{
   background-color: #f74e5e;
   border-color: #f74e5e;
   font-weight: 500;

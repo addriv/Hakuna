@@ -113,10 +113,12 @@ export default class TasksDetail extends React.Component{
         <p>Deleting this tasks will also delete all subtasks.
           Are you sure you want to delete?</p>
 
-        <button id='cancel' onClick={this.cancelDelete}>Cancel</button>
+        <div id='buttons'>
+          <button id='cancel' onClick={this.cancelDelete}>Cancel</button>
 
-        <button id='confirm-delete'
-          onClick={this.confirmDelete}>Delete</button>
+          <button id='confirm-delete'
+            onClick={this.confirmDelete}>Delete</button>
+        </div>
       </div>
     );
   }
