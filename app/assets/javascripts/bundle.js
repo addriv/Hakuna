@@ -31254,6 +31254,12 @@ var Dashboard = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(newProps) {
+      var oldTeam = newProps.entities.team;
+      var newTeam = this.props.entities.team;
+      if (oldTeam && newTeam && oldTeam.id !== newTeam.id) {
+        this.setState({ settingsMenuIsOpen: false });
+      }
+
       if (newProps.teams && this.props.teams) {
         var newTeams = Object.values(newProps.teams);
         var oldTeams = Object.values(this.props.teams);

@@ -38,6 +38,12 @@ export default class Dashboard extends React.Component{
   }
 
   componentWillReceiveProps(newProps){
+    const oldTeam = newProps.entities.team;
+    const newTeam = this.props.entities.team;
+    if (oldTeam && newTeam && oldTeam.id !== newTeam.id){
+      this.setState({ settingsMenuIsOpen: false});
+    }
+    
     if (newProps.teams && this.props.teams){
       const newTeams = Object.values(newProps.teams);
       const oldTeams = Object.values(this.props.teams);
