@@ -11,7 +11,7 @@ export default class TasksIndex extends React.Component{
     this.state = initialState;
     this.newTask = this.newTask.bind(this);
     this.closeDetail = this.closeDetail.bind(this);
-    this.handleTaskClick = this.handleTaskClick.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleOnBlur = this.handleOnBlur.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -64,7 +64,7 @@ export default class TasksIndex extends React.Component{
     this.setState({ taskDetailIsOpen: false });
   }
 
-  handleTaskClick(event){
+  handleFocus(event){
     const taskId = parseInt(event.target.id);
     const task = this.props.state.entities.tasks[taskId];
 
@@ -112,12 +112,12 @@ export default class TasksIndex extends React.Component{
     const currentStatus = this.state[taskId].completed;
     const update = { id: taskId, completed: !currentStatus };
 
-
     const newState = merge(
       {}, this.state, { [taskId]: { completed: !currentStatus }}
     );
 
-    this.props.updateTask(update).then(() => this.setState(newState));
+    this.props.updateTask(update).then(() => this.setState(newState,
+    ()=>console.log(this.state)));
   }
 
   tasksIndexContent(){
@@ -146,8 +146,8 @@ export default class TasksIndex extends React.Component{
 
               <input
                 id={ task.id }
-                onClick={ this.handleTaskClick }
                 onBlur={ this.handleOnBlur }
+                onFocus={ this.handleFocus }
                 onKeyPress={ this.handleKeyPress }
                 onKeyDown={ this.handleKeyDown }
                 onChange= { event => this.handleInput(event, 'title') }
@@ -175,6 +175,7 @@ export default class TasksIndex extends React.Component{
         { this.state.taskDetailIsOpen ?
           <TasksDetailContainer
             toggle={this.closeDetail}
+            toggleComplete={this.toggleComplete}
             indexState={this.state}
             titleChange={this.handleInput} /> : null }
       </div>

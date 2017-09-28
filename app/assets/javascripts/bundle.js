@@ -33640,7 +33640,7 @@ var TasksIndex = function (_React$Component) {
     _this.state = initialState;
     _this.newTask = _this.newTask.bind(_this);
     _this.closeDetail = _this.closeDetail.bind(_this);
-    _this.handleTaskClick = _this.handleTaskClick.bind(_this);
+    _this.handleFocus = _this.handleFocus.bind(_this);
     _this.handleInput = _this.handleInput.bind(_this);
     _this.handleOnBlur = _this.handleOnBlur.bind(_this);
     _this.handleKeyPress = _this.handleKeyPress.bind(_this);
@@ -33701,8 +33701,8 @@ var TasksIndex = function (_React$Component) {
       this.setState({ taskDetailIsOpen: false });
     }
   }, {
-    key: 'handleTaskClick',
-    value: function handleTaskClick(event) {
+    key: 'handleFocus',
+    value: function handleFocus(event) {
       var taskId = parseInt(event.target.id);
       var task = this.props.state.entities.tasks[taskId];
 
@@ -33760,7 +33760,9 @@ var TasksIndex = function (_React$Component) {
       var newState = (0, _merge5.default)({}, this.state, _defineProperty({}, taskId, { completed: !currentStatus }));
 
       this.props.updateTask(update).then(function () {
-        return _this5.setState(newState);
+        return _this5.setState(newState, function () {
+          return console.log(_this5.state);
+        });
       });
     }
   }, {
@@ -33795,8 +33797,8 @@ var TasksIndex = function (_React$Component) {
               ),
               _react2.default.createElement('input', {
                 id: task.id,
-                onClick: _this6.handleTaskClick,
                 onBlur: _this6.handleOnBlur,
+                onFocus: _this6.handleFocus,
                 onKeyPress: _this6.handleKeyPress,
                 onKeyDown: _this6.handleKeyDown,
                 onChange: function onChange(event) {
@@ -33836,6 +33838,7 @@ var TasksIndex = function (_React$Component) {
         ),
         this.state.taskDetailIsOpen ? _react2.default.createElement(_tasks_detail_container2.default, {
           toggle: this.closeDetail,
+          toggleComplete: this.toggleComplete,
           indexState: this.state,
           titleChange: this.handleInput }) : null
       );
@@ -33938,6 +33941,7 @@ var TasksDetail = function (_React$Component) {
     _this.handleTitle = _this.handleTitle.bind(_this);
     _this.handleOnBlur = _this.handleOnBlur.bind(_this);
     _this.handleKeyPress = _this.handleKeyPress.bind(_this);
+    _this.toggleComplete = _this.toggleComplete.bind(_this);
     return _this;
   }
 
@@ -33959,6 +33963,7 @@ var TasksDetail = function (_React$Component) {
       } else {
         newTask = newProps.state.entities.tasks[newTaskId];
         newTask.title = newProps.indexState[newTaskId].title;
+        newTask.completed = newProps.indexState[newTaskId].completed;
       }
 
       this.setState(newTask);
@@ -34001,6 +34006,12 @@ var TasksDetail = function (_React$Component) {
       }
     }
   }, {
+    key: 'toggleComplete',
+    value: function toggleComplete(event) {
+      event.preventDefault();
+      this.props.toggleComplete(event);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var project = void 0;
@@ -34028,14 +34039,26 @@ var TasksDetail = function (_React$Component) {
           { id: 'project-info' },
           project ? project.name : ''
         ),
-        _react2.default.createElement('input', {
-          className: 'title',
-          id: this.state.id,
-          value: this.state.title ? this.state.title : '',
-          onChange: this.handleTitle,
-          onBlur: this.handleOnBlur,
-          onKeyPress: this.handleKeyPress,
-          placeholder: 'New Task Title' }),
+        _react2.default.createElement(
+          'div',
+          { className: 'title' },
+          _react2.default.createElement(
+            'button',
+            { id: this.state.id, onClick: this.toggleComplete },
+            _react2.default.createElement(
+              'div',
+              { className: this.state.completed ? 'checkmark-done' : 'checkmark-not-done' },
+              'L'
+            )
+          ),
+          _react2.default.createElement('input', {
+            id: this.state.id,
+            value: this.state.title ? this.state.title : '',
+            onChange: this.handleTitle,
+            onBlur: this.handleOnBlur,
+            onKeyPress: this.handleKeyPress,
+            placeholder: 'New Task Title' })
+        ),
         _react2.default.createElement('textarea', {
           id: 'description',
           value: this.state.description ? this.state.description : '',

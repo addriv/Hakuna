@@ -23,6 +23,7 @@ export default class TasksDetail extends React.Component{
     this.handleTitle = this.handleTitle.bind(this);
     this.handleOnBlur = this.handleOnBlur.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.toggleComplete = this.toggleComplete.bind(this);
   }
 
   tryToggle(event){
@@ -41,6 +42,7 @@ export default class TasksDetail extends React.Component{
     else {
       newTask = newProps.state.entities.tasks[newTaskId];
       newTask.title = newProps.indexState[newTaskId].title;
+      newTask.completed = newProps.indexState[newTaskId].completed;
     }
 
     this.setState(newTask);
@@ -75,6 +77,11 @@ export default class TasksDetail extends React.Component{
     }
   }
 
+  toggleComplete(event){
+    event.preventDefault();
+    this.props.toggleComplete(event);
+  }
+
   render(){
     let project;
     const projectId = this.state.project_id;
@@ -94,14 +101,20 @@ export default class TasksDetail extends React.Component{
           { project ? project.name : '' }
         </div>
 
-        <input
-          className='title'
-          id={ this.state.id }
-          value={ this.state.title ? this.state.title : '' }
-          onChange={ this.handleTitle }
-          onBlur={ this.handleOnBlur }
-          onKeyPress={ this.handleKeyPress }
-          placeholder='New Task Title'></input>
+        <div className='title'>
+          <button id={ this.state.id } onClick={ this.toggleComplete }>
+            <div className={ this.state.completed ?
+                'checkmark-done' : 'checkmark-not-done'}>L</div>
+          </button>
+
+          <input
+            id={ this.state.id }
+            value={ this.state.title ? this.state.title : '' }
+            onChange={ this.handleTitle }
+            onBlur={ this.handleOnBlur }
+            onKeyPress={ this.handleKeyPress }
+            placeholder='New Task Title'></input>
+        </div>
 
         <textarea
           id='description'
