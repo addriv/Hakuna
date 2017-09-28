@@ -19,12 +19,15 @@ export default class TasksDetail extends React.Component{
     const taskId = this.props.state.ui.taskDisplay;
     const task = this.props.state.entities.tasks[taskId];
     this.state = task;
+    this.state.deleteMessage = false;
     this.tryToggle = this.tryToggle.bind(this);
     this.handleTitle = this.handleTitle.bind(this);
     this.handleOnBlur = this.handleOnBlur.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.toggleComplete = this.toggleComplete.bind(this);
     this.startDelete = this.startDelete.bind(this);
+    this.confirmDelete = this.confirmDelete.bind(this);
+    this.cancelDelete = this.cancelDelete.bind(this);
   }
 
   tryToggle(event){
@@ -91,7 +94,31 @@ export default class TasksDetail extends React.Component{
 
   startDelete(event){
     event.preventDefault();
+    this.setState({ deleteMessage: true });
+  }
+
+  cancelDelete(event){
+    event.preventDefault();
+    this.setState({ deleteMessage: false });
+  }
+
+  confirmDelete(event){
+    event.preventDefault();
     this.props.deleteTask(this.state).then(this.tryToggle);
+  }
+
+  deleteMessageContent(){
+    return (
+      <div id='delete-message'>
+        <p>Deleting this tasks will also delete all subtasks.
+          Are you sure you want to delete?</p>
+
+        <button id='cancel' onClick={this.cancelDelete}>Cancel</button>
+
+        <button id='confirm-delete'
+          onClick={this.confirmDelete}>Delete</button>
+      </div>
+    );
   }
 
   render(){
@@ -111,6 +138,8 @@ export default class TasksDetail extends React.Component{
 
           <button id='close' onClick={ this.tryToggle }>x</button>
         </div>
+
+        { this.state.deleteMessage ? this.deleteMessageContent() : null }
 
         <div id='project-info'>
           <div id='project-name'>{ project ? project.name : '' }</div>

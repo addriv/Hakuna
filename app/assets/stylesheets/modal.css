@@ -93,7 +93,7 @@
 }
 
 .leave-team-modal > div > #confirm-leave:hover{
-  background-color: #de2234;
+  background-color: #f74e5e;
 }
 
 .leave-team-modal > div > #cancel-btn:hover{
@@ -329,7 +329,7 @@
 }
 
 .project-delete > #buttons > #delete-project:hover{
-  background-color: #de2234;
+  background-color: #f74e5e;
 }
 
 .project-delete > #buttons > #cancel:hover{

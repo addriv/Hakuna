@@ -21,7 +21,7 @@
 .tasks-index > #header > button{
   background-color: white;
   color: #14aaf5;
-  border: solid #14aaf5 1px;
+  border: solid #14aaf5 1px;``
   border-radius: 3px;
   height: 28px;
   width: 80px;
@@ -118,14 +118,6 @@ li.unfocused {
   color: #14aaf5;
 }
 
-/*Delete task button*/
-.tasks-detail > #header > #delete{
-  background-color: #ff8e99;
-  color: white;
-  height: 20px;
-  margin: 14px 3px;
-}
-
 .tasks-detail > #timestamps{
   padding: 0 10px;
 }
@@ -135,6 +127,56 @@ li.unfocused {
   font-size: 12px;
   margin: 0 20px;
   color: gray;
+}
+
+/*Delete task button*/
+.tasks-detail > #header > #delete{
+  background-color: #ff8e99;
+  color: white;
+  height: 20px;
+  margin: 14px 3px;
+}
+
+/*Delete task message*/
+.tasks-detail > #delete-message{
+  display: flex;
+  flex-direction: row;
+  background-color: #ffedef;
+}
+
+.tasks-detail > #delete-message > p{
+  font-size: 12px;
+  padding: 0 10px;
+  text-align: center;
+  color: #ff5263;
+}
+
+.tasks-detail > #delete-message > #cancel{
+  height: 30px;
+  margin: 10px 5px;
+  background-color: white;
+  color: #14aaf5;
+  border: solid 1px #14aaf5;
+}
+
+.tasks-detail > #delete-message > #cancel:hover{
+  border: solid 3px;
+  padding: 0 6px;
+  font-weight: 500;
+}
+
+.tasks-detail > #delete-message > #confirm-delete{
+  height: 30px;
+  margin: 10px 5px;
+  background-color: #ff5263;
+  color: white;
+  border: solid 1px #ff5263;
+}
+
+.tasks-detail > #delete-message > #confirm-delete:hover{
+  background-color: #f74e5e;
+  border-color: #f74e5e;
+  font-weight: 500;
 }
 
 .tasks-detail > #project-info {

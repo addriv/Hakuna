@@ -33956,12 +33956,15 @@ var TasksDetail = function (_React$Component) {
     var taskId = _this.props.state.ui.taskDisplay;
     var task = _this.props.state.entities.tasks[taskId];
     _this.state = task;
+    _this.state.deleteMessage = false;
     _this.tryToggle = _this.tryToggle.bind(_this);
     _this.handleTitle = _this.handleTitle.bind(_this);
     _this.handleOnBlur = _this.handleOnBlur.bind(_this);
     _this.handleKeyPress = _this.handleKeyPress.bind(_this);
     _this.toggleComplete = _this.toggleComplete.bind(_this);
     _this.startDelete = _this.startDelete.bind(_this);
+    _this.confirmDelete = _this.confirmDelete.bind(_this);
+    _this.cancelDelete = _this.cancelDelete.bind(_this);
     return _this;
   }
 
@@ -34039,7 +34042,43 @@ var TasksDetail = function (_React$Component) {
     key: 'startDelete',
     value: function startDelete(event) {
       event.preventDefault();
+      this.setState({ deleteMessage: true });
+    }
+  }, {
+    key: 'cancelDelete',
+    value: function cancelDelete(event) {
+      event.preventDefault();
+      this.setState({ deleteMessage: false });
+    }
+  }, {
+    key: 'confirmDelete',
+    value: function confirmDelete(event) {
+      event.preventDefault();
       this.props.deleteTask(this.state).then(this.tryToggle);
+    }
+  }, {
+    key: 'deleteMessageContent',
+    value: function deleteMessageContent() {
+      return _react2.default.createElement(
+        'div',
+        { id: 'delete-message' },
+        _react2.default.createElement(
+          'p',
+          null,
+          'Deleting this tasks will also delete all subtasks. Are you sure you want to delete?'
+        ),
+        _react2.default.createElement(
+          'button',
+          { id: 'cancel', onClick: this.cancelDelete },
+          'Cancel'
+        ),
+        _react2.default.createElement(
+          'button',
+          { id: 'confirm-delete',
+            onClick: this.confirmDelete },
+          'Delete'
+        )
+      );
     }
   }, {
     key: 'render',
@@ -34070,6 +34109,7 @@ var TasksDetail = function (_React$Component) {
             'x'
           )
         ),
+        this.state.deleteMessage ? this.deleteMessageContent() : null,
         _react2.default.createElement(
           'div',
           { id: 'project-info' },
