@@ -50,7 +50,7 @@
   display: flex;
   flex-direction: column;
   position: absolute;
-  right: 15px;
+  right: 10px;
   z-index: 1;
 }
 
@@ -100,7 +100,7 @@
 .current-team{
   height: 100%;
   font-size: 20px;
-  padding: 10px;
+  padding: 8px 10px;
 }
 
 .create-team-btn, .menu-logout-btn, .team-settings-btn, .leave-team-btn{

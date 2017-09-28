@@ -15,22 +15,24 @@
 }
 
 .sidebar-team-members > ul >li {
-  border-radius: 33px;
+  border-radius: 28px;
   border: dashed white 1px;
-  width: 33px;
-  height: 33px;
+  width: 28px;
+  height: 28px;
 }
 .sidebar-team-members > ul {
   display: flex;
   flex-flow: wrap;
   margin-bottom: 5px;
+  padding: 5px;
+  justify-content: center;
 }
 
 [class^="member-icon"]{
-  width: 35px;
-  height: 35px;
-  border-radius: 35px;
-  margin: 3px 2px;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  margin: 4px 4px;
   padding: 0;
   color: white;
   vertical-align: center;
