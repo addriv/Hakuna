@@ -55,10 +55,13 @@ export default class TasksDetail extends React.Component{
   }
 
   handleInput(inputType){
-    return event => this.setState({ [inputType]: event.target.value });
+    return event => {
+      event.target.onblur = this.handleOnBlur;
+      this.setState({ [inputType]: event.target.value });
+    };
   }
 
-  handleOnBlur(){
+  handleOnBlur(event){
     const updatedTask = {
       id: this.state.id,
       title: this.state.title,
@@ -69,6 +72,7 @@ export default class TasksDetail extends React.Component{
     };
 
     this.props.updateTask(updatedTask);
+    event.target.onblur = null;
   }
 
   handleKeyPress(event){
@@ -111,7 +115,6 @@ export default class TasksDetail extends React.Component{
             id={ this.state.id }
             value={ this.state.title ? this.state.title : '' }
             onChange={ this.handleTitle }
-            onBlur={ this.handleOnBlur }
             onKeyPress={ this.handleKeyPress }
             placeholder='New Task Title'></input>
         </div>
@@ -120,7 +123,6 @@ export default class TasksDetail extends React.Component{
           id='description'
           value={ this.state.description ? this.state.description : ''}
           onChange={ this.handleInput('description') }
-          onBlur={ this.handleOnBlur }
           onKeyPress={ this.handleKeyPress }
           placeholder='Description'></textarea>
 

@@ -33975,12 +33975,13 @@ var TasksDetail = function (_React$Component) {
       var _this2 = this;
 
       return function (event) {
-        return _this2.setState(_defineProperty({}, inputType, event.target.value));
+        event.target.onblur = _this2.handleOnBlur;
+        _this2.setState(_defineProperty({}, inputType, event.target.value));
       };
     }
   }, {
     key: 'handleOnBlur',
-    value: function handleOnBlur() {
+    value: function handleOnBlur(event) {
       var updatedTask = {
         id: this.state.id,
         title: this.state.title,
@@ -33991,6 +33992,7 @@ var TasksDetail = function (_React$Component) {
       };
 
       this.props.updateTask(updatedTask);
+      event.target.onblur = null;
     }
   }, {
     key: 'handleKeyPress',
@@ -34049,7 +34051,6 @@ var TasksDetail = function (_React$Component) {
             id: this.state.id,
             value: this.state.title ? this.state.title : '',
             onChange: this.handleTitle,
-            onBlur: this.handleOnBlur,
             onKeyPress: this.handleKeyPress,
             placeholder: 'New Task Title' })
         ),
@@ -34057,7 +34058,6 @@ var TasksDetail = function (_React$Component) {
           id: 'description',
           value: this.state.description ? this.state.description : '',
           onChange: this.handleInput('description'),
-          onBlur: this.handleOnBlur,
           onKeyPress: this.handleKeyPress,
           placeholder: 'Description' }),
         _react2.default.createElement(
