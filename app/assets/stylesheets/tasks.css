@@ -17,6 +17,16 @@
   margin: 0 15px;
 }
 
+.tasks-index > #header > button{
+  background-color: white;
+  color: #14aaf5;
+  border: solid #14aaf5 1px;
+  height: 28px;
+  width: 90px;
+  font-size: 13px;
+  margin: 10px 31px;
+}
+
 .tasks-index > #header, .tasks-detail > #header{
   height: 50px;
   margin-bottom: 5px;
@@ -86,7 +96,19 @@ li.focused {
   width: 28px;
   height: 28px;
   border-radius: 30px;
-  font-size: 23px;
+  font-size: 24px;
+}
+
+.tasks-detail > #description {
+  border: 0;
+}
+
+.tasks-detail > #timestamps{
+  padding: 10px;
+}
+
+.tasks-detail > #timestamps * {
+  padding: 5px;
 }
 
 .checkmark-done{

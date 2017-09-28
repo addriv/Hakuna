@@ -254,6 +254,6 @@ form > input{
   height: 100%;
 }
 
-button, input {
+button, input, textarea {
   outline: 0;
 }
