@@ -68,8 +68,9 @@ export default class TasksDetail extends React.Component{
   }
 
   render(){
+    let project;
     const projectId = this.state.project_id;
-    const project = this.props.state.entities.projects[projectId];
+    if (projectId) project = this.props.state.entities.projects[projectId];
     const taskId = this.props.state.ui.taskDisplay;
     const task = this.props.state.entities.tasks[taskId];
     const createdDate = shortDate(new Date(task.created_at));

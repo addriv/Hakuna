@@ -8515,11 +8515,14 @@ var receiveTaskDisplay = exports.receiveTaskDisplay = function receiveTaskDispla
 
 var createTask = exports.createTask = function createTask(task) {
   return function (dispatch) {
-    return taskUtil.createTask(task).then(function (response) {
-      return dispatch(receiveTask(response));
+    var ajax = taskUtil.createTask(task);
+    ajax.then(function (response) {
+      dispatch(receiveTask(response));
     }).then(function (response) {
-      return dispatch(receiveTaskDisplay(response));
+      dispatch(receiveTaskDisplay(ajax.responseJSON));
     });
+
+    return ajax;
   };
 };
 
@@ -31251,7 +31254,6 @@ var Dashboard = function (_React$Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(newProps) {
-      this.setState({ settingsMenuIsOpen: false });
       if (newProps.teams && this.props.teams) {
         var newTeams = Object.values(newProps.teams);
         var oldTeams = Object.values(this.props.teams);
@@ -33640,9 +33642,17 @@ var TasksIndex = function (_React$Component) {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(newProps) {
       var tasks = newProps.state.entities.tasks;
+      var oldTeam = this.props.state.entities.team;
+      var newTeam = newProps.state.entities.team;
+      var oldProject = this.props.state.ui.projectDisplay;
+      var newProject = newProps.state.ui.projectDisplay;
 
       if (tasks) {
         this.setState(tasks);
+      }
+
+      if (oldTeam && newTeam && oldTeam.id !== newTeam.id || oldProject !== newProject) {
+        this.setState({ taskDetailIsOpen: false });
       }
     }
   }, {
@@ -33926,8 +33936,9 @@ var TasksDetail = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
+      var project = void 0;
       var projectId = this.state.project_id;
-      var project = this.props.state.entities.projects[projectId];
+      if (projectId) project = this.props.state.entities.projects[projectId];
       var taskId = this.props.state.ui.taskDisplay;
       var task = this.props.state.entities.tasks[taskId];
       var createdDate = shortDate(new Date(task.created_at));

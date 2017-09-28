@@ -13,13 +13,20 @@ export const receiveTaskDisplay = task => ({
   task
 });
 
-export const createTask = task => dispatch => (
-  taskUtil.createTask(task).then(
-    response => dispatch(receiveTask(response))
+export const createTask = task => dispatch => {
+  const ajax = taskUtil.createTask(task);
+  ajax.then(
+    response => {
+      dispatch(receiveTask(response));
+    }
   ).then(
-    response => dispatch(receiveTaskDisplay(response))
-  )
-);
+    response => {
+      dispatch(receiveTaskDisplay(ajax.responseJSON));
+    }
+  );
+
+  return ajax;
+};
 
 export const updateTask = task => dispatch => (
   taskUtil.updateTask(task).then(

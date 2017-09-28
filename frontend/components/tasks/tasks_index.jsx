@@ -16,9 +16,17 @@ export default class TasksIndex extends React.Component{
 
   componentWillReceiveProps(newProps){
     const tasks = newProps.state.entities.tasks;
+    const oldTeam = this.props.state.entities.team;
+    const newTeam = newProps.state.entities.team;
+    const oldProject = this.props.state.ui.projectDisplay;
+    const newProject = newProps.state.ui.projectDisplay;
 
     if (tasks){
       this.setState(tasks);
+    }
+
+    if (oldTeam && newTeam && oldTeam.id !== newTeam.id || oldProject !== newProject){
+      this.setState({ taskDetailIsOpen: false});
     }
   }
 

@@ -34,11 +34,10 @@ export default class Dashboard extends React.Component{
   }
 
   setWrapperRef(node) {
-      this.wrapperRef = node;
+    this.wrapperRef = node;
   }
 
   componentWillReceiveProps(newProps){
-    this.setState({ settingsMenuIsOpen: false });
     if (newProps.teams && this.props.teams){
       const newTeams = Object.values(newProps.teams);
       const oldTeams = Object.values(this.props.teams);
