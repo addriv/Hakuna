@@ -33613,9 +33613,9 @@ var _tasks_detail_container = __webpack_require__(338);
 
 var _tasks_detail_container2 = _interopRequireDefault(_tasks_detail_container);
 
-var _merge3 = __webpack_require__(37);
+var _merge4 = __webpack_require__(37);
 
-var _merge4 = _interopRequireDefault(_merge3);
+var _merge5 = _interopRequireDefault(_merge4);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33645,6 +33645,7 @@ var TasksIndex = function (_React$Component) {
     _this.handleOnBlur = _this.handleOnBlur.bind(_this);
     _this.handleKeyPress = _this.handleKeyPress.bind(_this);
     _this.handleKeyDown = _this.handleKeyDown.bind(_this);
+    _this.toggleComplete = _this.toggleComplete.bind(_this);
     return _this;
   }
 
@@ -33712,7 +33713,7 @@ var TasksIndex = function (_React$Component) {
     key: 'handleInput',
     value: function handleInput(event, inputType) {
       var taskId = event.target.id;
-      var newState = (0, _merge4.default)({}, this.state, _defineProperty({}, taskId, _defineProperty({}, inputType, event.target.value)));
+      var newState = (0, _merge5.default)({}, this.state, _defineProperty({}, taskId, _defineProperty({}, inputType, event.target.value)));
       this.setState(newState);
     }
   }, {
@@ -33721,14 +33722,11 @@ var TasksIndex = function (_React$Component) {
       var _this4 = this;
 
       var taskId = parseInt(event.target.id);
-      var updatedTask = {
-        id: taskId,
-        title: event.target.value
-      };
+      var update = { id: taskId, title: event.target.value };
 
-      var newState = (0, _merge4.default)({}, this.state, _defineProperty({}, taskId, { title: event.target.value }));
+      var newState = (0, _merge5.default)({}, this.state, _defineProperty({}, taskId, { title: event.target.value }));
 
-      this.props.updateTask(updatedTask).then(function () {
+      this.props.updateTask(update).then(function () {
         return _this4.setState(newState);
       });
     }
@@ -33750,9 +33748,25 @@ var TasksIndex = function (_React$Component) {
       }
     }
   }, {
+    key: 'toggleComplete',
+    value: function toggleComplete(event) {
+      var _this5 = this;
+
+      event.preventDefault();
+      var taskId = parseInt(event.currentTarget.id);
+      var currentStatus = this.state[taskId].completed;
+      var update = { id: taskId, completed: !currentStatus };
+
+      var newState = (0, _merge5.default)({}, this.state, _defineProperty({}, taskId, { completed: !currentStatus }));
+
+      this.props.updateTask(update).then(function () {
+        return _this5.setState(newState);
+      });
+    }
+  }, {
     key: 'tasksIndexContent',
     value: function tasksIndexContent() {
-      var _this5 = this;
+      var _this6 = this;
 
       var tasks = this.props.tasks;
       var projectDisplay = this.props.state.ui.projectDisplay;
@@ -33764,7 +33778,7 @@ var TasksIndex = function (_React$Component) {
           } else if (projectDisplay > 0 && task.project_id !== projectDisplay) {
             return;
           } else {
-            var title = _this5.state[task.id].title;
+            var title = _this6.state[task.id].title;
             return _react2.default.createElement(
               'li',
               {
@@ -33772,7 +33786,7 @@ var TasksIndex = function (_React$Component) {
                 key: i },
               _react2.default.createElement(
                 'button',
-                null,
+                { id: task.id, onClick: _this6.toggleComplete },
                 _react2.default.createElement(
                   'div',
                   { className: task.completed ? 'checkmark-done' : 'checkmark-not-done' },
@@ -33781,12 +33795,12 @@ var TasksIndex = function (_React$Component) {
               ),
               _react2.default.createElement('input', {
                 id: task.id,
-                onClick: _this5.handleTaskClick,
-                onBlur: _this5.handleOnBlur,
-                onKeyPress: _this5.handleKeyPress,
-                onKeyDown: _this5.handleKeyDown,
+                onClick: _this6.handleTaskClick,
+                onBlur: _this6.handleOnBlur,
+                onKeyPress: _this6.handleKeyPress,
+                onKeyDown: _this6.handleKeyDown,
                 onChange: function onChange(event) {
-                  return _this5.handleInput(event, 'title');
+                  return _this6.handleInput(event, 'title');
                 },
                 value: title ? title : '' })
             );

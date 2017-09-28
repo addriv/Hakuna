@@ -16,6 +16,7 @@ export default class TasksIndex extends React.Component{
     this.handleOnBlur = this.handleOnBlur.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.toggleComplete = this.toggleComplete.bind(this);
   }
 
   componentWillReceiveProps(newProps){
@@ -81,18 +82,13 @@ export default class TasksIndex extends React.Component{
 
   handleOnBlur(event){
     const taskId = parseInt(event.target.id);
-    const updatedTask = {
-      id: taskId,
-      title: event.target.value
-    };
+    const update = { id: taskId, title: event.target.value };
 
     const newState = merge(
       {}, this.state, { [taskId]: { title: event.target.value }}
     );
 
-    this.props.updateTask(updatedTask).then(
-      () => this.setState(newState)
-    );
+    this.props.updateTask(update).then(() => this.setState(newState));
   }
 
   handleKeyPress(event){
@@ -108,6 +104,20 @@ export default class TasksIndex extends React.Component{
     if (event.key === 'ArrowUp' && event.target.parentElement.previousSibling) {
       event.target.parentElement.previousSibling.childNodes[1].focus();
     }
+  }
+
+  toggleComplete(event){
+    event.preventDefault();
+    const taskId = parseInt(event.currentTarget.id);
+    const currentStatus = this.state[taskId].completed;
+    const update = { id: taskId, completed: !currentStatus };
+
+
+    const newState = merge(
+      {}, this.state, { [taskId]: { completed: !currentStatus }}
+    );
+
+    this.props.updateTask(update).then(() => this.setState(newState));
   }
 
   tasksIndexContent(){
@@ -129,7 +139,7 @@ export default class TasksIndex extends React.Component{
               id={ task.id }
               key={i}>
 
-              <button>
+              <button id={ task.id } onClick={ this.toggleComplete }>
                 <div className={ task.completed ?
                     'checkmark-done' : 'checkmark-not-done'}>L</div>
               </button>

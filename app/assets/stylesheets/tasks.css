@@ -78,6 +78,23 @@
   color: white;
 }
 
+.checkmark-not-done{
+  border-color: gray;
+  color: gray;
+}
+
+.checkmark-not-done:hover{
+  background-color: #b2ebe1;
+  border-color: #b2ebe1;
+  color: white;
+}
+
+.checkmark-done:hover{
+  background-color: white;
+  border-color: gray;
+  color: gray;
+}
+
 .tasks-detail > #project-info {
   padding: 10px;
 }
