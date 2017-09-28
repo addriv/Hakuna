@@ -39,7 +39,8 @@ export default class TasksDetail extends React.Component{
       newTask = newProps.state.entities.tasks[newTaskId];
     }
     else {
-      newTask = newProps.indexState[newTaskId];
+      newTask = newProps.state.entities.tasks[newTaskId];
+      newTask.title = newProps.indexState[newTaskId].title;
     }
 
     this.setState(newTask);

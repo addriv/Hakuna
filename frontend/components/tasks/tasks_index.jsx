@@ -2,11 +2,13 @@ import React from 'react';
 import TasksDetailContainer from './tasks_detail_container';
 import merge from 'lodash/merge';
 
+const initialState = { taskDetailIsOpen: false };
+
 export default class TasksIndex extends React.Component{
   constructor(props){
     super(props);
 
-    this.state = { taskDetailIsOpen: false };
+    this.state = initialState;
     this.newTask = this.newTask.bind(this);
     this.closeDetail = this.closeDetail.bind(this);
     this.handleTaskClick = this.handleTaskClick.bind(this);
@@ -22,13 +24,18 @@ export default class TasksIndex extends React.Component{
     const oldProject = this.props.state.ui.projectDisplay;
     const newProject = newProps.state.ui.projectDisplay;
 
-    if (tasks){
-      this.setState(tasks);
+    if (tasks && (!this.props.state.entities.tasks || (oldTeam && newTeam && oldTeam.id !== newTeam.id))){
+      this.setState(tasks, () => console.log(this.state));
+    }
+    else if (!tasks && oldTeam && newTeam && oldTeam.id !== newTeam.id){
+      this.setState(initialState);
     }
 
     if (oldTeam && newTeam && oldTeam.id !== newTeam.id || oldProject !== newProject){
       this.setState({ taskDetailIsOpen: false});
     }
+
+
   }
 
   newTask(event){
@@ -56,7 +63,6 @@ export default class TasksIndex extends React.Component{
   }
 
   handleTaskClick(event){
-    event.preventDefault();
     const taskId = parseInt(event.target.id);
     const task = this.props.state.entities.tasks[taskId];
 
@@ -67,17 +73,21 @@ export default class TasksIndex extends React.Component{
   handleInput(event, inputType){
     const taskId = event.target.id;
     const newState = merge({}, this.state, { [taskId]: { [inputType]: event.target.value }});
-
     this.setState(newState);
   }
 
   handleOnBlur(event){
+    const taskId = parseInt(event.target.id);
     const updatedTask = {
-      id: parseInt(event.target.id),
+      id: taskId,
       title: event.target.value
     };
 
-    this.props.updateTask(updatedTask);
+    const newState = merge({}, this.state, { [taskId]: { title: event.target.value }});
+
+    this.props.updateTask(updatedTask).then(
+      () => this.setState(newState)
+    );
   }
 
   handleKeyPress(event){

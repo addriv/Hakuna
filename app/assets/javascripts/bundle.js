@@ -33613,9 +33613,9 @@ var _tasks_detail_container = __webpack_require__(338);
 
 var _tasks_detail_container2 = _interopRequireDefault(_tasks_detail_container);
 
-var _merge2 = __webpack_require__(37);
+var _merge3 = __webpack_require__(37);
 
-var _merge3 = _interopRequireDefault(_merge2);
+var _merge4 = _interopRequireDefault(_merge3);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -33627,6 +33627,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var initialState = { taskDetailIsOpen: false };
+
 var TasksIndex = function (_React$Component) {
   _inherits(TasksIndex, _React$Component);
 
@@ -33635,7 +33637,7 @@ var TasksIndex = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (TasksIndex.__proto__ || Object.getPrototypeOf(TasksIndex)).call(this, props));
 
-    _this.state = { taskDetailIsOpen: false };
+    _this.state = initialState;
     _this.newTask = _this.newTask.bind(_this);
     _this.closeDetail = _this.closeDetail.bind(_this);
     _this.handleTaskClick = _this.handleTaskClick.bind(_this);
@@ -33648,14 +33650,20 @@ var TasksIndex = function (_React$Component) {
   _createClass(TasksIndex, [{
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(newProps) {
+      var _this2 = this;
+
       var tasks = newProps.state.entities.tasks;
       var oldTeam = this.props.state.entities.team;
       var newTeam = newProps.state.entities.team;
       var oldProject = this.props.state.ui.projectDisplay;
       var newProject = newProps.state.ui.projectDisplay;
 
-      if (tasks) {
-        this.setState(tasks);
+      if (tasks && (!this.props.state.entities.tasks || oldTeam && newTeam && oldTeam.id !== newTeam.id)) {
+        this.setState(tasks, function () {
+          return console.log(_this2.state);
+        });
+      } else if (!tasks && oldTeam && newTeam && oldTeam.id !== newTeam.id) {
+        this.setState(initialState);
       }
 
       if (oldTeam && newTeam && oldTeam.id !== newTeam.id || oldProject !== newProject) {
@@ -33665,7 +33673,7 @@ var TasksIndex = function (_React$Component) {
   }, {
     key: 'newTask',
     value: function newTask(event) {
-      var _this2 = this;
+      var _this3 = this;
 
       event.preventDefault();
 
@@ -33679,7 +33687,7 @@ var TasksIndex = function (_React$Component) {
       };
 
       this.props.createTask(task).then(function () {
-        return _this2.setState({ taskDetailIsOpen: true });
+        return _this3.setState({ taskDetailIsOpen: true });
       });
     }
   }, {
@@ -33693,7 +33701,6 @@ var TasksIndex = function (_React$Component) {
   }, {
     key: 'handleTaskClick',
     value: function handleTaskClick(event) {
-      event.preventDefault();
       var taskId = parseInt(event.target.id);
       var task = this.props.state.entities.tasks[taskId];
 
@@ -33704,19 +33711,25 @@ var TasksIndex = function (_React$Component) {
     key: 'handleInput',
     value: function handleInput(event, inputType) {
       var taskId = event.target.id;
-      var newState = (0, _merge3.default)({}, this.state, _defineProperty({}, taskId, _defineProperty({}, inputType, event.target.value)));
-
+      var newState = (0, _merge4.default)({}, this.state, _defineProperty({}, taskId, _defineProperty({}, inputType, event.target.value)));
       this.setState(newState);
     }
   }, {
     key: 'handleOnBlur',
     value: function handleOnBlur(event) {
+      var _this4 = this;
+
+      var taskId = parseInt(event.target.id);
       var updatedTask = {
-        id: parseInt(event.target.id),
+        id: taskId,
         title: event.target.value
       };
 
-      this.props.updateTask(updatedTask);
+      var newState = (0, _merge4.default)({}, this.state, _defineProperty({}, taskId, { title: event.target.value }));
+
+      this.props.updateTask(updatedTask).then(function () {
+        return _this4.setState(newState);
+      });
     }
   }, {
     key: 'handleKeyPress',
@@ -33728,7 +33741,7 @@ var TasksIndex = function (_React$Component) {
   }, {
     key: 'tasksIndexContent',
     value: function tasksIndexContent() {
-      var _this3 = this;
+      var _this5 = this;
 
       var tasks = this.props.tasks;
       var projectDisplay = this.props.state.ui.projectDisplay;
@@ -33740,7 +33753,7 @@ var TasksIndex = function (_React$Component) {
           } else if (projectDisplay > 0 && task.project_id !== projectDisplay) {
             return;
           } else {
-            var title = _this3.state[task.id].title;
+            var title = _this5.state[task.id].title;
             return _react2.default.createElement(
               'li',
               {
@@ -33753,11 +33766,11 @@ var TasksIndex = function (_React$Component) {
               ),
               _react2.default.createElement('input', {
                 id: task.id,
-                onClick: _this3.handleTaskClick,
-                onBlur: _this3.handleOnBlur,
-                onKeyPress: _this3.handleKeyPress,
+                onClick: _this5.handleTaskClick,
+                onBlur: _this5.handleOnBlur,
+                onKeyPress: _this5.handleKeyPress,
                 onChange: function onChange(event) {
-                  return _this3.handleInput(event, 'title');
+                  return _this5.handleInput(event, 'title');
                 },
                 value: title ? title : '' })
             );
@@ -33914,7 +33927,8 @@ var TasksDetail = function (_React$Component) {
       if (oldTaskId !== newTaskId) {
         newTask = newProps.state.entities.tasks[newTaskId];
       } else {
-        newTask = newProps.indexState[newTaskId];
+        newTask = newProps.state.entities.tasks[newTaskId];
+        newTask.title = newProps.indexState[newTaskId].title;
       }
 
       this.setState(newTask);
