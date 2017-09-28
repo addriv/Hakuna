@@ -15,6 +15,7 @@ export default class TasksIndex extends React.Component{
     this.handleInput = this.handleInput.bind(this);
     this.handleOnBlur = this.handleOnBlur.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   componentWillReceiveProps(newProps){
@@ -24,18 +25,18 @@ export default class TasksIndex extends React.Component{
     const oldProject = this.props.state.ui.projectDisplay;
     const newProject = newProps.state.ui.projectDisplay;
 
-    if (tasks && (!this.props.state.entities.tasks || (oldTeam && newTeam && oldTeam.id !== newTeam.id))){
+    if (tasks && (!this.props.state.entities.tasks
+      || (oldTeam && newTeam && oldTeam.id !== newTeam.id))){
       this.setState(tasks, () => console.log(this.state));
     }
     else if (!tasks && oldTeam && newTeam && oldTeam.id !== newTeam.id){
       this.setState(initialState);
     }
 
-    if (oldTeam && newTeam && oldTeam.id !== newTeam.id || oldProject !== newProject){
+    if (oldTeam && newTeam && oldTeam.id !== newTeam.id
+        || oldProject !== newProject){
       this.setState({ taskDetailIsOpen: false});
     }
-
-
   }
 
   newTask(event){
@@ -72,7 +73,9 @@ export default class TasksIndex extends React.Component{
 
   handleInput(event, inputType){
     const taskId = event.target.id;
-    const newState = merge({}, this.state, { [taskId]: { [inputType]: event.target.value }});
+    const newState = merge(
+      {}, this.state, { [taskId]: { [inputType]: event.target.value }}
+    );
     this.setState(newState);
   }
 
@@ -83,7 +86,9 @@ export default class TasksIndex extends React.Component{
       title: event.target.value
     };
 
-    const newState = merge({}, this.state, { [taskId]: { title: event.target.value }});
+    const newState = merge(
+      {}, this.state, { [taskId]: { title: event.target.value }}
+    );
 
     this.props.updateTask(updatedTask).then(
       () => this.setState(newState)
@@ -93,6 +98,15 @@ export default class TasksIndex extends React.Component{
   handleKeyPress(event){
     if (event.key === 'Enter'){
       event.target.blur();
+    }
+  }
+
+  handleKeyDown(event){
+    if (event.key === 'ArrowDown' && event.target.parentElement.nextSibling) {
+      event.target.parentElement.nextSibling.childNodes[1].focus();
+    }
+    if (event.key === 'ArrowUp' && event.target.parentElement.previousSibling) {
+      event.target.parentElement.previousSibling.childNodes[1].focus();
     }
   }
 
@@ -115,13 +129,17 @@ export default class TasksIndex extends React.Component{
               id={ task.id }
               key={i}>
 
-              <div className={ task.completed ?
-                  'checkmark-done' : 'checkmark-not-done'}>L</div>
+              <button>
+                <div className={ task.completed ?
+                    'checkmark-done' : 'checkmark-not-done'}>L</div>
+              </button>
+
               <input
                 id={ task.id }
                 onClick={ this.handleTaskClick }
                 onBlur={ this.handleOnBlur }
                 onKeyPress={ this.handleKeyPress }
+                onKeyDown={ this.handleKeyDown }
                 onChange= { event => this.handleInput(event, 'title') }
                 value={ title ? title : '' }></input>
             </li>

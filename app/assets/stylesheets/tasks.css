@@ -29,6 +29,8 @@
 
 .tasks-index > ul > li {
   padding: 0 30px;
+  display: flex;
+  flex-direction: row;
 }
 
 .tasks-index > ul > li > input{
@@ -36,6 +38,12 @@
   width: calc(100% - 33.28px);
   border: 0;
   border-bottom: solid 1px rgba(0,0,0,0.15);
+}
+
+.tasks-index > ul > li > button {
+  padding: 0;
+  text-align: center;
+  background-color: transparent;
 }
 
 .tasks-detail{

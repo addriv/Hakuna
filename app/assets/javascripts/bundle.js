@@ -33644,6 +33644,7 @@ var TasksIndex = function (_React$Component) {
     _this.handleInput = _this.handleInput.bind(_this);
     _this.handleOnBlur = _this.handleOnBlur.bind(_this);
     _this.handleKeyPress = _this.handleKeyPress.bind(_this);
+    _this.handleKeyDown = _this.handleKeyDown.bind(_this);
     return _this;
   }
 
@@ -33739,6 +33740,16 @@ var TasksIndex = function (_React$Component) {
       }
     }
   }, {
+    key: 'handleKeyDown',
+    value: function handleKeyDown(event) {
+      if (event.key === 'ArrowDown' && event.target.parentElement.nextSibling) {
+        event.target.parentElement.nextSibling.childNodes[1].focus();
+      }
+      if (event.key === 'ArrowUp' && event.target.parentElement.previousSibling) {
+        event.target.parentElement.previousSibling.childNodes[1].focus();
+      }
+    }
+  }, {
     key: 'tasksIndexContent',
     value: function tasksIndexContent() {
       var _this5 = this;
@@ -33760,15 +33771,20 @@ var TasksIndex = function (_React$Component) {
                 id: task.id,
                 key: i },
               _react2.default.createElement(
-                'div',
-                { className: task.completed ? 'checkmark-done' : 'checkmark-not-done' },
-                'L'
+                'button',
+                null,
+                _react2.default.createElement(
+                  'div',
+                  { className: task.completed ? 'checkmark-done' : 'checkmark-not-done' },
+                  'L'
+                )
               ),
               _react2.default.createElement('input', {
                 id: task.id,
                 onClick: _this5.handleTaskClick,
                 onBlur: _this5.handleOnBlur,
                 onKeyPress: _this5.handleKeyPress,
+                onKeyDown: _this5.handleKeyDown,
                 onChange: function onChange(event) {
                   return _this5.handleInput(event, 'title');
                 },
