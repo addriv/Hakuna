@@ -13,7 +13,7 @@ export default class TasksIndex extends React.Component{
     this.closeDetail = this.closeDetail.bind(this);
     this.handleFocus = this.handleFocus.bind(this);
     this.handleInput = this.handleInput.bind(this);
-    this.handleOnBlur = this.handleOnBlur.bind(this);
+    this.handleOnChangeBlur = this.handleOnChangeBlur.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.toggleComplete = this.toggleComplete.bind(this);
@@ -68,13 +68,15 @@ export default class TasksIndex extends React.Component{
   handleFocus(event){
     const taskId = parseInt(event.target.id);
     const task = this.props.state.entities.tasks[taskId];
+    const parentli = event.target.parentElement;
+    parentli.className = 'focused';
 
     this.props.receiveTaskDisplay({ tasks: { [task.id]: task }});
     this.setState({ taskDetailIsOpen: true });
   }
 
   handleInput(event, inputType){
-    event.target.onblur = this.handleOnBlur;
+    event.target.onblur = this.handleOnChangeBlur;
 
     const taskId = event.target.id;
     const newState = merge(
@@ -83,7 +85,7 @@ export default class TasksIndex extends React.Component{
     this.setState(newState);
   }
 
-  handleOnBlur(event){
+  handleOnChangeBlur(event){
     const taskId = parseInt(event.target.id);
     const update = { id: taskId, title: event.target.value };
 
@@ -94,6 +96,11 @@ export default class TasksIndex extends React.Component{
     this.props.updateTask(update).then(() => this.setState(newState));
 
     event.target.onblur = null;
+  }
+
+  handleOnBlur(event){
+    const parentli = event.target.parentElement;
+    parentli.className = 'unfocused';
   }
 
   handleKeyPress(event){
@@ -152,6 +159,7 @@ export default class TasksIndex extends React.Component{
                 onFocus={ this.handleFocus }
                 onKeyPress={ this.handleKeyPress }
                 onKeyDown={ this.handleKeyDown }
+                onBlur={ this.handleOnBlur }
                 onChange= { event => this.handleInput(event, 'title') }
                 value={ title ? title : '' }></input>
             </li>

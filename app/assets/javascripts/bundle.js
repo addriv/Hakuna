@@ -33642,7 +33642,7 @@ var TasksIndex = function (_React$Component) {
     _this.closeDetail = _this.closeDetail.bind(_this);
     _this.handleFocus = _this.handleFocus.bind(_this);
     _this.handleInput = _this.handleInput.bind(_this);
-    _this.handleOnBlur = _this.handleOnBlur.bind(_this);
+    _this.handleOnChangeBlur = _this.handleOnChangeBlur.bind(_this);
     _this.handleKeyPress = _this.handleKeyPress.bind(_this);
     _this.handleKeyDown = _this.handleKeyDown.bind(_this);
     _this.toggleComplete = _this.toggleComplete.bind(_this);
@@ -33703,6 +33703,8 @@ var TasksIndex = function (_React$Component) {
     value: function handleFocus(event) {
       var taskId = parseInt(event.target.id);
       var task = this.props.state.entities.tasks[taskId];
+      var parentli = event.target.parentElement;
+      parentli.className = 'focused';
 
       this.props.receiveTaskDisplay({ tasks: _defineProperty({}, task.id, task) });
       this.setState({ taskDetailIsOpen: true });
@@ -33710,15 +33712,15 @@ var TasksIndex = function (_React$Component) {
   }, {
     key: 'handleInput',
     value: function handleInput(event, inputType) {
-      event.target.onblur = this.handleOnBlur;
+      event.target.onblur = this.handleOnChangeBlur;
 
       var taskId = event.target.id;
       var newState = (0, _merge5.default)({}, this.state, _defineProperty({}, taskId, _defineProperty({}, inputType, event.target.value)));
       this.setState(newState);
     }
   }, {
-    key: 'handleOnBlur',
-    value: function handleOnBlur(event) {
+    key: 'handleOnChangeBlur',
+    value: function handleOnChangeBlur(event) {
       var _this3 = this;
 
       var taskId = parseInt(event.target.id);
@@ -33731,6 +33733,12 @@ var TasksIndex = function (_React$Component) {
       });
 
       event.target.onblur = null;
+    }
+  }, {
+    key: 'handleOnBlur',
+    value: function handleOnBlur(event) {
+      var parentli = event.target.parentElement;
+      parentli.className = 'unfocused';
     }
   }, {
     key: 'handleKeyPress',
@@ -33795,6 +33803,7 @@ var TasksIndex = function (_React$Component) {
                 onFocus: _this4.handleFocus,
                 onKeyPress: _this4.handleKeyPress,
                 onKeyDown: _this4.handleKeyDown,
+                onBlur: _this4.handleOnBlur,
                 onChange: function onChange(event) {
                   return _this4.handleInput(event, 'title');
                 },

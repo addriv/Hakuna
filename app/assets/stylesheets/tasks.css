@@ -33,10 +33,14 @@
   flex-direction: row;
 }
 
+li.focused {
+  border: solid blue 1px;
+}
+
 .tasks-index > ul > li > input{
   height: 34px;
   width: calc(100% - 33.28px);
-  border: 0;
+  border: solid transparent 1px;
   border-bottom: solid 1px rgba(0,0,0,0.15);
 }
 
