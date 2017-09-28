@@ -22,8 +22,10 @@
   color: #14aaf5;
   border: solid #14aaf5 1px;
   height: 28px;
-  width: 90px;
+  width: 75px;
+  padding: 0 5px;
   font-size: 13px;
+  font-weight: 500;
   margin: 10px 31px;
 }
 
