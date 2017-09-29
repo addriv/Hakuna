@@ -36531,7 +36531,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var middlewares = [_reduxThunk2.default];
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.RAILS_ENV !== 'production') {
   // must use 'require' (import only allowed at top of file)
   var _require = __webpack_require__(409),
       logger = _require.logger;
