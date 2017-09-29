@@ -33670,8 +33670,6 @@ var TasksIndex = function (_React$Component) {
       var oldProject = this.props.state.ui.projectDisplay;
       var newProject = newProps.state.ui.projectDisplay;
 
-      console.log('old: ' + oldProject + ', new: ' + newProject);
-
       if (tasks) {
         this.setState(tasks);
       } else if (!tasks && oldTeam && newTeam && oldTeam.id !== newTeam.id) {
@@ -33956,7 +33954,8 @@ var TasksDetail = function (_React$Component) {
     var taskId = _this.props.state.ui.taskDisplay;
     var task = _this.props.state.entities.tasks[taskId];
     _this.state = task;
-    _this.state.deleteMessage = false;
+    _this.state.deleteIsOpen = false;
+    _this.state.assigneeIsOpen = false;
     _this.tryToggle = _this.tryToggle.bind(_this);
     _this.handleTitle = _this.handleTitle.bind(_this);
     _this.handleOnBlur = _this.handleOnBlur.bind(_this);
@@ -33965,6 +33964,8 @@ var TasksDetail = function (_React$Component) {
     _this.startDelete = _this.startDelete.bind(_this);
     _this.confirmDelete = _this.confirmDelete.bind(_this);
     _this.cancelDelete = _this.cancelDelete.bind(_this);
+    _this.toggleAssignee = _this.toggleAssignee.bind(_this);
+    _this.handleAssignee = _this.handleAssignee.bind(_this);
     return _this;
   }
 
@@ -34042,13 +34043,13 @@ var TasksDetail = function (_React$Component) {
     key: 'startDelete',
     value: function startDelete(event) {
       event.preventDefault();
-      this.setState({ deleteMessage: true });
+      this.setState({ deleteIsOpen: true });
     }
   }, {
     key: 'cancelDelete',
     value: function cancelDelete(event) {
       event.preventDefault();
-      this.setState({ deleteMessage: false });
+      this.setState({ deleteIsOpen: false });
     }
   }, {
     key: 'confirmDelete',
@@ -34085,6 +34086,44 @@ var TasksDetail = function (_React$Component) {
       );
     }
   }, {
+    key: 'toggleAssignee',
+    value: function toggleAssignee(event) {
+      event.preventDefault();
+      this.setState({ assigneeIsOpen: !this.state.assigneeIsOpen });
+    }
+  }, {
+    key: 'assigneeDropdown',
+    value: function assigneeDropdown() {
+      var _this3 = this;
+
+      var currentUser = this.props.state.session.currentUser;
+      var teamMembers = this.props.state.entities.members;
+      var membersArr = Object.values(teamMembers);
+      membersArr.unshift(currentUser);
+
+      var membersli = membersArr.map(function (member, i) {
+        return _react2.default.createElement(
+          'button',
+          { id: member.id, key: i,
+            onClick: _this3.handleAssignee },
+          member.name
+        );
+      });
+      return _react2.default.createElement(
+        'ul',
+        null,
+        membersli
+      );
+    }
+  }, {
+    key: 'handleAssignee',
+    value: function handleAssignee(event) {
+      event.preventDefault();
+      var assigneeId = parseInt(event.target.id);
+      var update = { id: this.state.id, assignee_id: assigneeId };
+      this.props.updateTask(update);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var project = void 0;
@@ -34094,6 +34133,11 @@ var TasksDetail = function (_React$Component) {
       var task = this.props.state.entities.tasks[taskId];
       var createdDate = shortDate(new Date(task.created_at));
       var updatedDate = shortDate(new Date(task.updated_at));
+      var assigneeId = this.state.assignee_id;
+      var currentUserId = this.props.state.session.currentUser.id;
+      var allMembers = Object.assign({}, this.props.state.entities.members);
+      allMembers[currentUserId] = this.props.state.session.currentUser;
+      var assignee = allMembers[assigneeId];
 
       return _react2.default.createElement(
         'div',
@@ -34101,6 +34145,18 @@ var TasksDetail = function (_React$Component) {
         _react2.default.createElement(
           'div',
           { id: 'header' },
+          _react2.default.createElement(
+            'div',
+            { id: 'assignee' },
+            _react2.default.createElement(
+              'button',
+              {
+                id: this.state.assigneeIsOpen ? 'opened' : 'closed',
+                onClick: this.toggleAssignee },
+              assigneeId ? assignee.name : 'Unassigned'
+            ),
+            this.state.assigneeIsOpen ? this.assigneeDropdown() : null
+          ),
           _react2.default.createElement(
             'button',
             { id: 'delete',
@@ -34113,7 +34169,7 @@ var TasksDetail = function (_React$Component) {
             'x'
           )
         ),
-        this.state.deleteMessage ? this.deleteMessageContent() : null,
+        this.state.deleteIsOpen ? this.deleteMessageContent() : null,
         _react2.default.createElement(
           'div',
           { id: 'project-info' },

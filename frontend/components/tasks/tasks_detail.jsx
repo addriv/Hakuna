@@ -19,7 +19,8 @@ export default class TasksDetail extends React.Component{
     const taskId = this.props.state.ui.taskDisplay;
     const task = this.props.state.entities.tasks[taskId];
     this.state = task;
-    this.state.deleteMessage = false;
+    this.state.deleteIsOpen = false;
+    this.state.assigneeIsOpen = false;
     this.tryToggle = this.tryToggle.bind(this);
     this.handleTitle = this.handleTitle.bind(this);
     this.handleOnBlur = this.handleOnBlur.bind(this);
@@ -28,6 +29,8 @@ export default class TasksDetail extends React.Component{
     this.startDelete = this.startDelete.bind(this);
     this.confirmDelete = this.confirmDelete.bind(this);
     this.cancelDelete = this.cancelDelete.bind(this);
+    this.toggleAssignee = this.toggleAssignee.bind(this);
+    this.handleAssignee = this.handleAssignee.bind(this);
   }
 
   tryToggle(event){
@@ -94,12 +97,12 @@ export default class TasksDetail extends React.Component{
 
   startDelete(event){
     event.preventDefault();
-    this.setState({ deleteMessage: true });
+    this.setState({ deleteIsOpen: true });
   }
 
   cancelDelete(event){
     event.preventDefault();
-    this.setState({ deleteMessage: false });
+    this.setState({ deleteIsOpen: false });
   }
 
   confirmDelete(event){
@@ -123,6 +126,35 @@ export default class TasksDetail extends React.Component{
     );
   }
 
+  toggleAssignee(event){
+    event.preventDefault();
+    this.setState({ assigneeIsOpen: !this.state.assigneeIsOpen });
+  }
+
+  assigneeDropdown(){
+    const currentUser = this.props.state.session.currentUser;
+    const teamMembers = this.props.state.entities.members;
+    const membersArr = Object.values(teamMembers);
+    membersArr.unshift(currentUser);
+
+    const membersli = membersArr.map((member, i) => (
+      <button id={ member.id } key={i}
+        onClick={ this.handleAssignee }>{ member.name }</button>
+    ));
+    return (
+      <ul>
+        { membersli }
+      </ul>
+    );
+  }
+
+  handleAssignee(event){
+    event.preventDefault();
+    const assigneeId = parseInt(event.target.id);
+    const update = { id: this.state.id, assignee_id: assigneeId };
+    this.props.updateTask(update);
+  }
+
   render(){
     let project;
     const projectId = this.state.project_id;
@@ -131,17 +163,33 @@ export default class TasksDetail extends React.Component{
     const task = this.props.state.entities.tasks[taskId];
     const createdDate = shortDate(new Date(task.created_at));
     const updatedDate = shortDate(new Date(task.updated_at));
+    const assigneeId = this.state.assignee_id;
+    const currentUserId = this.props.state.session.currentUser.id;
+    const allMembers = Object.assign({}, this.props.state.entities.members);
+    allMembers[currentUserId] = this.props.state.session.currentUser;
+    const assignee = allMembers[assigneeId];
 
     return (
       <div className='tasks-detail'>
         <div id='header'>
+          <div id='assignee'>
+            <button
+              id={ this.state.assigneeIsOpen ? 'opened' : 'closed' }
+              onClick={ this.toggleAssignee }>
+
+              { assigneeId ? assignee.name : 'Unassigned' }
+            </button>
+
+            { this.state.assigneeIsOpen ? this.assigneeDropdown() : null }
+          </div>
+
           <button id='delete'
             onClick={ this.startDelete }>Delete</button>
 
           <button id='close' onClick={ this.tryToggle }>x</button>
         </div>
 
-        { this.state.deleteMessage ? this.deleteMessageContent() : null }
+        { this.state.deleteIsOpen ? this.deleteMessageContent() : null }
 
         <div id='project-info'>
           <div id='project-name'>{ project ? project.name : '' }</div>

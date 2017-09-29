@@ -26,8 +26,6 @@ export default class TasksIndex extends React.Component{
     const oldProject = this.props.state.ui.projectDisplay;
     const newProject = newProps.state.ui.projectDisplay;
 
-    console.log(`old: ${oldProject}, new: ${newProject}`);
-
     if (tasks){
       this.setState(tasks);
     }

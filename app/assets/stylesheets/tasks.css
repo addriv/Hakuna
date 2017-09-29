@@ -106,6 +106,68 @@ li.unfocused {
   flex-direction: row;
 }
 
+/*Assignee button*/
+.tasks-detail > #header > #assignee{
+  position: absolute;
+  left: 15px;
+  top: 15px;
+}
+
+.tasks-detail > #header > #assignee > ul{
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  position: relative;
+  padding: 5px 20px;
+  border: solid gray 1px;
+  border-radius: 3px;
+  border-top-left-radius: 0px;
+}
+
+.tasks-detail > #header > #assignee > ul > button{
+  background-color: white;
+  padding: 5px 0;
+  width: 100%;
+}
+
+.tasks-detail > #header > #assignee > ul > button:hover{
+  background-color: #14aaf5;
+}
+
+.tasks-detail > #header > #assignee > #closed{
+  font-size: 13px;
+  border-radius: 15px;
+  padding: 5px 15px;
+  background-color: white;
+  border: solid 1px gray;
+  color: gray;
+}
+
+.tasks-detail > #header > #assignee > #closed:hover{
+  border: solid 2px #14aaf5;
+  color: #14aaf5;
+  font-weight: 400;
+}
+
+.tasks-detail > #header > #assignee > #opened{
+  font-size: 13px;
+  border-radius: 3px;
+  padding: 5px 15px;
+  background-color: white;
+  border: solid 2px #14aaf5;
+  color: #14aaf5;
+  font-weight: 400;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+.tasks-detail > #header > #assignee > #opened:hover{
+  background-color: #14aaf5;
+  color: white;
+  font-weight: 400;
+}
+
 /*Close detail button*/
 .tasks-detail > #header > #close{
   background-color: transparent;
@@ -207,6 +269,7 @@ li.unfocused {
   padding: 5px 20px;
   margin-bottom: 5px;
   font-size: 12px;
+  color: gray;
   text-align: center;
   white-space: nowrap;
 }
