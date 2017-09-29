@@ -31319,8 +31319,8 @@ var Dashboard = function (_React$Component) {
     value: function toggleSettingsMenu(event) {
       if (event) {
         event.preventDefault();
-        this.setState({ settingsMenuIsOpen: !this.state.settingsMenuIsOpen });
       }
+      this.setState({ settingsMenuIsOpen: !this.state.settingsMenuIsOpen });
     }
   }, {
     key: 'handleMyTasks',
@@ -31417,7 +31417,7 @@ var Dashboard = function (_React$Component) {
                       )
                     )
                   ),
-                  this.state.settingsMenuIsOpen ? _react2.default.createElement(_settings_menu_container2.default, null) : null
+                  this.state.settingsMenuIsOpen ? _react2.default.createElement(_settings_menu_container2.default, { toggleMenu: this.toggleSettingsMenu }) : null
                 )
               ),
               _react2.default.createElement(
@@ -33327,9 +33327,13 @@ var SettingsMenu = function (_React$Component) {
   }, {
     key: 'handleTeamUpdate',
     value: function handleTeamUpdate(event) {
+      var _this4 = this;
+
       event.preventDefault();
       var updatedData = { id: this.state.updateId, name: this.state.updateName };
-      this.props.updateTeam(updatedData);
+      this.props.updateTeam(updatedData).then(function () {
+        return _this4.props.toggleMenu();
+      });
     }
   }, {
     key: 'confirmLeaveTeamModal',
@@ -33471,7 +33475,7 @@ var SettingsMenu = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       var teamsList = void 0,
           teamsUl = void 0;
@@ -33513,7 +33517,7 @@ var SettingsMenu = function (_React$Component) {
               'button',
               {
                 className: 'team-btn',
-                onClick: _this4.handleTeamSelect,
+                onClick: _this5.handleTeamSelect,
                 id: team.id,
                 key: i },
               _react2.default.createElement(

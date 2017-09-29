@@ -71,8 +71,8 @@ export default class Dashboard extends React.Component{
   toggleSettingsMenu(event){
     if (event){
       event.preventDefault();
-      this.setState({ settingsMenuIsOpen: !this.state.settingsMenuIsOpen });
     }
+    this.setState({ settingsMenuIsOpen: !this.state.settingsMenuIsOpen });
   }
 
   handleMyTasks(event){
@@ -146,7 +146,7 @@ export default class Dashboard extends React.Component{
                   </button>
 
                   { this.state.settingsMenuIsOpen ?
-                    <SettingsMenuContainer /> : null }
+                    <SettingsMenuContainer toggleMenu={this.toggleSettingsMenu}/> : null }
 
                 </div>
 

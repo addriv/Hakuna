@@ -88,7 +88,9 @@ export default class SettingsMenu extends React.Component{
   handleTeamUpdate(event){
     event.preventDefault();
     const updatedData = { id: this.state.updateId, name: this.state.updateName };
-    this.props.updateTeam(updatedData);
+    this.props.updateTeam(updatedData).then(
+      () => this.props.toggleMenu()
+    );
   }
 
   confirmLeaveTeamModal(){
