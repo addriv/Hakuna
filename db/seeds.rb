@@ -24,7 +24,8 @@ User.create!([
   {name: "Andrew Reynolds", email: "demo@email.com", password: 'demo333'},
   {name: "John Smith", email: "demo1@email.com", password: 'demo000'},
   {name: "Cathy Foster", email: "demo2@email.com", password: 'demo111'},
-  {name: "Rebecca Lee", email: "demo3@email.com", password: 'demo222'}
+  {name: "Rebecca Lee", email: "demo3@email.com", password: 'demo222'},
+  {name: "Daniel Reed", email: "demo4@email.com", password: 'demo4'}
 ])
 
 Team.create!([
@@ -35,9 +36,6 @@ Team.create!([
 ])
 
 Project.create!([
-  {name: "Test Auth", description: "", public: true, lead_id: 2, team_id: 3},
-  {name: "Test Dashboard", description: "Proposal for project planning", public: true, lead_id: 2, team_id: 3},
-  {name: "Test Team", description: "Proposal for project planning", public: true, lead_id: 2, team_id: 3},
   {name: "Teams Feature", description: "Implementing Teams for Hakuna App", public: true, lead_id: 1, team_id: 1},
   {name: "Projects Feature", description: "Implementing Projects feature for Hakuna App", public: true, lead_id: 1, team_id: 1},
   {name: "Tasks Feature", description: "Implement Tasks feature for Hakuna App", public: true, lead_id: 1, team_id: 1},
@@ -47,7 +45,10 @@ Project.create!([
   {name: "Production Readiness", description: "Checklist to get app in production state", public: true, lead_id: 1, team_id: 1},
   {name: "Project 1", description: "", public: true, lead_id: 1, team_id: 2},
   {name: "Project 2", description: "", public: true, lead_id: 1, team_id: 2},
-  {name: "Project 3", description: "", public: true, lead_id: 1, team_id: 2}
+  {name: "Project 3", description: "", public: true, lead_id: 1, team_id: 2},
+  {name: "Test Auth", description: "", public: true, lead_id: 2, team_id: 3},
+  {name: "Test Team", description: "Proposal for project planning", public: true, lead_id: 2, team_id: 3},
+  {name: "Test Dashboard", description: "Proposal for project planning", public: true, lead_id: 2, team_id: 3}
 ])
 Task.create!([
   {title: "Team 2 Project 4 Task 1", description: nil, public: true, completed: false, due_date: nil, creator_id: 2, assignee_id: nil, project_id: 4, parent_task_id: nil, team_id: 2},
@@ -136,5 +137,6 @@ UserTeam.create!([
   {member_id: 3, team_id: 1},
   {member_id: 4, team_id: 1},
   {member_id: 3, team_id: 2},
-  {member_id: 4, team_id: 2}
+  {member_id: 4, team_id: 2},
+  {member_id: 5, team_id: 1}
 ])
