@@ -36,6 +36,7 @@
   padding: 0;
   color: white;
   vertical-align: center;
+  text-align: center;
 }
 
 [class^="member-icon-user"] > div{

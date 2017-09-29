@@ -184,7 +184,9 @@ export default class TasksDetail extends React.Component{
     let assigneeId = parseInt(event.target.id);
     assigneeId = assigneeId === 0 ? null : assigneeId;
     const update = { id: this.state.id, assignee_id: assigneeId };
-    this.props.updateTask(update);
+    this.props.updateTask(update).then(
+      () => this.setState({ assigneeIsOpen: false })
+    );
   }
 
   render(){

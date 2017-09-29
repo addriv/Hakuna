@@ -34152,11 +34152,15 @@ var TasksDetail = function (_React$Component) {
   }, {
     key: 'handleAssignee',
     value: function handleAssignee(event) {
+      var _this4 = this;
+
       event.preventDefault();
       var assigneeId = parseInt(event.target.id);
       assigneeId = assigneeId === 0 ? null : assigneeId;
       var update = { id: this.state.id, assignee_id: assigneeId };
-      this.props.updateTask(update);
+      this.props.updateTask(update).then(function () {
+        return _this4.setState({ assigneeIsOpen: false });
+      });
     }
   }, {
     key: 'render',
