@@ -31,6 +31,31 @@ export default class TasksDetail extends React.Component{
     this.cancelDelete = this.cancelDelete.bind(this);
     this.toggleAssignee = this.toggleAssignee.bind(this);
     this.handleAssignee = this.handleAssignee.bind(this);
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.setWrapperRef = this.setWrapperRef.bind(this);
+  }
+
+  componentDidMount(){
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+  }
+
+  handleClickOutside(event){
+    const modalElement = document.getElementsByClassName('ReactModal__Overlay');
+
+    if (
+      this.wrapperRef
+      && !this.wrapperRef.contains(event.target)
+      && modalElement.length === 0) {
+        this.setState({ assigneeIsOpen: false });
+    }
+  }
+
+  setWrapperRef(node) {
+    this.wrapperRef = node;
   }
 
   tryToggle(event){
@@ -141,6 +166,12 @@ export default class TasksDetail extends React.Component{
       <button id={ member.id } key={i}
         onClick={ this.handleAssignee }>{ member.name }</button>
     ));
+
+    membersli.push(
+      <button
+        id='0' key={-1} onClick={ this.handleAssignee }>Unassign</button>
+    );
+
     return (
       <ul>
         { membersli }
@@ -150,7 +181,8 @@ export default class TasksDetail extends React.Component{
 
   handleAssignee(event){
     event.preventDefault();
-    const assigneeId = parseInt(event.target.id);
+    let assigneeId = parseInt(event.target.id);
+    assigneeId = assigneeId === 0 ? null : assigneeId;
     const update = { id: this.state.id, assignee_id: assigneeId };
     this.props.updateTask(update);
   }
@@ -172,7 +204,7 @@ export default class TasksDetail extends React.Component{
     return (
       <div className='tasks-detail'>
         <div id='header'>
-          <div id='assignee'>
+          <div id='assignee' ref={ this.setWrapperRef }>
             <button
               id={ this.state.assigneeIsOpen ? 'opened' : 'closed' }
               onClick={ this.toggleAssignee }>

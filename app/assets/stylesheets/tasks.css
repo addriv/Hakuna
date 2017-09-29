@@ -119,20 +119,22 @@ li.unfocused {
   flex-direction: column;
   z-index: 1;
   position: relative;
-  padding: 5px 20px;
   border: solid gray 1px;
   border-radius: 3px;
   border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
 }
 
 .tasks-detail > #header > #assignee > ul > button{
   background-color: white;
-  padding: 5px 0;
+  padding: 5px 20px;
   width: 100%;
+  border-radius: 0;
 }
 
 .tasks-detail > #header > #assignee > ul > button:hover{
   background-color: #14aaf5;
+  color: white;
 }
 
 .tasks-detail > #header > #assignee > #closed{

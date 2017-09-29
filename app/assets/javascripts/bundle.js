@@ -33966,10 +33966,36 @@ var TasksDetail = function (_React$Component) {
     _this.cancelDelete = _this.cancelDelete.bind(_this);
     _this.toggleAssignee = _this.toggleAssignee.bind(_this);
     _this.handleAssignee = _this.handleAssignee.bind(_this);
+    _this.handleClickOutside = _this.handleClickOutside.bind(_this);
+    _this.setWrapperRef = _this.setWrapperRef.bind(_this);
     return _this;
   }
 
   _createClass(TasksDetail, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      document.addEventListener('mousedown', this.handleClickOutside);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+  }, {
+    key: 'handleClickOutside',
+    value: function handleClickOutside(event) {
+      var modalElement = document.getElementsByClassName('ReactModal__Overlay');
+
+      if (this.wrapperRef && !this.wrapperRef.contains(event.target) && modalElement.length === 0) {
+        this.setState({ assigneeIsOpen: false });
+      }
+    }
+  }, {
+    key: 'setWrapperRef',
+    value: function setWrapperRef(node) {
+      this.wrapperRef = node;
+    }
+  }, {
     key: 'tryToggle',
     value: function tryToggle(event) {
       if (event) {
@@ -34109,6 +34135,14 @@ var TasksDetail = function (_React$Component) {
           member.name
         );
       });
+
+      membersli.push(_react2.default.createElement(
+        'button',
+        {
+          id: '0', key: -1, onClick: this.handleAssignee },
+        'Unassign'
+      ));
+
       return _react2.default.createElement(
         'ul',
         null,
@@ -34120,6 +34154,7 @@ var TasksDetail = function (_React$Component) {
     value: function handleAssignee(event) {
       event.preventDefault();
       var assigneeId = parseInt(event.target.id);
+      assigneeId = assigneeId === 0 ? null : assigneeId;
       var update = { id: this.state.id, assignee_id: assigneeId };
       this.props.updateTask(update);
     }
@@ -34147,7 +34182,7 @@ var TasksDetail = function (_React$Component) {
           { id: 'header' },
           _react2.default.createElement(
             'div',
-            { id: 'assignee' },
+            { id: 'assignee', ref: this.setWrapperRef },
             _react2.default.createElement(
               'button',
               {
