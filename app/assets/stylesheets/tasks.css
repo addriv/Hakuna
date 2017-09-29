@@ -361,6 +361,10 @@ border: 1px solid #14aaf5;
   color: gray;
 }
 
+.tasks-index > ul{
+  overflow-y: scroll;
+}
+
 /*.checkmark-not-done:hover{
   background-color: #b2ebe1;
   border-color: #b2ebe1;
