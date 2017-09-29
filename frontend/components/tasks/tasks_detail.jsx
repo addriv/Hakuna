@@ -190,9 +190,17 @@ export default class TasksDetail extends React.Component{
   }
 
   render(){
-    let project;
+    let project, projectInfo;
     const projectId = this.state.project_id;
-    if (projectId) project = this.props.state.entities.projects[projectId];
+    if (projectId) {
+      project = this.props.state.entities.projects[projectId];
+      projectInfo = (
+        <div id='project-info'>
+          <div id='project-name'>{ project.name }</div>
+          <div id='project-spacer'></div>
+        </div>
+      );
+    }
     const taskId = this.props.state.ui.taskDisplay;
     const task = this.props.state.entities.tasks[taskId];
     const createdDate = shortDate(new Date(task.created_at));
@@ -225,10 +233,7 @@ export default class TasksDetail extends React.Component{
 
         { this.state.deleteIsOpen ? this.deleteMessageContent() : null }
 
-        <div id='project-info'>
-          <div id='project-name'>{ project ? project.name : '' }</div>
-          <div id='project-spacer'></div>
-        </div>
+        { projectInfo }
 
         <div className='title'>
           <button id={ this.state.id } onClick={ this.toggleComplete }>

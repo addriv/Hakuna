@@ -110,7 +110,7 @@ li.unfocused {
 .tasks-detail > #header > #assignee{
   position: absolute;
   left: 15px;
-  top: 15px;
+  top: 12px;
 }
 
 .tasks-detail > #header > #assignee > ul{

@@ -34165,9 +34165,22 @@ var TasksDetail = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var project = void 0;
+      var project = void 0,
+          projectInfo = void 0;
       var projectId = this.state.project_id;
-      if (projectId) project = this.props.state.entities.projects[projectId];
+      if (projectId) {
+        project = this.props.state.entities.projects[projectId];
+        projectInfo = _react2.default.createElement(
+          'div',
+          { id: 'project-info' },
+          _react2.default.createElement(
+            'div',
+            { id: 'project-name' },
+            project.name
+          ),
+          _react2.default.createElement('div', { id: 'project-spacer' })
+        );
+      }
       var taskId = this.props.state.ui.taskDisplay;
       var task = this.props.state.entities.tasks[taskId];
       var createdDate = shortDate(new Date(task.created_at));
@@ -34209,16 +34222,7 @@ var TasksDetail = function (_React$Component) {
           )
         ),
         this.state.deleteIsOpen ? this.deleteMessageContent() : null,
-        _react2.default.createElement(
-          'div',
-          { id: 'project-info' },
-          _react2.default.createElement(
-            'div',
-            { id: 'project-name' },
-            project ? project.name : ''
-          ),
-          _react2.default.createElement('div', { id: 'project-spacer' })
-        ),
+        projectInfo,
         _react2.default.createElement(
           'div',
           { className: 'title' },
