@@ -20,6 +20,20 @@ ActiveRecord::Base.connection.execute("TRUNCATE TABLE projects RESTART IDENTITY"
 ActiveRecord::Base.connection.execute("TRUNCATE TABLE user_projects RESTART IDENTITY")
 ActiveRecord::Base.connection.execute("TRUNCATE TABLE tasks RESTART IDENTITY")
 
+User.create!([
+  {name: "John Smith", email: "demo1@email.com", password: 'demo000'},
+  {name: "Cathy Foster", email: "demo2@email.com", password: 'demo111'},
+  {name: "Rebecca Lee", email: "demo3@email.com", password: 'demo222'},
+  {name: "Andrew Reynolds", email: "demo@email.com", password: 'demo333'},
+])
+
+Team.create!([
+  {name: "Engineering", lead_id: 1},
+  {name: "Marketing", lead_id: 1},
+  {name: "Recruiting", lead_id: 1},
+  {name: "Sales", lead_id: 1}
+])
+
 Project.create!([
   {name: "Test Auth", description: "", public: true, lead_id: 2, team_id: 3},
   {name: "Test Dashboard", description: "Proposal for project planning", public: true, lead_id: 2, team_id: 3},
@@ -91,18 +105,7 @@ Task.create!([
   {title: "Tasks Detail React component", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: 1, project_id: 15, parent_task_id: nil, team_id: 1},
   {title: "Remove minification warnings", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 20, parent_task_id: nil, team_id: 1}
 ])
-Team.create!([
-  {name: "Engineering", lead_id: 1},
-  {name: "Marketing", lead_id: 1},
-  {name: "Recruiting", lead_id: 1},
-  {name: "Sales", lead_id: 1}
-])
-User.create!([
-  {name: "John Smith", email: "demo1@email.com", password: 'demo000'},
-  {name: "Cathy Foster", email: "demo2@email.com", password: 'demo111'},
-  {name: "Rebecca Lee", email: "demo3@email.com", password: 'demo222'},
-  {name: "Andrew Reynolds", email: "demo@email.com", password: 'demo222'},
-])
+
 UserProject.create!([
   {member_id: 1, project_id: 1},
   {member_id: 1, project_id: 2},
@@ -121,15 +124,9 @@ UserProject.create!([
   {member_id: 1, project_id: 10},
   {member_id: 1, project_id: 11},
   {member_id: 1, project_id: 12},
-  {member_id: 1, project_id: 13},
-  {member_id: 1, project_id: 14},
-  {member_id: 1, project_id: 15},
-  {member_id: 1, project_id: 16},
-  {member_id: 1, project_id: 17},
-  {member_id: 1, project_id: 18},
-  {member_id: 1, project_id: 19},
-  {member_id: 1, project_id: 20}
+  {member_id: 1, project_id: 13}
 ])
+
 UserTeam.create!([
   {member_id: 1, team_id: 1},
   {member_id: 1, team_id: 2},

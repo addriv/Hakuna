@@ -31024,7 +31024,7 @@ var LoginForm = function (_React$Component) {
       var demoAcc = {
         user: {
           email: 'demo@email.com',
-          password: 'demo123'
+          password: 'demo333'
         } };
 
       this.props.login(demoAcc);

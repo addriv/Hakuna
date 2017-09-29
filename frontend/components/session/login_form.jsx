@@ -32,7 +32,7 @@ export default class LoginForm extends React.Component {
     const demoAcc = {
       user: {
         email: 'demo@email.com',
-        password: 'demo123'
+        password: 'demo333'
       }};
 
     this.props.login(demoAcc);
@@ -86,7 +86,7 @@ export default class LoginForm extends React.Component {
                   <button onClick={this.handleSubmit}>LOG IN</button>
                   <button onClick={this.handleDemoLogin}>DEMO</button>
                 </div>
-                
+
               </form>
             </div>
 
