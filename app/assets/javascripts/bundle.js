@@ -34157,8 +34157,12 @@ var TasksDetail = function (_React$Component) {
 
       var currentUser = this.props.state.session.currentUser;
       var teamMembers = this.props.state.entities.members;
-      var membersArr = Object.values(teamMembers);
-      membersArr.unshift(currentUser);
+      var membersArr = void 0;
+      if (teamMembers) {
+        membersArr = [currentUser].concat(Object.values(teamMembers));
+      } else {
+        membersArr = [currentUser];
+      }
 
       var membersli = membersArr.map(function (member, i) {
         return _react2.default.createElement(

@@ -159,8 +159,14 @@ export default class TasksDetail extends React.Component{
   assigneeDropdown(){
     const currentUser = this.props.state.session.currentUser;
     const teamMembers = this.props.state.entities.members;
-    const membersArr = Object.values(teamMembers);
-    membersArr.unshift(currentUser);
+    let membersArr;
+    if (teamMembers){
+      membersArr = [currentUser].concat(Object.values(teamMembers));
+    }
+    else {
+      membersArr = [currentUser];
+    }
+
 
     const membersli = membersArr.map((member, i) => (
       <button id={ member.id } key={i}
