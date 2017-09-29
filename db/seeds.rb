@@ -21,10 +21,10 @@ ActiveRecord::Base.connection.execute("TRUNCATE TABLE user_projects RESTART IDEN
 ActiveRecord::Base.connection.execute("TRUNCATE TABLE tasks RESTART IDENTITY")
 
 User.create!([
+  {name: "Andrew Reynolds", email: "demo@email.com", password: 'demo333'},
   {name: "John Smith", email: "demo1@email.com", password: 'demo000'},
   {name: "Cathy Foster", email: "demo2@email.com", password: 'demo111'},
-  {name: "Rebecca Lee", email: "demo3@email.com", password: 'demo222'},
-  {name: "Andrew Reynolds", email: "demo@email.com", password: 'demo333'},
+  {name: "Rebecca Lee", email: "demo3@email.com", password: 'demo222'}
 ])
 
 Team.create!([
