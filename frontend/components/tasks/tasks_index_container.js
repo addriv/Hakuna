@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 import TasksIndex from './tasks_index';
 import { tasksSelector } from '../../reducers/selectors';
-import { createTask, receiveTaskDisplay, updateTask } from '../../actions/task_actions';
+import { createTask, updateTask } from '../../actions/task_actions';
+import { receiveTaskDisplay } from '../../actions/ui_actions';
 
 const mapStateToProps = state => ({
   state,

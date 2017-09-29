@@ -5656,7 +5656,7 @@ var currentUserInitials = exports.currentUserInitials = function currentUserInit
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deleteTask = exports.updateTask = exports.createTask = exports.receiveTaskDisplay = exports.receiveTask = exports.RECEIVE_TASK_DISPLAY = exports.RECEIVE_TASK = undefined;
+exports.deleteTask = exports.updateTask = exports.createTask = exports.receiveTask = exports.RECEIVE_USER = exports.RECEIVE_TASK = undefined;
 
 var _task_util = __webpack_require__(340);
 
@@ -5664,21 +5664,16 @@ var taskUtil = _interopRequireWildcard(_task_util);
 
 var _navigation_actions = __webpack_require__(18);
 
+var _ui_actions = __webpack_require__(146);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var RECEIVE_TASK = exports.RECEIVE_TASK = 'RECEIVE_TASK';
-var RECEIVE_TASK_DISPLAY = exports.RECEIVE_TASK_DISPLAY = 'RECEIVE_TASK_DISPLAY';
+var RECEIVE_USER = exports.RECEIVE_USER = 'RECEIVE_USER';
 
 var receiveTask = exports.receiveTask = function receiveTask(task) {
   return {
     type: RECEIVE_TASK,
-    task: task
-  };
-};
-
-var receiveTaskDisplay = exports.receiveTaskDisplay = function receiveTaskDisplay(task) {
-  return {
-    type: RECEIVE_TASK_DISPLAY,
     task: task
   };
 };
@@ -5689,7 +5684,7 @@ var createTask = exports.createTask = function createTask(task) {
     ajax.then(function (response) {
       dispatch(receiveTask(response));
     }).then(function (response) {
-      dispatch(receiveTaskDisplay(ajax.responseJSON));
+      dispatch((0, _ui_actions.receiveTaskDisplay)(ajax.responseJSON));
     });
 
     return ajax;
@@ -13840,11 +13835,19 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var RECEIVE_PROJECT_DISPLAY = exports.RECEIVE_PROJECT_DISPLAY = 'RECEIVE_PROJECT_DISPLAY';
+var RECEIVE_TASK_DISPLAY = exports.RECEIVE_TASK_DISPLAY = 'RECEIVE_TASK_DISPLAY';
 
 var receiveProjectDisplay = exports.receiveProjectDisplay = function receiveProjectDisplay(projectId) {
   return {
     type: RECEIVE_PROJECT_DISPLAY,
     projectId: projectId
+  };
+};
+
+var receiveTaskDisplay = exports.receiveTaskDisplay = function receiveTaskDisplay(task) {
+  return {
+    type: RECEIVE_TASK_DISPLAY,
+    task: task
   };
 };
 
@@ -32521,25 +32524,6 @@ var Sidebar = function (_React$Component) {
   return Sidebar;
 }(_react2.default.Component);
 
-//Grab team members
-// if (this.props.teamMembers){
-//   members = this.props.teamMembers.map((member, i) => {
-//     const memberInitials = member.name
-//       .split(' ')
-//       .map(name => name[0]);
-//     return (
-//       <li
-//         key={i}
-//         id={member.id}><div className='member'>{memberInitials}</div></li>
-//     );
-//   });
-//
-//   membersList = <ul>{members}</ul>;
-//
-//   currentTeam = this.props.entities.team.name;
-// }
-
-
 exports.default = Sidebar;
 
 /***/ }),
@@ -33579,6 +33563,8 @@ var _selectors = __webpack_require__(53);
 
 var _task_actions = __webpack_require__(54);
 
+var _ui_actions = __webpack_require__(146);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -33594,7 +33580,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
       return dispatch((0, _task_actions.createTask)(task));
     },
     receiveTaskDisplay: function receiveTaskDisplay(task) {
-      return dispatch((0, _task_actions.receiveTaskDisplay)(task));
+      return dispatch((0, _ui_actions.receiveTaskDisplay)(task));
     },
     updateTask: function updateTask(task) {
       return dispatch((0, _task_actions.updateTask)(task));
@@ -36806,7 +36792,7 @@ var uiReducer = exports.uiReducer = function uiReducer() {
       return (0, _merge2.default)({}, state, { projectDisplay: action.projectId });
     case _ui_actions.RECEIVE_USER_DISPLAY:
       return (0, _merge2.default)({}, state, { userDisplay: action.userDisplayId });
-    case _task_actions.RECEIVE_TASK_DISPLAY:
+    case _ui_actions.RECEIVE_TASK_DISPLAY:
       var taskId = parseInt(Object.keys(action.task.tasks)[0]);
       return (0, _merge2.default)({}, state, { taskDisplay: taskId });
     case _navigation_actions.RECEIVE_TEAM:

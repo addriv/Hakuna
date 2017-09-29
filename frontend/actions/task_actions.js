@@ -1,16 +1,12 @@
 import * as taskUtil from '../util/task_util';
 import { fetchTeam } from './navigation_actions';
+import { receiveTaskDisplay } from './ui_actions';
 
 export const RECEIVE_TASK = 'RECEIVE_TASK';
-export const RECEIVE_TASK_DISPLAY = 'RECEIVE_TASK_DISPLAY';
+export const RECEIVE_USER = 'RECEIVE_USER';
 
 export const receiveTask = task => ({
   type: RECEIVE_TASK,
-  task
-});
-
-export const receiveTaskDisplay = task => ({
-  type: RECEIVE_TASK_DISPLAY,
   task
 });
 

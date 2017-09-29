@@ -2,7 +2,8 @@ import { RECEIVE_PROJECT_DISPLAY,
   RECEIVE_USER_DISPLAY } from '../actions/ui_actions';
 import { RECEIVE_TEAM } from '../actions/navigation_actions';
 import { RECEIVE_PROJECT } from '../actions/project_actions';
-import { RECEIVE_TASK, RECEIVE_TASK_DISPLAY } from '../actions/task_actions';
+import { RECEIVE_TASK } from '../actions/task_actions';
+import { RECEIVE_TASK_DISPLAY } from '../actions/ui_actions';
 import merge from 'lodash/merge';
 
 const _defaultState = {
