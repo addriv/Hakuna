@@ -169,3 +169,7 @@ div.member{
   padding-bottom: 4px;
   margin: 0 10px;
 }
+
+.sidebar-projects > ul{
+  overflow-y: scroll;
+}

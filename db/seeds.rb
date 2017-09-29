@@ -20,77 +20,124 @@ ActiveRecord::Base.connection.execute("TRUNCATE TABLE projects RESTART IDENTITY"
 ActiveRecord::Base.connection.execute("TRUNCATE TABLE user_projects RESTART IDENTITY")
 ActiveRecord::Base.connection.execute("TRUNCATE TABLE tasks RESTART IDENTITY")
 
-#Seed tables with test data
-#users
-user1 = User.create!(name: "Andrew Reynolds", email: "demo@email.com", password: "demo123")
-user2 = User.create!(name: "John Smith", email: "demo1@email.com", password: "demo123")
-user3 = User.create!(name: "Cathy Foster", email: "demo2@email.com", password: "demo123")
-user4 = User.create!(name: "Rebecca Lee", email: "demo3@email.com", password: "demo123")
-
-#teams
-team1 = Team.create!(name: "Fullstack", lead_id: user1.id)
-team2 = Team.create!(name: "Flex", lead_id: user1.id)
-team3 = Team.create!(name: "JavaScript", lead_id: user1.id)
-team4 = Team.create!(name: "Portfolio", lead_id: user1.id)
-
-#user_teams
-user_team1 = UserTeam.create(member_id: user1.id, team_id: team1.id)
-user_team2 = UserTeam.create(member_id: user1.id, team_id: team2.id)
-user_team3 = UserTeam.create(member_id: user1.id, team_id: team3.id)
-user_team4 = UserTeam.create(member_id: user1.id, team_id: team4.id)
-user_team5 = UserTeam.create(member_id: user2.id, team_id: team1.id)
-user_team6 = UserTeam.create(member_id: user3.id, team_id: team1.id)
-user_team7 = UserTeam.create(member_id: user4.id, team_id: team1.id)
-user_team8 = UserTeam.create(member_id: user3.id, team_id: team2.id)
-user_team9 = UserTeam.create(member_id: user4.id, team_id: team2.id)
-
-#projects
-project1 = Project.create!(name: "Proposal", description: "Proposal for project planning", lead_id: user1.id, team_id: team1.id )
-project2 = Project.create!(name: "User Auth", description: "Do auth", lead_id: user1.id, team_id: team1.id )
-project3 = Project.create!(name: "Dashboard", description: "Setup dashboard and styling", lead_id: user1.id, team_id: team1.id )
-project4 = Project.create!(name: "Team", description: "Finish team add features", lead_id: user1.id, team_id: team2.id )
-project5 = Project.create!(name: "Projects", description: "Proposal for project planning", lead_id: user1.id, team_id: team2.id )
-project6 = Project.create!(name: "Tasks", description: "Proposal for project planning", lead_id: user1.id, team_id: team2.id )
-project7 = Project.create!(name: "Test Auth", description: "", lead_id: user2.id, team_id: team3.id )
-project8 = Project.create!(name: "Test Dashboard", description: "Proposal for project planning", lead_id: user2.id, team_id: team3.id )
-project9 = Project.create!(name: "Test Team", description: "Proposal for project planning", lead_id: user2.id, team_id: team3.id )
-
-
-#user_projects
-user_project1 = UserProject.create(member_id: user1.id, project_id: project1.id)
-user_project2 = UserProject.create(member_id: user1.id, project_id: project2.id)
-user_project3 = UserProject.create(member_id: user1.id, project_id: project3.id)
-user_project4 = UserProject.create(member_id: user1.id, project_id: project4.id)
-user_project5 = UserProject.create(member_id: user1.id, project_id: project5.id)
-user_project6 = UserProject.create(member_id: user1.id, project_id: project6.id)
-user_project7 = UserProject.create(member_id: user2.id, project_id: project1.id)
-user_project8 = UserProject.create(member_id: user2.id, project_id: project3.id)
-user_project9 = UserProject.create(member_id: user2.id, project_id: project5.id)
-user_project10 = UserProject.create(member_id: user3.id, project_id: project6.id)
-user_project11 = UserProject.create(member_id: user3.id, project_id: project1.id)
-user_project11 = UserProject.create(member_id: user1.id, project_id: project7.id)
-user_project11 = UserProject.create(member_id: user1.id, project_id: project8.id)
-user_project11 = UserProject.create(member_id: user1.id, project_id: project9.id)
-
-#tasks
-task1 = Task.create!(title: "Team 1 Project 1 Task 1", creator_id: user1.id, project_id: project1.id, team_id: project1.team_id)
-task2 = Task.create!(title: "Team 1 Project 1 Task 2", creator_id: user1.id, project_id: project1.id, team_id: project1.team_id)
-task3 = Task.create!(title: "Team 1 Project 1 Task 3", creator_id: user1.id, project_id: project1.id, team_id: project1.team_id)
-task4 = Task.create!(title: "Team 1 Project 1 Task 4", creator_id: user1.id, project_id: project1.id, team_id: project1.team_id)
-task5 = Task.create!(title: "Team 1 Project 1 Task 5", creator_id: user1.id, project_id: project1.id, team_id: project1.team_id)
-task6 = Task.create!(title: "Team 1 Project 2 Task 1", creator_id: user1.id, project_id: project2.id, team_id: project2.team_id)
-task7 = Task.create!(title: "Team 1 Project 2 Task 2", creator_id: user1.id, project_id: project2.id, team_id: project2.team_id)
-task8 = Task.create!(title: "Team 1 Project 2 Task 3", creator_id: user1.id, project_id: project2.id, team_id: project2.team_id)
-task9 = Task.create!(title: "Team 1 Project 3 Task 1", creator_id: user1.id, project_id: project3.id, team_id: project3.team_id)
-task10 = Task.create!(title: "Team 2 Project 4 Task 1", creator_id: user2.id, project_id: project4.id, team_id: project4.team_id)
-task11 = Task.create!(title: "Team 2 Project 4 Task 2", creator_id: user2.id, project_id: project4.id, team_id: project4.team_id)
-task12 = Task.create!(title: "Team 2 Project 4 Task 3", creator_id: user2.id, project_id: project4.id, team_id: project4.team_id)
-task13 = Task.create!(title: "Team 2 Project 4 Task 4", creator_id: user2.id, project_id: project4.id, team_id: project4.team_id)
-task14 = Task.create!(title: "Team 2 Project 4 Task 5", creator_id: user2.id, project_id: project4.id, team_id: project4.team_id)
-task15 = Task.create!(title: "Team 2 Project 5 Task 1", creator_id: user2.id, project_id: project5.id, team_id: project5.team_id)
-task16 = Task.create!(title: "Team 2 Project 5 Task 2", creator_id: user2.id, project_id: project5.id, team_id: project5.team_id)
-task17 = Task.create!(title: "Team 2 Project 5 Task 3", creator_id: user2.id, project_id: project5.id, team_id: project5.team_id)
-task18 = Task.create!(title: "Team 2 Project 6 Task 1", creator_id: user2.id, project_id: project6.id, team_id: project6.team_id)
-task18 = Task.create!(title: "Team 3 Project 7 Task 1", creator_id: user1.id, project_id: project7.id, team_id: project7.team_id)
-task18 = Task.create!(title: "Team 3 Project 8 Task 1", creator_id: user1.id, project_id: project8.id, team_id: project8.team_id)
-task18 = Task.create!(title: "Team 3 Project 9 Task 1", creator_id: user1.id, project_id: project9.id, team_id: project9.team_id)
+Project.create!([
+  {name: "Test Auth", description: "", public: true, lead_id: 2, team_id: 3},
+  {name: "Test Dashboard", description: "Proposal for project planning", public: true, lead_id: 2, team_id: 3},
+  {name: "Test Team", description: "Proposal for project planning", public: true, lead_id: 2, team_id: 3},
+  {name: "Teams Feature", description: "Implementing Teams for Hakuna App", public: true, lead_id: 1, team_id: 1},
+  {name: "Projects Feature", description: "Implementing Projects feature for Hakuna App", public: true, lead_id: 1, team_id: 1},
+  {name: "Tasks Feature", description: "Implement Tasks feature for Hakuna App", public: true, lead_id: 1, team_id: 1},
+  {name: "Dashboard Feature", description: "Implement Dashboard feature for Hakuna App", public: true, lead_id: 1, team_id: 1},
+  {name: "User Authentication", description: "Implement User Authentication", public: true, lead_id: 1, team_id: 1},
+  {name: "Additional Features", description: "Implement new features after finishing MVP", public: true, lead_id: 1, team_id: 1},
+  {name: "Production Readiness", description: "Checklist to get app in production state", public: true, lead_id: 1, team_id: 1},
+  {name: "Project 1", description: "", public: true, lead_id: 1, team_id: 2},
+  {name: "Project 2", description: "", public: true, lead_id: 1, team_id: 2},
+  {name: "Project 3", description: "", public: true, lead_id: 1, team_id: 2}
+])
+Task.create!([
+  {title: "Team 2 Project 4 Task 1", description: nil, public: true, completed: false, due_date: nil, creator_id: 2, assignee_id: nil, project_id: 4, parent_task_id: nil, team_id: 2},
+  {title: "Team 2 Project 4 Task 2", description: nil, public: true, completed: false, due_date: nil, creator_id: 2, assignee_id: nil, project_id: 4, parent_task_id: nil, team_id: 2},
+  {title: "Team 2 Project 4 Task 3", description: nil, public: true, completed: false, due_date: nil, creator_id: 2, assignee_id: nil, project_id: 4, parent_task_id: nil, team_id: 2},
+  {title: "Team 2 Project 4 Task 4", description: nil, public: true, completed: false, due_date: nil, creator_id: 2, assignee_id: nil, project_id: 4, parent_task_id: nil, team_id: 2},
+  {title: "Team 2 Project 4 Task 5", description: nil, public: true, completed: false, due_date: nil, creator_id: 2, assignee_id: nil, project_id: 4, parent_task_id: nil, team_id: 2},
+  {title: "Team 2 Project 5 Task 1", description: nil, public: true, completed: false, due_date: nil, creator_id: 2, assignee_id: nil, project_id: 5, parent_task_id: nil, team_id: 2},
+  {title: "Team 2 Project 5 Task 2", description: nil, public: true, completed: false, due_date: nil, creator_id: 2, assignee_id: nil, project_id: 5, parent_task_id: nil, team_id: 2},
+  {title: "Team 2 Project 5 Task 3", description: nil, public: true, completed: false, due_date: nil, creator_id: 2, assignee_id: nil, project_id: 5, parent_task_id: nil, team_id: 2},
+  {title: "Team 2 Project 6 Task 1", description: nil, public: true, completed: false, due_date: nil, creator_id: 2, assignee_id: nil, project_id: 6, parent_task_id: nil, team_id: 2},
+  {title: "Team 3 Project 7 Task 1", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 7, parent_task_id: nil, team_id: 3},
+  {title: "Team 3 Project 8 Task 1", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 8, parent_task_id: nil, team_id: 3},
+  {title: "Team 3 Project 9 Task 1", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 9, parent_task_id: nil, team_id: 3},
+  {title: "Tasks backend", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 15, parent_task_id: nil, team_id: 1},
+  {title: "Push to Heroku", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 20, parent_task_id: nil, team_id: 1},
+  {title: "New Team creation", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: 1, project_id: 13, parent_task_id: nil, team_id: 1},
+  {title: "Demo login", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: 1, project_id: 18, parent_task_id: nil, team_id: 1},
+  {title: "Update Team functionality", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: 2, project_id: 13, parent_task_id: nil, team_id: 1},
+  {title: "React routing", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: 4, project_id: 18, parent_task_id: nil, team_id: 1},
+  {title: "Projects Redux Loop", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: 1, project_id: 14, parent_task_id: nil, team_id: 1},
+  {title: "Projects backend", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: 1, project_id: 14, parent_task_id: nil, team_id: 1},
+  {title: "Projects smooth navigation", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: 4, project_id: 14, parent_task_id: nil, team_id: 1},
+  {title: "Sidebar component with Projects display", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 16, parent_task_id: nil, team_id: 1},
+  {title: "Filter by team member assigned tasks", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 16, parent_task_id: nil, team_id: 1},
+  {title: "Delete Task functionality", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: 3, project_id: 15, parent_task_id: nil, team_id: 1},
+  {title: "Update Task onBlur", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: 2, project_id: 15, parent_task_id: nil, team_id: 1},
+  {title: "New Task creation", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: 1, project_id: 15, parent_task_id: nil, team_id: 1},
+  {title: "Tasks Redux loop", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: 4, project_id: 15, parent_task_id: nil, team_id: 1},
+  {title: "Styling", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 18, parent_task_id: nil, team_id: 1},
+  {title: "Single page Dashboard", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 16, parent_task_id: nil, team_id: 1},
+  {title: "Comments", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 19, parent_task_id: nil, team_id: 1},
+  {title: "Signup component", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: 1, project_id: 18, parent_task_id: nil, team_id: 1},
+  {title: "Datepicker to set due date", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 15, parent_task_id: nil, team_id: 1},
+  {title: "Chat System", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 19, parent_task_id: nil, team_id: 1},
+  {title: "Calendar", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 19, parent_task_id: nil, team_id: 1},
+  {title: "Display Team members and icons", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 16, parent_task_id: nil, team_id: 1},
+  {title: "Login component", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 18, parent_task_id: nil, team_id: 1},
+  {title: "My Tasks button", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 16, parent_task_id: nil, team_id: 1},
+  {title: "Delete Team functionality", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: 3, project_id: 13, parent_task_id: nil, team_id: 1},
+  {title: "React component for menu dropdown", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: 4, project_id: 13, parent_task_id: nil, team_id: 1},
+  {title: "Subtasks", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 19, parent_task_id: nil, team_id: 1},
+  {title: "Remove loggers and debuggers", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 20, parent_task_id: nil, team_id: 1},
+  {title: "Exclude redux-loggger", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 20, parent_task_id: nil, team_id: 1},
+  {title: "Teams React modal components", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: 1, project_id: 13, parent_task_id: nil, team_id: 1},
+  {title: "Teams Redux loop", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: 2, project_id: 13, parent_task_id: nil, team_id: 1},
+  {title: "Teams styling", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: 3, project_id: 13, parent_task_id: nil, team_id: 1},
+  {title: "Teams backend ", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: 4, project_id: 13, parent_task_id: nil, team_id: 1},
+  {title: "Update Project functionality", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: 4, project_id: 14, parent_task_id: nil, team_id: 1},
+  {title: "New Project creation", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: 4, project_id: 14, parent_task_id: nil, team_id: 1},
+  {title: "Projects styling", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: 3, project_id: 14, parent_task_id: nil, team_id: 1},
+  {title: "Delete Project functionality", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: 3, project_id: 14, parent_task_id: nil, team_id: 1},
+  {title: "Projects React modal components ", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: 1, project_id: 14, parent_task_id: nil, team_id: 1},
+  {title: "Tasks Index React component", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: 1, project_id: 15, parent_task_id: nil, team_id: 1},
+  {title: "Tasks Detail React component", description: nil, public: true, completed: false, due_date: nil, creator_id: 1, assignee_id: 1, project_id: 15, parent_task_id: nil, team_id: 1},
+  {title: "Remove minification warnings", description: nil, public: true, completed: true, due_date: nil, creator_id: 1, assignee_id: nil, project_id: 20, parent_task_id: nil, team_id: 1}
+])
+Team.create!([
+  {name: "Engineering", lead_id: 1},
+  {name: "Marketing", lead_id: 1},
+  {name: "Recruiting", lead_id: 1},
+  {name: "Sales", lead_id: 1}
+])
+User.create!([
+  {name: "John Smith", email: "demo1@email.com", password: 'demo000'},
+  {name: "Cathy Foster", email: "demo2@email.com", password: 'demo111'},
+  {name: "Rebecca Lee", email: "demo3@email.com", password: 'demo222'},
+  {name: "Andrew Reynolds", email: "demo@email.com", password: 'demo222'},
+])
+UserProject.create!([
+  {member_id: 1, project_id: 1},
+  {member_id: 1, project_id: 2},
+  {member_id: 1, project_id: 3},
+  {member_id: 1, project_id: 4},
+  {member_id: 1, project_id: 5},
+  {member_id: 1, project_id: 6},
+  {member_id: 2, project_id: 1},
+  {member_id: 2, project_id: 3},
+  {member_id: 2, project_id: 5},
+  {member_id: 3, project_id: 6},
+  {member_id: 3, project_id: 1},
+  {member_id: 1, project_id: 7},
+  {member_id: 1, project_id: 8},
+  {member_id: 1, project_id: 9},
+  {member_id: 1, project_id: 10},
+  {member_id: 1, project_id: 11},
+  {member_id: 1, project_id: 12},
+  {member_id: 1, project_id: 13},
+  {member_id: 1, project_id: 14},
+  {member_id: 1, project_id: 15},
+  {member_id: 1, project_id: 16},
+  {member_id: 1, project_id: 17},
+  {member_id: 1, project_id: 18},
+  {member_id: 1, project_id: 19},
+  {member_id: 1, project_id: 20}
+])
+UserTeam.create!([
+  {member_id: 1, team_id: 1},
+  {member_id: 1, team_id: 2},
+  {member_id: 1, team_id: 3},
+  {member_id: 1, team_id: 4},
+  {member_id: 2, team_id: 1},
+  {member_id: 3, team_id: 1},
+  {member_id: 4, team_id: 1},
+  {member_id: 3, team_id: 2},
+  {member_id: 4, team_id: 2}
+])

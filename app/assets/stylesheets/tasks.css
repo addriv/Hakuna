@@ -44,7 +44,9 @@
 }
 
 .tasks-index > ul{
-  height: calc(100% - 50px)
+  height: 100%;
+  max-height: 750px;
+  overflow-y: auto;
 }
 
 .tasks-index > ul > li {
@@ -361,9 +363,7 @@ border: 1px solid #14aaf5;
   color: gray;
 }
 
-.tasks-index > ul{
-  overflow-y: scroll;
-}
+
 
 /*.checkmark-not-done:hover{
   background-color: #b2ebe1;
