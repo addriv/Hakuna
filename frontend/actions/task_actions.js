@@ -3,7 +3,6 @@ import { fetchTeam } from './navigation_actions';
 import { receiveTaskDisplay } from './ui_actions';
 
 export const RECEIVE_TASK = 'RECEIVE_TASK';
-export const RECEIVE_USER = 'RECEIVE_USER';
 
 export const receiveTask = task => ({
   type: RECEIVE_TASK,

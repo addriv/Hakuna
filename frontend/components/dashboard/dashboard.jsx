@@ -16,6 +16,7 @@ export default class Dashboard extends React.Component{
     this.toggleSettingsMenu = this.toggleSettingsMenu.bind(this);
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.handleMyTasks = this.handleMyTasks.bind(this);
   }
 
   componentWillUnmount() {
@@ -43,7 +44,7 @@ export default class Dashboard extends React.Component{
     if (oldTeam && newTeam && oldTeam.id !== newTeam.id){
       this.setState({ settingsMenuIsOpen: false});
     }
-    
+
     if (newProps.teams && this.props.teams){
       const newTeams = Object.values(newProps.teams);
       const oldTeams = Object.values(this.props.teams);
@@ -74,6 +75,12 @@ export default class Dashboard extends React.Component{
     }
   }
 
+  handleMyTasks(event){
+    event.preventDefault();
+    const currentUserId = this.props.currentUser.id;
+    this.props.receiveUserDisplay(currentUserId);
+  }
+
   render(){
     const entitiesExist = Object.keys(this.props.entities).length > 0;
     const teams = this.props.teams;
@@ -91,7 +98,16 @@ export default class Dashboard extends React.Component{
     const projectDisplay = this.props.uiDisplay.projectDisplay;
     const userDisplay = this.props.uiDisplay.userDisplay;
 
-    if (projectDisplay === 0) {
+    if (userDisplay > 0){
+      if (userDisplay === this.props.currentUser.id){
+        listDisplay = `All My Tasks in ${teamDisplay}`;
+      }
+      else {
+        const member = this.props.entities.members[userDisplay];
+        listDisplay = `${member.name}'s Tasks in ${teamDisplay}`;
+      }
+    }
+    else if (projectDisplay === 0) {
       listDisplay = `All Tasks in ${teamDisplay}`;
     }
     else if (projectDisplay !== 0 && projectDisplay !== -1 ) {
@@ -112,6 +128,7 @@ export default class Dashboard extends React.Component{
 
               <nav className='top-bar'>
                 <button
+                  onClick={ this.handleMyTasks }
                   className='view-user-tasks'
                   >My Tasks</button>
 

@@ -25,6 +25,8 @@ export default class TasksIndex extends React.Component{
     const newTeam = newProps.state.entities.team;
     const oldProject = this.props.state.ui.projectDisplay;
     const newProject = newProps.state.ui.projectDisplay;
+    const oldUser = this.props.state.ui.userDisplay;
+    const newUser = newProps.state.ui.userDisplay;
 
     if (tasks){
       this.setState(tasks);
@@ -34,7 +36,7 @@ export default class TasksIndex extends React.Component{
     }
 
     if (oldTeam && newTeam && oldTeam.id !== newTeam.id
-        || oldProject !== newProject){
+        || oldProject !== newProject || oldUser !== newUser){
       this.setState({ taskDetailIsOpen: false});
     }
   }
@@ -131,10 +133,14 @@ export default class TasksIndex extends React.Component{
   tasksIndexContent(){
     const tasks = this.props.tasks;
     const projectDisplay = this.props.state.ui.projectDisplay;
+    const userDisplay = this.props.state.ui.userDisplay;
 
     if (tasks){
       const taskList = tasks.map((task, i) => {
         if (task.parent_task_id) {
+          return;
+        }
+        else if (userDisplay > 0 && task.assignee_id !== userDisplay){
           return;
         }
         else if (projectDisplay > 0 && task.project_id !== projectDisplay) {

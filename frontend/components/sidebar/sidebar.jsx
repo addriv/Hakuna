@@ -6,12 +6,18 @@ export default class Sidebar extends React.Component {
   constructor(props){
     super(props);
     this.handleProject = this.handleProject.bind(this);
+    this.handleMemberClick = this.handleMemberClick.bind(this);
   }
 
   handleProject(event){
     event.preventDefault();
     const projectId = parseInt(event.target.id);
     this.props.displayProject(projectId);
+  }
+
+  handleMemberClick(event){
+    event.preventDefault();
+    this.props.displayUser(parseInt(event.target.id));
   }
 
   render(){
@@ -22,10 +28,12 @@ export default class Sidebar extends React.Component {
     }
 
     const memberButton= (initials, i, memberId) => (
-      <button className={`member-icon-user-${i}`} data-member={memberId} key={i} id={i} >{initials}</button>
+      <button className={`member-icon-user-${i}`}
+        onClick={ this.handleMemberClick } data-member={memberId}
+        key={i} id={memberId} >{initials}</button>
     );
 
-    let membersGrid = [memberButton(this.props.currentUserInitials, 0)];
+    let membersGrid = [memberButton(this.props.currentUserInitials, 0, this.props.currentUser.id)];
     for (let j = 1; j < 12; j++){
       if (this.props.teamMembers && this.props.teamMembers[j-1]){
         let memberInitials = this.props.teamMembers[j-1].name
@@ -38,7 +46,9 @@ export default class Sidebar extends React.Component {
         membersGrid.push(memberButton(memberInitials, j, memberId));
       }
       else {
-        membersGrid.push(<li className='member-icon-blank' key={j} id={j}></li>);
+        membersGrid.push(
+          <li className='member-icon-blank' key={j} id={j}></li>
+        );
       }
     }
     membersList = <ul>{membersGrid}</ul>;

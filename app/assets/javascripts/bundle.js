@@ -5656,7 +5656,7 @@ var currentUserInitials = exports.currentUserInitials = function currentUserInit
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.deleteTask = exports.updateTask = exports.createTask = exports.receiveTask = exports.RECEIVE_USER = exports.RECEIVE_TASK = undefined;
+exports.deleteTask = exports.updateTask = exports.createTask = exports.receiveTask = exports.RECEIVE_TASK = undefined;
 
 var _task_util = __webpack_require__(340);
 
@@ -5669,7 +5669,6 @@ var _ui_actions = __webpack_require__(146);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var RECEIVE_TASK = exports.RECEIVE_TASK = 'RECEIVE_TASK';
-var RECEIVE_USER = exports.RECEIVE_USER = 'RECEIVE_USER';
 
 var receiveTask = exports.receiveTask = function receiveTask(task) {
   return {
@@ -13836,6 +13835,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var RECEIVE_PROJECT_DISPLAY = exports.RECEIVE_PROJECT_DISPLAY = 'RECEIVE_PROJECT_DISPLAY';
 var RECEIVE_TASK_DISPLAY = exports.RECEIVE_TASK_DISPLAY = 'RECEIVE_TASK_DISPLAY';
+var RECEIVE_USER_DISPLAY = exports.RECEIVE_USER_DISPLAY = 'RECEIVE_USER_DISPLAY';
 
 var receiveProjectDisplay = exports.receiveProjectDisplay = function receiveProjectDisplay(projectId) {
   return {
@@ -13848,6 +13848,13 @@ var receiveTaskDisplay = exports.receiveTaskDisplay = function receiveTaskDispla
   return {
     type: RECEIVE_TASK_DISPLAY,
     task: task
+  };
+};
+
+var receiveUserDisplay = exports.receiveUserDisplay = function receiveUserDisplay(userId) {
+  return {
+    type: RECEIVE_USER_DISPLAY,
+    userId: userId
   };
 };
 
@@ -31156,6 +31163,8 @@ var _navigation_actions = __webpack_require__(18);
 
 var _selectors = __webpack_require__(53);
 
+var _ui_actions = __webpack_require__(146);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -31164,7 +31173,8 @@ var mapStateToProps = function mapStateToProps(state) {
     entities: state.entities,
     tasks: (0, _selectors.tasksSelector)(state),
     uiDisplay: state.ui,
-    userInitials: (0, _selectors.currentUserInitials)(state)
+    userInitials: (0, _selectors.currentUserInitials)(state),
+    currentUser: state.session.currentUser
   };
 };
 
@@ -31178,6 +31188,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     fetchTeam: function fetchTeam(team) {
       return dispatch((0, _navigation_actions.fetchTeam)(team));
+    },
+    receiveUserDisplay: function receiveUserDisplay(userId) {
+      return dispatch((0, _ui_actions.receiveUserDisplay)(userId));
     }
   };
 };
@@ -31244,6 +31257,7 @@ var Dashboard = function (_React$Component) {
     _this.toggleSettingsMenu = _this.toggleSettingsMenu.bind(_this);
     _this.setWrapperRef = _this.setWrapperRef.bind(_this);
     _this.handleClickOutside = _this.handleClickOutside.bind(_this);
+    _this.handleMyTasks = _this.handleMyTasks.bind(_this);
     return _this;
   }
 
@@ -31309,6 +31323,13 @@ var Dashboard = function (_React$Component) {
       }
     }
   }, {
+    key: 'handleMyTasks',
+    value: function handleMyTasks(event) {
+      event.preventDefault();
+      var currentUserId = this.props.currentUser.id;
+      this.props.receiveUserDisplay(currentUserId);
+    }
+  }, {
     key: 'render',
     value: function render() {
       var entitiesExist = Object.keys(this.props.entities).length > 0;
@@ -31331,7 +31352,14 @@ var Dashboard = function (_React$Component) {
       var projectDisplay = this.props.uiDisplay.projectDisplay;
       var userDisplay = this.props.uiDisplay.userDisplay;
 
-      if (projectDisplay === 0) {
+      if (userDisplay > 0) {
+        if (userDisplay === this.props.currentUser.id) {
+          listDisplay = 'All My Tasks in ' + teamDisplay;
+        } else {
+          var member = this.props.entities.members[userDisplay];
+          listDisplay = member.name + '\'s Tasks in ' + teamDisplay;
+        }
+      } else if (projectDisplay === 0) {
         listDisplay = 'All Tasks in ' + teamDisplay;
       } else if (projectDisplay !== 0 && projectDisplay !== -1) {
         var project = this.props.entities.projects[projectDisplay];
@@ -31361,6 +31389,7 @@ var Dashboard = function (_React$Component) {
                 _react2.default.createElement(
                   'button',
                   {
+                    onClick: this.handleMyTasks,
                     className: 'view-user-tasks'
                   },
                   'My Tasks'
@@ -32355,7 +32384,8 @@ var mapStateToProps = function mapStateToProps(state) {
     entities: state.entities,
     teamMembers: (0, _selectors.teamMembersSelector)(state),
     projects: (0, _selectors.projectsSelector)(state),
-    currentUserInitials: (0, _selectors.currentUserInitials)(state)
+    currentUserInitials: (0, _selectors.currentUserInitials)(state),
+    currentUser: state.session.currentUser
   };
 };
 
@@ -32363,6 +32393,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
     displayProject: function displayProject(projectId) {
       return dispatch((0, _ui_actions.receiveProjectDisplay)(projectId));
+    },
+    displayUser: function displayUser(userId) {
+      return dispatch((0, _ui_actions.receiveUserDisplay)(userId));
     }
   };
 };
@@ -32411,6 +32444,7 @@ var Sidebar = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Sidebar.__proto__ || Object.getPrototypeOf(Sidebar)).call(this, props));
 
     _this.handleProject = _this.handleProject.bind(_this);
+    _this.handleMemberClick = _this.handleMemberClick.bind(_this);
     return _this;
   }
 
@@ -32420,6 +32454,12 @@ var Sidebar = function (_React$Component) {
       event.preventDefault();
       var projectId = parseInt(event.target.id);
       this.props.displayProject(projectId);
+    }
+  }, {
+    key: 'handleMemberClick',
+    value: function handleMemberClick(event) {
+      event.preventDefault();
+      this.props.displayUser(parseInt(event.target.id));
     }
   }, {
     key: 'render',
@@ -32439,12 +32479,14 @@ var Sidebar = function (_React$Component) {
       var memberButton = function memberButton(initials, i, memberId) {
         return _react2.default.createElement(
           'button',
-          { className: 'member-icon-user-' + i, 'data-member': memberId, key: i, id: i },
+          { className: 'member-icon-user-' + i,
+            onClick: _this2.handleMemberClick, 'data-member': memberId,
+            key: i, id: memberId },
           initials
         );
       };
 
-      var membersGrid = [memberButton(this.props.currentUserInitials, 0)];
+      var membersGrid = [memberButton(this.props.currentUserInitials, 0, this.props.currentUser.id)];
       for (var j = 1; j < 12; j++) {
         if (this.props.teamMembers && this.props.teamMembers[j - 1]) {
           var memberInitials = this.props.teamMembers[j - 1].name.split(' ').map(function (name) {
@@ -33655,6 +33697,8 @@ var TasksIndex = function (_React$Component) {
       var newTeam = newProps.state.entities.team;
       var oldProject = this.props.state.ui.projectDisplay;
       var newProject = newProps.state.ui.projectDisplay;
+      var oldUser = this.props.state.ui.userDisplay;
+      var newUser = newProps.state.ui.userDisplay;
 
       if (tasks) {
         this.setState(tasks);
@@ -33662,7 +33706,7 @@ var TasksIndex = function (_React$Component) {
         this.setState(initialState);
       }
 
-      if (oldTeam && newTeam && oldTeam.id !== newTeam.id || oldProject !== newProject) {
+      if (oldTeam && newTeam && oldTeam.id !== newTeam.id || oldProject !== newProject || oldUser !== newUser) {
         this.setState({ taskDetailIsOpen: false });
       }
     }
@@ -33771,10 +33815,13 @@ var TasksIndex = function (_React$Component) {
 
       var tasks = this.props.tasks;
       var projectDisplay = this.props.state.ui.projectDisplay;
+      var userDisplay = this.props.state.ui.userDisplay;
 
       if (tasks) {
         var taskList = tasks.map(function (task, i) {
           if (task.parent_task_id) {
+            return;
+          } else if (userDisplay > 0 && task.assignee_id !== userDisplay) {
             return;
           } else if (projectDisplay > 0 && task.project_id !== projectDisplay) {
             return;
@@ -36624,6 +36671,8 @@ var _navigation_actions = __webpack_require__(18);
 
 var _account_actions = __webpack_require__(87);
 
+var _session_actions = __webpack_require__(29);
+
 var _merge = __webpack_require__(37);
 
 var _merge2 = _interopRequireDefault(_merge);
@@ -36632,12 +36681,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+var _defaultState = null;
+
 var teamsReducer = exports.teamsReducer = function teamsReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
   var action = arguments[1];
 
   Object.freeze(state);
   switch (action.type) {
+    case _session_actions.RECEIVE_CURRENT_USER:
+      return _defaultState;
     case _navigation_actions.RECEIVE_TEAMS:
       return action.teams;
     case _navigation_actions.RECEIVE_TEAM:
@@ -36724,11 +36777,15 @@ var _project_actions = __webpack_require__(52);
 
 var _task_actions = __webpack_require__(54);
 
+var _session_actions = __webpack_require__(29);
+
 var _merge = __webpack_require__(37);
 
 var _merge2 = _interopRequireDefault(_merge);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _defaultState = {};
 
 var entitiesReducer = exports.entitiesReducer = function entitiesReducer() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -36736,6 +36793,8 @@ var entitiesReducer = exports.entitiesReducer = function entitiesReducer() {
 
   Object.freeze(state);
   switch (action.type) {
+    case _session_actions.RECEIVE_CURRENT_USER:
+      return _defaultState;
     case _navigation_actions.RECEIVE_TEAM:
       return action.teamData;
     case _project_actions.RECEIVE_PROJECT:
@@ -36765,8 +36824,6 @@ var _navigation_actions = __webpack_require__(18);
 
 var _project_actions = __webpack_require__(52);
 
-var _task_actions = __webpack_require__(54);
-
 var _merge = __webpack_require__(37);
 
 var _merge2 = _interopRequireDefault(_merge);
@@ -36775,7 +36832,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var _defaultState = {
   projectDisplay: 0,
-  userDisplay: -1,
+  userDisplay: 0,
   taskDisplay: 0
 };
 
@@ -36787,11 +36844,26 @@ var uiReducer = exports.uiReducer = function uiReducer() {
   switch (action.type) {
     case _project_actions.RECEIVE_PROJECT:
       var projectId = parseInt(Object.keys(action.project.projects)[0]);
-      return (0, _merge2.default)({}, state, { projectDisplay: projectId });
+      return {
+        projectDisplay: projectId,
+        userDisplay: -1,
+        taskDisplay: 0
+      };
+    // return merge({}, state, { projectDisplay: projectId } );
     case _ui_actions.RECEIVE_PROJECT_DISPLAY:
-      return (0, _merge2.default)({}, state, { projectDisplay: action.projectId });
+      return {
+        projectDisplay: action.projectId,
+        userDisplay: -1,
+        taskDisplay: 0
+      };
+    // return merge({}, state, { projectDisplay: action.projectId } );
     case _ui_actions.RECEIVE_USER_DISPLAY:
-      return (0, _merge2.default)({}, state, { userDisplay: action.userDisplayId });
+      return {
+        projectDisplay: 0,
+        userDisplay: action.userId,
+        taskDisplay: 0
+      };
+    // return merge({}, state, { userDisplay: action.userId });
     case _ui_actions.RECEIVE_TASK_DISPLAY:
       var taskId = parseInt(Object.keys(action.task.tasks)[0]);
       return (0, _merge2.default)({}, state, { taskDisplay: taskId });
