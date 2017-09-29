@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   //TEST ONLY REMEMBER TO DELETE
   window.store = store;
+  window.process = process.env;
   //TEST ONLY REMEMBER TO DELETE
 
   const root = document.getElementById('root');

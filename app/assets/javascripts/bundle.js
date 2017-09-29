@@ -14264,7 +14264,7 @@ module.exports = identity;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function(process) {
 
 var _react = __webpack_require__(4);
 
@@ -14297,6 +14297,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   //TEST ONLY REMEMBER TO DELETE
   window.store = store;
+  window.process = process.env;
   //TEST ONLY REMEMBER TO DELETE
 
   var root = document.getElementById('root');
@@ -14304,6 +14305,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 //TEST ONLY REMEMBER TO DELETE
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
 /* 163 */
