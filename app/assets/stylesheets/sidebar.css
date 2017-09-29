@@ -85,12 +85,12 @@ div.member{
   height: 100px;
   padding-left: 5%;
   padding-right: 10%;
-  padding-top: 15px;
+  padding-top: 25px;
   padding-bottom: 5px;
 }
 
 .sidebar > div> .spacer{
-  height: 50px;
+  height: 30px;
 }
 
 .sidebar-projects > ul > li{
@@ -129,6 +129,7 @@ div.member{
 .sidebar-team-members > #team{
   font-size: 20px;
   padding: 5px;
+  margin-top: 30px;
   color: gray;
   font-weight: lighter;
 }
