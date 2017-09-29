@@ -14282,8 +14282,6 @@ var _store = __webpack_require__(408);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//TEST ONLY REMEMBER TO DELETE
-
 document.addEventListener('DOMContentLoaded', function () {
   //Bootstrap the user
   var store = void 0;
@@ -14298,8 +14296,6 @@ document.addEventListener('DOMContentLoaded', function () {
   var root = document.getElementById('root');
   _reactDom2.default.render(_react2.default.createElement(_root2.default, { store: store }), root);
 });
-
-//TEST ONLY REMEMBER TO DELETE
 
 /***/ }),
 /* 163 */
@@ -36527,7 +36523,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var middlewares = [_reduxThunk2.default];
 
-if (process.env.RAILS_ENV !== 'production') {
+if (process.env.NODE_ENV === 'development') {
   // must use 'require' (import only allowed at top of file)
   var _require = __webpack_require__(409),
       logger = _require.logger;

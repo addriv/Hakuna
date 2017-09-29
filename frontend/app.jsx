@@ -1,10 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './components/root';
-
-//TEST ONLY REMEMBER TO DELETE
 import { configureStore } from './store/store';
-//TEST ONLY REMEMBER TO DELETE
 
 document.addEventListener('DOMContentLoaded', () => {
   //Bootstrap the user
