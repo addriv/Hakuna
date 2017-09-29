@@ -19,11 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     store = configureStore();
   }
 
-  //TEST ONLY REMEMBER TO DELETE
-  window.store = store;
-  window.process = process.env;
-  //TEST ONLY REMEMBER TO DELETE
-
   const root = document.getElementById('root');
   ReactDOM.render(<Root store={store}/>, root);
 });
