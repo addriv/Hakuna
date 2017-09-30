@@ -9,7 +9,6 @@
 
 .tasks-index{
   background-color: white;
-  height: calc(100% - 27px);
   position: relative;
   top: 25px;
   width: 100%;
@@ -45,8 +44,10 @@
 }
 
 .tasks-index > ul{
-  height: calc(100% - 50px);
-  max-height: calc(100% - 50px);
+  height: calc(100% - 80px);
+  position: absolute;
+  left: 0;
+  right: 0;
   overflow-y: scroll;
 }
 
