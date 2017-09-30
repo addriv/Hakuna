@@ -18,6 +18,7 @@
 .bottom-bar{
   border-bottom: solid 2px rgba(162, 162, 162, 0.4);
   height: 65px;
+  min-width: 500px;
 }
 
 .bottom-bar > div{
@@ -26,7 +27,7 @@
 }
 
 .bottom-bar > div > h1 {
-  margin: 0;
+  font-size: 24px;
 }
 
 .top-bar {
@@ -35,6 +36,12 @@
   display: flex;
 }
 
+.top-bar > div {
+  width: 100%;
+  min-width: 260px;
+  justify-content: flex-end;
+  display: flex;
+}
 
 .view-user-tasks{
   background-color: transparent;
@@ -43,13 +50,13 @@
   padding: 0;
   margin: 0;
   font-size: 20px;
+  min-width: 150px;
 }
 
 .settings-menu{
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  position: absolute;
+  display: inline-block;
+  position: relative;
   right: 10px;
   z-index: 1;
 }
@@ -81,6 +88,7 @@
   height: 40px;
   padding: 0;
   margin: 0;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;

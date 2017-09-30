@@ -132,22 +132,26 @@ export default class Dashboard extends React.Component{
                   className='view-user-tasks'
                   >My Tasks</button>
 
-                <div className='settings-menu' ref={this.setWrapperRef}>
+                <div>
+                  <div className='settings-menu' ref={this.setWrapperRef}>
 
-                  <button
-                    className='settings-menu-btn'
-                    onClick={this.toggleSettingsMenu}>
+                    <button
+                      className='settings-menu-btn'
+                      onClick={this.toggleSettingsMenu}>
 
-                    <div className='current-team'>{teamDisplay}</div>
+                      <div className='current-team'>{teamDisplay}</div>
 
-                    <div className='member-icon-user-0'>
-                      <div>{this.props.userInitials}</div>
-                    </div>
-                  </button>
+                      <div className='member-icon-user-0'>
+                        <div>{this.props.userInitials}</div>
+                      </div>
 
-                  { this.state.settingsMenuIsOpen ?
-                    <SettingsMenuContainer toggleMenu={this.toggleSettingsMenu}/> : null }
+                    </button>
+                    
+                    { this.state.settingsMenuIsOpen ?
+                      <SettingsMenuContainer toggleMenu={this.toggleSettingsMenu}/> : null }
 
+
+                  </div>
                 </div>
 
               </nav>
