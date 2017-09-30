@@ -78,8 +78,6 @@ html, body {
 }
 
 .login-content, .signup-content{
-  width: 100vw;
-  height: 300px;
   position: absolute;
   top: 20%;
   right: 5%;
@@ -115,24 +113,9 @@ html, body {
   list-style: none;
 }
 
-.signup-btn > ul{
-  /*padding-top: 10px;*/
-  padding: 10px;
-  /*display: flex;
-  flex-direction: column;*/
-}
-
 .login-form-buttons > li {
   padding: 10px;
   margin: 3px;
-}
-
-.login-form{
-  height: 300px;
-}
-
-.signup-form{
-  height: 325px;
 }
 
 button{
@@ -140,23 +123,12 @@ button{
   border: 0;
   box-shadow: none;
   font-weight: lighter;
+  cursor: pointer;
 }
 
 .login-form > form > h2, .signup-form > form > h2{
   text-align: center;
   margin-bottom: 10px;
-}
-
-/*.login-btn, .signup-btn, .demo-btn{
-  display: flex;
-  justify-content: flex-end;
-  padding: 0;
-  width: 30px;
-  margin-top: 10px;
-}*/
-
-button{
-  cursor: pointer;
 }
 
 .button:active {
@@ -167,7 +139,8 @@ button{
 
 .signup-btn > button{
   margin: 10px;
-  height: 25px;
+  padding: 8px 20px;
+  margin-top: 20px;
   background-color: #796eff;
   color: white;
 }
@@ -183,11 +156,37 @@ button{
 
 .login-form-buttons > button{
   color: white;
-  width: 55px;
+  padding: 7px 20px;
+  text-align: center;
   margin: 10px;
-  height: 25px;
+  margin-top: 20px;
   background-color: #796eff;
 }
+
+
+.signup-btn > button{
+  margin: 10px;
+  padding: 8px 20px;
+  margin-top: 20px;
+  background-color: #796eff;
+  color: white;
+}
+
+
+.signup-link, .login-link {
+    background-color: #796eff;
+    height: 10px;
+    padding: 8px 10px;
+    width: 45px;
+    text-align: center;
+    border-radius: 3px;
+    text-decoration: none;
+    color: white;
+    font-weight: lighter;
+    font-size: 11px;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
 
 .login-form-buttons > button:hover{
   background-color: #594cef;
@@ -212,6 +211,7 @@ form > label{
 form > input{
   height: 18px;
   font-size: 10px;
+  padding: 5px;
 }
 
 .signup, .login{
@@ -227,16 +227,13 @@ form > input{
   color: white;
   font-weight: lighter;
   margin-right: 5px;
-  margin-top: 3px;
+  margin-top: 7px;
 }
 
 .signup-link, .login-link {
     background-color: #796eff;
     height: 10px;
-    padding-top: 3px;
-    padding-bottom: 5px;
-    padding-right: 5px;
-    padding-left: 5px;
+    padding: 8px 10px;
     width: 45px;
     text-align: center;
     border-radius: 3px;
