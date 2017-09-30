@@ -46,12 +46,15 @@ export default class TasksIndex extends React.Component{
 
     const team = this.props.state.entities.team;
     const projectDisplayId = this.props.state.ui.projectDisplay;
-    const projectId = projectDisplayId ? projectDisplayId : null;
+    const projects = this.props.state.entities.projects;
+    const firstProjectId = parseInt(Object.keys(projects)[0]);
+    const projectId = projectDisplayId ? projectDisplayId : firstProjectId;
 
     const task = {
       team_id: team.id,
       project_id: projectId
     };
+
 
     this.props.createTask(task).then(
       () => this.setState({ taskDetailIsOpen: true })
