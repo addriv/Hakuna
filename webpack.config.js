@@ -18,7 +18,7 @@ var prodPlugins = [
 ];
 
 plugins = plugins.concat(
-  process.env.NODE_ENV === 'development' ? prodPlugins : prodPlugins
+  process.env.NODE_ENV === 'development' ? devPlugins : prodPlugins
 );
 
 module.exports = {
