@@ -1,6 +1,6 @@
 # Hakuna
 
-![logo](https://github.com/addriv/Hakuna/blob/master/app/assets/images/hakuna_logo.png)
+<img src="https://github.com/addriv/Hakuna/blob/master/app/assets/images/hakuna_logo.png" width="50">
 
 Live version: [Hakuna](https://hakuna-.herokuapp.com)
 
