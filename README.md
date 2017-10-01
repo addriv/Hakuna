@@ -1,24 +1,11 @@
-# README
+# Hakuna
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Live version: [Hakuna](https://hakuna-.herokuapp.com)
 
-Things you may want to cover:
+Hakuna is a clone of Asana, a team productivity tool designed to help manage projects and tasks within organizations.
 
-* Ruby version
+## Features
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* User Authentication
+  * Hakuna uses the `BCrypt` gem to allow users to create new secure accounts
+*
