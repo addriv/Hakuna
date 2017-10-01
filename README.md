@@ -1,6 +1,6 @@
 # Hakuna
 
-<img src="https://github.com/addriv/Hakuna/blob/master/app/assets/images/hakuna_logo.png" width="100">
+<img src="https://github.com/addriv/Hakuna/blob/master/app/assets/images/hakuna_logo.png" width="300px">
 
 Live version: [Hakuna](https://hakuna-.herokuapp.com)
 
@@ -9,5 +9,5 @@ Hakuna is a clone of Asana, a team productivity tool designed to help manage pro
 ## Features
 
 * User Authentication
-  * Hakuna uses the `BCrypt` gem to allow users to create new secure accounts
+  * Hakuna uses `BCrypt` gem to allow users to create new secure accounts
 *
