@@ -1,5 +1,7 @@
 # Hakuna
 
+![logo](https://github.com/addriv/Hakuna/blob/master/app/assets/images/hakuna_logo.png)
+
 Live version: [Hakuna](https://hakuna-.herokuapp.com)
 
 Hakuna is a clone of Asana, a team productivity tool designed to help manage projects and tasks within organizations.
