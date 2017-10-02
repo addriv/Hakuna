@@ -203,7 +203,7 @@
 
 .new-project-form > form > input{
   height: 25px;
-  width: calc(100% - 4px);
+  width: calc(100% - 16px);
   font-size: 13px;
   padding-left: 7px;
 }
@@ -264,7 +264,7 @@
 
 .edit-project-form > form > input{
   height: 25px;
-  width: calc(100% - 4px);
+  width: calc(100% - 16px);
   font-size: 13px;
   padding-left: 7px;
 }
