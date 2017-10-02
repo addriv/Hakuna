@@ -54,9 +54,21 @@ export default class Sidebar extends React.Component {
     membersList = <ul>{membersGrid}</ul>;
     //Grab projects
     if (this.props.projects){
+      const displayProjectId = this.props.uiDisplay.projectDisplay;
+
+
       projects = this.props.projects.map((project, i) => {
+        let projectClass;
+        if (project.id === displayProjectId) {
+          projectClass = 'selected';
+        }
+        else {
+          projectClass = 'unselected';
+        }
         return (
-          <li key={i}>
+          <li
+            className={ projectClass }
+            key={i}>
             <button
               onClick={this.handleProject}
               id={project.id}>{project.name}</button>

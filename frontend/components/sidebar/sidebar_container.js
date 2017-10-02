@@ -10,7 +10,8 @@ const mapStateToProps = state => ({
   teamMembers: teamMembersSelector(state),
   projects: projectsSelector(state),
   currentUserInitials: currentUserInitials(state),
-  currentUser: state.session.currentUser
+  currentUser: state.session.currentUser,
+  uiDisplay: state.ui
 });
 
 const mapDispatchToProps = dispatch => ({

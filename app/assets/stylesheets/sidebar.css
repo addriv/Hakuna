@@ -91,13 +91,24 @@ div.member{
   flex-direction: row;
 }
 
+/*Select project effeccts*/
+
+.sidebar-projects > ul > li.selected{
+  background-color: #14aaf5;
+}
+
+li.selected > div > button{
+  background-color: transparent;
+  color: white;
+  font-size: 16px;
+}
+
+/*Sidebar project buttons*/
+
 .sidebar-projects > ul > li:hover{
   background-color: gray;
 }
 
-.sidebar-projects > ul > li:hover > div > button {
-  color: white;
-}
 
 .sidebar-projects > ul > li > button {
   width: 100%;
@@ -113,10 +124,14 @@ div.member{
   padding: 8px;
 }
 
-.sidebar-projects > ul > li > div > button{
+.sidebar-projects > ul > li.unselected > div > button{
   background-color: transparent;
   color: transparent;
   font-size: 16px;
+}
+
+.sidebar-projects > ul > li:hover > div > button {
+  color: white;
 }
 
 .sidebar-team-members > #team{
