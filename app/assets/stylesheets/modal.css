@@ -37,9 +37,9 @@
 }
 
 .new-team-form > form > input{
-  margin-left: 20px;
+  margin: 10px;
   height: 25px;
-  width: calc(100% - 170px);
+  width: calc(100% - 30px);
   font-size: 13px;
 }
 
@@ -141,9 +141,9 @@
 }
 
 .edit-team-form > form > input{
-  margin-left: 20px;
+  margin: 10px;
   height: 25px;
-  width: calc(100% - 170px);
+  width: calc(100% - 30px);
   font-size: 13px;
 }
 
