@@ -15,6 +15,9 @@ Hakuna is a clone of Asana, a team productivity tool designed to help manage pro
 
 * Projects
   * Users can create, update, delete projects within a team
+
+  <img align="center" src="https://github.com/addriv/Hakuna/blob/master/app/assets/images/projects.gif" width="600">
+
 * Tasks
   * Users can create, update, delete, assign tasks to other users.
 
