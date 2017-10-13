@@ -180,4 +180,5 @@ li.selected > div > button{
 
 .sidebar-projects > ul{
   overflow-y: scroll;
+  background-color: #222b37;
 }
