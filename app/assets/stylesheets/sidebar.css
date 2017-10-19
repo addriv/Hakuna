@@ -89,6 +89,7 @@ div.member{
 .sidebar-projects > ul > li{
   display: flex;
   flex-direction: row;
+  width: 100%;
 }
 
 /*Select project effeccts*/
@@ -179,6 +180,6 @@ li.selected > div > button{
 }
 
 .sidebar-projects > ul{
-  overflow-y: scroll;
+  overflow-y: auto;
   background-color: #222b37;
 }
