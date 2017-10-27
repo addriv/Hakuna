@@ -33,6 +33,9 @@ html, body {
 #login-auth, #signup-auth {
   height: 100vh;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #login-auth{
@@ -51,14 +54,6 @@ html, body {
   background-size: cover;
 }
 
-.front-display{
-  margin-right: 150px;
-}
-
-.front-display > img{
-  margin-right: 100px;
-}
-
 .logo{
   height: 40%;
   left: 20%;
@@ -68,30 +63,32 @@ html, body {
 }
 
 .logo > img {
-  height: 184.25px;
-  margin-top: 20px;
-  margin-left: 90px;
+  height: 20vh;
 }
 
 .logo > p {
   margin-top: 15px;
+  font-family: Helvetica, Arial, sans-serif;
+  color: white;
+  font-weight: 300;
 }
 
 .login-content, .signup-content{
-  position: absolute;
+  /* position: absolute;
   top: 20%;
-  right: 5%;
+  right: 5%; */
   display: flex;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 12px;
   flex-direction: row;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: center;
 }
 
-.test{
+/* .test{
   display: flex;
   flex-direction: column;
-}
+} */
 
 .signup-elements{
 }
@@ -102,7 +99,7 @@ html, body {
 }
 
 .login-form, .signup-form {
-  width: 405px;
+  width: calc(100% - 80px);
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -111,6 +108,7 @@ html, body {
   font-family: Helvetica, Arial, sans-serif;
   border-radius: 5px;
   list-style: none;
+  margin: 0;
 }
 
 .login-form-buttons > li {
@@ -224,7 +222,7 @@ form > input{
 .signup > p, .login > p {
   padding: 0;
   margin: 0;
-  color: white;
+  color: black;
   font-weight: lighter;
   margin-right: 5px;
   margin-top: 7px;
@@ -257,3 +255,4 @@ form > input{
 button, input, textarea {
   outline: 0;
 }
+
