@@ -33,10 +33,13 @@ html, body {
 #login-auth, #signup-auth {
   height: 100vh;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #login-auth{
-  background: url(http://res.cloudinary.com/dcl72qrya/image/upload/v1505711124/login_background_hpnkgq.png) no-repeat center center fixed;
+  background: url(http://res.cloudinary.com/dcl72qrya/image/upload/c_scale,w_1080/v1509145098/notebook-computer-chill-relax_mpfx6l.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -44,19 +47,11 @@ html, body {
 }
 
 #signup-auth{
-  background-image: url(http://res.cloudinary.com/dcl72qrya/image/upload/v1505717424/signup_background_nqqdgh.png);
+  background-image: url(https://static.pexels.com/photos/34601/pexels-photo.jpg);
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-}
-
-.front-display{
-  margin-right: 150px;
-}
-
-.front-display > img{
-  margin-right: 100px;
 }
 
 .logo{
@@ -68,32 +63,28 @@ html, body {
 }
 
 .logo > img {
-  height: 184.25px;
-  margin-top: 20px;
-  margin-left: 90px;
+  height: 20vh;
 }
 
 .logo > p {
   margin-top: 15px;
+  font-family: Helvetica, Arial, sans-serif;
+  color: white;
+  font-weight: 300;
 }
 
 .login-content, .signup-content{
-  position: absolute;
-  top: 20%;
-  right: 5%;
+  width: 40%;
   display: flex;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 12px;
   flex-direction: row;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: center;
 }
 
-.test{
-  display: flex;
-  flex-direction: column;
-}
-
-.signup-elements{
+.login-wrapper, .signup-wrapper{
+  width: 100%;
 }
 
 .signup-form > form, .login-form > form{
@@ -102,7 +93,7 @@ html, body {
 }
 
 .login-form, .signup-form {
-  width: 405px;
+  width: calc(100% - 80px);
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -111,6 +102,7 @@ html, body {
   font-family: Helvetica, Arial, sans-serif;
   border-radius: 5px;
   list-style: none;
+  margin: 0;
 }
 
 .login-form-buttons > li {
@@ -224,7 +216,7 @@ form > input{
 .signup > p, .login > p {
   padding: 0;
   margin: 0;
-  color: white;
+  color: black;
   font-weight: lighter;
   margin-right: 5px;
   margin-top: 7px;
@@ -257,3 +249,4 @@ form > input{
 button, input, textarea {
   outline: 0;
 }
+
