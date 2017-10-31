@@ -39,53 +39,58 @@ export default class SignupForm extends React.Component {
     return (
       <div id='signup-auth'>
         <div className='signup-content'>
-          <div className='front-display'>
 
-            <div className='logo'>
-              <img src='http://res.cloudinary.com/dcl72qrya/image/upload/v1505802948/full_logo_full_yfxljp.png'/>
-              <p>It means no worries, your team solutions are one step away</p>
+          <div className='signup-wrapper'>
+
+            <div className='front-display'>
+
+              <div className='logo'>
+                <img src='http://res.cloudinary.com/dcl72qrya/image/upload/v1505802948/full_logo_full_yfxljp.png'/>
+              </div>
+
             </div>
 
-          </div>
+            <div className='signup-elements'>
+              <div  className='signup-form'>
+                <form>
+                  <h2>Sign Up</h2>
 
-          <div className='signup-elements'>
-            <div  className='signup-form'>
-              <form>
-                <h2>Sign Up</h2>
+                  <label>NAME</label>
+                  <input
+                    onChange={this.handleInput('name')}
+                    type='text'
+                    placeholder='Your Name'
+                    value={this.state.name}></input>
 
-                <label>NAME</label>
-                <input
-                  onChange={this.handleInput('name')}
-                  type='text'
-                  value={this.state.name}></input>
+                  <label>EMAIL ADDRESS</label>
+                  <input
+                    onChange={this.handleInput('email')}
+                    type='text'
+                    placeholder='name@company.com'
+                    value={this.state.email}></input>
 
-                <label>EMAIL ADDRESS</label>
-                <input
-                  onChange={this.handleInput('email')}
-                  type='text'
-                  value={this.state.email}></input>
+                  <label>PASSWORD</label>
+                  <input
+                    onChange={this.handleInput('password')}
+                    type='password'
+                    placeholder='Password'
+                    value={this.state.password}></input>
 
-                <label>PASSWORD</label>
-                <input
-                  onChange={this.handleInput('password')}
-                  type='password'
-                  value={this.state.password}></input>
-
-                <div className='signup-btn'>
-                  { errors }
-                  <button onClick={this.handleSubmit}>SIGN UP</button>
-                </div>
+                  <div className='signup-btn'>
+                    { errors }
+                    <button onClick={this.handleSubmit}>SIGN UP</button>
+                  </div>
 
 
-              </form>
-            </div>
-            <div className='login'>
-              <p>Already have an account?</p>
-              <Link to='/login' className='login-link'>LOG IN</Link>
+                </form>
+              </div>
+              <div className='login'>
+                <p>Already have an account?</p>
+                <Link to='/login' className='login-link'>LOG IN</Link>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
     );
   }
