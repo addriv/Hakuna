@@ -52,13 +52,13 @@ export default class LoginForm extends React.Component {
         <div className='login-content'>
 
 
-          <div className='test'>
+          <div className='login-wrapper'>
 
-          <div className='front-display'>
-            <div className='logo'>
-              <img src='http://res.cloudinary.com/dcl72qrya/image/upload/v1505801236/full_logo_medium_q8xov2.png'/>
+            <div className='front-display'>
+              <div className='logo'>
+                <img src='http://res.cloudinary.com/dcl72qrya/image/upload/v1505801236/full_logo_medium_q8xov2.png'/>
+              </div>
             </div>
-          </div>
 
             <div className='login-form'>
               <form>
@@ -77,7 +77,6 @@ export default class LoginForm extends React.Component {
                   type='password'
                   value={this.state.password}
                   placeholder='Password'></input>
-
 
                 <div className='login-form-buttons'>
                   {errors}

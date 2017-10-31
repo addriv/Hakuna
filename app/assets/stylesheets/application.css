@@ -74,9 +74,7 @@ html, body {
 }
 
 .login-content, .signup-content{
-  /* position: absolute;
-  top: 20%;
-  right: 5%; */
+  width: 40%;
   display: flex;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 12px;
@@ -85,10 +83,9 @@ html, body {
   justify-content: center;
 }
 
-/* .test{
-  display: flex;
-  flex-direction: column;
-} */
+.login-wrapper{
+  width: 100%;
+}
 
 .signup-elements{
 }
