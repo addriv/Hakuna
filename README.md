@@ -7,9 +7,9 @@ Live version: [Hakuna](https://hakuna-.herokuapp.com)
 Hakuna is a clone of Asana, a team productivity tool designed to help manage projects and tasks within organizations.
 
 **Technologies**
-* Frontend: React, Redux, JavaScript
-* Backend: Ruby on Rails
-* Database: PostgreSQL
+* **Frontend**: React, Redux, JavaScript
+* **Backend**: Ruby on Rails
+* **Database**: PostgreSQL
 
 <p align="center">
   <img src="https://github.com/addriv/Hakuna/blob/master/app/assets/images/overview.gif" width="600">
@@ -40,7 +40,9 @@ Hakuna is a clone of Asana, a team productivity tool designed to help manage pro
 
 * Filters
   * Tasks can be filtered by assignee by clicking the team member's icon in the sidebar.
-  
+  <p align="center">
+    <img src="https://github.com/addriv/Hakuna/blob/master/app/assets/images/filters.gif" width="600">
+  </p>
 
 ## Implementation
 
