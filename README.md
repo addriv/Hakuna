@@ -38,6 +38,10 @@ Hakuna is a clone of Asana, a team productivity tool designed to help manage pro
     <img src="https://github.com/addriv/Hakuna/blob/master/app/assets/images/tasks.gif" width="600">
   </p>
 
+* Filters
+  * Tasks can be filtered by assignee by clicking the team member's icon in the sidebar.
+  
+
 ## Implementation
 
 One of the challenges faced when creating Hakuna was keeping the Tasks Detail(tasks_detail.jsx) component in sync with the Tasks Index component(tasks_index.jsx). 
