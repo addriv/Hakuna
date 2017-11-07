@@ -27,21 +27,32 @@ export default class LoginForm extends React.Component {
   }
 
   handleDemoLogin(event){
+    debugger;
     event.preventDefault();
+
+    const demoAcc = {
+        email: 'demo@email.com',
+        password: 'demo333'
+    };
 
     let i = 0;
     setInterval(() => {
+      const emailInput = $('.input-email');
+      const passwordInput = $('.input-password');
+      const loginBtn = $('.submit-login');
+      
+      if (i < demoAcc.email.length) {
+        emailInput.value = demoAcc.email.slice(0, i + 1);
+      }
+      else if (i < demoAcc.email.length + demoAcc.password.length) {
+        let passwordIdx = i - (emailInput.length - 1);
+        passwordInput.value = demoAcc.password.slice(0, passwordIdx + 1);
+      }
+      else { loginBtn.click(); }
 
+      i++;
     }, 500);
-
-
-    const demoAcc = {
-      user: {
-        email: 'demo@email.com',
-        password: 'demo333'
-      }};
-
-    this.props.login(demoAcc);
+    // this.props.login(demoAcc);
   }
 
   render(){
@@ -74,7 +85,7 @@ export default class LoginForm extends React.Component {
                 <input
                   onChange={this.handleInput('email')}
                   type='text'
-                  class='input-email'
+                  className='input-email'
                   value={this.state.email}
                   placeholder='name@company.com'></input>
 
@@ -82,14 +93,17 @@ export default class LoginForm extends React.Component {
                 <input
                   onChange={this.handleInput('password')}
                   type='password'
-                  class='input-password'
+                  className='input-password'
                   value={this.state.password}
                   placeholder='Password'></input>
 
                 <div className='login-form-buttons'>
                   {errors}
 
-                  <button onClick={this.handleSubmit}>LOG IN</button>
+                  <button 
+                    onClick={this.handleSubmit}
+                    className='submit-login'
+                    >LOG IN</button>
                   <button onClick={this.handleDemoLogin}>DEMO</button>
                 </div>
 
