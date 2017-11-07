@@ -27,7 +27,6 @@ export default class LoginForm extends React.Component {
   }
 
   handleDemoLogin(event){
-    debugger;
     event.preventDefault();
 
     const demoAcc = {
