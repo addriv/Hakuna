@@ -72,7 +72,7 @@ To keep the two components synced with controlled React inputs, the event handle
     );
   }
 ````
-To limit minimize the amount of ajax requests to the API when selecting tasks, update requests are only sent after an input is changed within the tasks components. 
+To limit minimize the amount of AJAX requests to the API when selecting tasks, update requests are only sent after an input is changed within the tasks components. 
 
 To do this, the update function which sent the request to the application API was added as an onBlur event. This event was only added after an input is changed and then removed after the onBlur event occurs.
 
