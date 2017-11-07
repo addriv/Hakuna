@@ -36,23 +36,27 @@ export default class LoginForm extends React.Component {
     };
 
     let i = 0;
-    setInterval(() => {
-      const emailInput = $('.input-email');
-      const passwordInput = $('.input-password');
-      const loginBtn = $('.submit-login');
+    const demoInterval = setInterval(() => {
+      const emailInput = $('.input-email')[0];
+      const passwordInput = $('.input-password')[0];
+      const loginBtn = $('.submit-login')[0];
       
       if (i < demoAcc.email.length) {
-        emailInput.value = demoAcc.email.slice(0, i + 1);
+        let email = demoAcc.email.slice(0, i + 1);
+        this.setState({ email })
       }
       else if (i < demoAcc.email.length + demoAcc.password.length) {
-        let passwordIdx = i - (emailInput.length - 1);
-        passwordInput.value = demoAcc.password.slice(0, passwordIdx + 1);
+        let passwordIdx = i - (demoAcc.email.length);
+        let password = demoAcc.password.slice(0, passwordIdx + 1);
+        this.setState({ password });
       }
-      else { loginBtn.click(); }
+      else { 
+        clearInterval(demoInterval);
+        loginBtn.click(); 
+      }
 
       i++;
-    }, 500);
-    // this.props.login(demoAcc);
+    }, 50);
   }
 
   render(){
