@@ -17,28 +17,28 @@ Hakuna is a clone of Asana, a team productivity tool designed to help manage pro
 
 ## Features
 
-* User Authentication
+* **User Authentication**
   * Hakuna uses `BCrypt` gem to allow users to create new secure accounts
 
-* Teams
+* **Teams**
   * Users are able to create teams for other users to join
   <p align="center">
     <img src="https://github.com/addriv/Hakuna/blob/master/app/assets/images/teams.gif" width="600">
   </p>
 
-* Projects
+* **Projects**
   * Users can create, update, delete projects within a team
   <p align="center">
     <img src="https://github.com/addriv/Hakuna/blob/master/app/assets/images/projects.gif" width="600">
   </p>
 
-* Tasks
+* **Tasks**
   * Users can create, update, delete, assign tasks to other users.
   <p align="center">
     <img src="https://github.com/addriv/Hakuna/blob/master/app/assets/images/tasks.gif" width="600">
   </p>
 
-* Filters
+* **Filters**
   * Tasks can be filtered by assignee by clicking the team member's icon in the sidebar.
   <p align="center">
     <img src="https://github.com/addriv/Hakuna/blob/master/app/assets/images/filters.gif" width="600">
