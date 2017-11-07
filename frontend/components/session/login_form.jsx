@@ -29,6 +29,12 @@ export default class LoginForm extends React.Component {
   handleDemoLogin(event){
     event.preventDefault();
 
+    let i = 0;
+    setInterval(() => {
+
+    }, 500);
+
+
     const demoAcc = {
       user: {
         email: 'demo@email.com',
@@ -68,6 +74,7 @@ export default class LoginForm extends React.Component {
                 <input
                   onChange={this.handleInput('email')}
                   type='text'
+                  class='input-email'
                   value={this.state.email}
                   placeholder='name@company.com'></input>
 
@@ -75,6 +82,7 @@ export default class LoginForm extends React.Component {
                 <input
                   onChange={this.handleInput('password')}
                   type='password'
+                  class='input-password'
                   value={this.state.password}
                   placeholder='Password'></input>
 
