@@ -45,7 +45,7 @@ export default class SignupForm extends React.Component {
             <div className='front-display'>
 
               <div className='logo'>
-                <img src='http://res.cloudinary.com/dcl72qrya/image/upload/v1505802948/full_logo_full_yfxljp.png'/>
+                <img src='https://res.cloudinary.com/dcl72qrya/image/upload/v1505802948/full_logo_full_yfxljp.png'/>
               </div>
 
             </div>

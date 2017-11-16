@@ -76,7 +76,7 @@ export default class LoginForm extends React.Component {
 
             <div className='front-display'>
               <div className='logo'>
-                <img src='http://res.cloudinary.com/dcl72qrya/image/upload/v1505801236/full_logo_medium_q8xov2.png'/>
+                <img src='https://res.cloudinary.com/dcl72qrya/image/upload/v1505801236/full_logo_medium_q8xov2.png'/>
               </div>
             </div>
 

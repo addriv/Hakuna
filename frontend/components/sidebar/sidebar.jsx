@@ -83,7 +83,7 @@ export default class Sidebar extends React.Component {
 
     return (
       <div className='sidebar-content'>
-        <img src='http://res.cloudinary.com/dcl72qrya/image/upload/v1505802948/full_logo_full_yfxljp.png'></img>
+        <img src='https://res.cloudinary.com/dcl72qrya/image/upload/v1505802948/full_logo_full_yfxljp.png'></img>
 
         <div className='sidebar-team-members'>
           <div id='team'>{ `${currentTeam} Team Members` }</div>
