@@ -1,4 +1,4 @@
-**{appNamePlaceholder}** is an Asana clone, a team productivity tool designed to help manage projects and tasks within organizations.
+**Hakuna** is an Asana clone, a team productivity tool designed to help manage projects and tasks within organizations.
 
 **1. New account creation, login, demo login**
 
